@@ -20,11 +20,7 @@ public class SolLuna extends Base {
 	 * @param posY es el <code>posiscion en y</code> del objeto cuadro.
 	 * @param image es la <code>imagen</code> del objeto cuadro.
 	 */
-	public SolLuna(int posX,int posY, Image image){
-            
-            super(posX, posY, image);
-            
-        }
-            
-    
+	public SolLuna(int posX,int posY, Animacion a) {
+		super(posX, posY, a);
+	}
 }
