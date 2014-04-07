@@ -6,19 +6,13 @@
 
 package dreamwalker;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author NLCJohn
  */
-public class DreamWalker {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        JFrameDreamWalker tiro = new JFrameDreamWalker();
-        tiro.setVisible(true);
-    }
+public class JFrameDreamWalker extends JFrame{
+    
     
 }
