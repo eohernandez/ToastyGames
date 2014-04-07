@@ -17,8 +17,10 @@ public class DreamWalker {
      */
     public static void main(String[] args) {
         
-        JFrameDreamWalker tiro = new JFrameDreamWalker();
-        tiro.setVisible(true);
+        JFrameDreamWalker juego = new JFrameDreamWalker();
+        juego.setVisible(true);
+        juego.setDefaultCloseOperation(juego.EXIT_ON_CLOSE);
+        
     }
     
 }
