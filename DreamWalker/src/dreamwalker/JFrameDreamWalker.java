@@ -40,9 +40,9 @@ import javax.swing.JOptionPane;
  * @author NLCJohn
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
-
-        
-         private int score;
+   
+    static boolean playing;        
+    private int score;
 
     private int randPosY;
 
@@ -67,7 +67,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image fotoBarraAbajo;
     private Image fotoBarraArriba;
 
-    private Image gameOver;
     private Image fotoAvion;
     private Image tableroInstrucciones;
     private Image pausaImagen;
@@ -90,8 +89,16 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     
     private boolean nombreIngresado;
     
+    
+    public Menu menu;
+    public Instructions instructions;
+    public gameOver gameOver;
+    private Image menuBG;
+    
      public static enum STATUS {
         MENU,
+        INSTRUCTIONS,
+        TROPHIES,
         PAUSE,
         GAME,
         GAMEOVER,
@@ -128,8 +135,16 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         instrucciones = false;
         sonido = true;
         inicio = false;
-   
+        playing = true;
         nombreIngresado = false;
+        
+        menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
+        menu = new Menu(menuBG);
+            
+
+        instructions = new Instructions(menuBG);
+        gameOver = new gameOver(menuBG);
+       
 
 ////        loseSound = new SoundClip("Resources/lostSound.wav");
 ////        crashSound = new SoundClip("Resources/crashSound.wav");
@@ -321,6 +336,16 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawImage(background, 8, 30, this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
+        if (status == STATUS.GAME ) {
+            
+        }
+        else if (status == STATUS.MENU) {
+            menu.render(g, this);
+        } else if (status == STATUS.INSTRUCTIONS) {
+            instructions.render(g, this);
+        } else if (status == STATUS.GAMEOVER) {
+            gameOver.render(g, this);
+        }
 
 
     }
