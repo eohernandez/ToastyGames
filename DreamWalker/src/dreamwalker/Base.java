@@ -18,7 +18,7 @@ public class Base {
 	 * Metodo constructor usado para crear el objeto
 	 * @param posX es la <code>posicion en x</code> del objeto.
 	 * @param posY es la <code>posicion en y</code> del objeto.
-	 * @param image es la <code>imagen</code> del objeto.
+	 * @param Animacion es la <code>Animacion</code> del objeto.
 	 */
 	public Base(int posX, int posY, Animacion a) {
 		this.posX=posX;

@@ -12,6 +12,13 @@ import javax.swing.JFrame;
  *
  * @author NLCJohn
  */
-public class JFrameDreamWalker extends JFrame {
-	
+public class JFrameDreamWalker extends JFrame{
+    
+    
+    public JFrameDreamWalker(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000,600);   //el tamanio de la pantalla
+    }
+     
+         
 }
