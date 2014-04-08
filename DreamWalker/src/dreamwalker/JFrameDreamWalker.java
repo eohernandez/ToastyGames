@@ -368,11 +368,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
    
     
     
-    
-    public JFrameDreamWalker(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000,600);   //el tamanio de la pantalla
-    }
      
          
 }
