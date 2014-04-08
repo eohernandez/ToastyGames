@@ -78,7 +78,7 @@ public class Base {
 	
 	/**
 	 * Checa si el objeto <code>Base</code> intersecta a otro <code>Base</code>
-	 *
+	 * @param obj con el objeto que se checa la interseccion
 	 * @return un valor boleano <code>true</code> si lo intersecta <code>false</code>
 	 * en caso contrario
 	 */
@@ -88,9 +88,9 @@ public class Base {
      
 	/**
 	 * Checa si el objeto <code>Base</code> intersecta con el mouse
-	 *
+	 * @param x posicion x del mouse
+	 * @param y posicion y del mouse
 	 * @return un valor boleano <code>true</code> si lo intersecta <code>false</code>
-         * 
 	 * en caso contrario
 	 */ 
 	public boolean mouseOver(int x, int y) {

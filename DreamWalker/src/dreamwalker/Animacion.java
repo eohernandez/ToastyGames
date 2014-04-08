@@ -18,7 +18,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 
-public class Animacion{
+public class Animacion {
 	private ArrayList cuadros;
 	private int indiceCuadroActual;
 	private long tiempoDeAnimacion;
@@ -28,7 +28,7 @@ public class Animacion{
 	/**
 		Crea una nueva Animacion vacía
 	*/
-	public Animacion(){
+	public Animacion() {
 		cuadros = new ArrayList();
 		duracionTotal = 0;
    
@@ -40,13 +40,13 @@ public class Animacion{
 		Añade una cuadro a la animación con la duración
 		indicada (tiempo que se muestra la imagen).
 	*/	
-	public synchronized void sumaCuadro(Image imagen, long duracion){
+	public synchronized void sumaCuadro(Image imagen, long duracion) {
     	duracionTotal += duracion;
 		cuadros.add(new cuadroDeAnimacion(imagen, duracionTotal));
     }
 	
 	// Inicializa la animación desde el principio. 
-	public synchronized void iniciar(){
+	public synchronized void iniciar() {
     	tiempoDeAnimacion = 0;
 		indiceCuadroActual = 0;
     }
@@ -121,8 +121,8 @@ public class Animacion{
 	 *	Metodo de acceso que regresa el ancho de la imagen
 	 * @return width
 	*/
-	public int getWidth(){
-		if (cuadros.isEmpty()){
+	public int getWidth() {
+		if (cuadros.isEmpty()) {
 			return -1;
 		} else {
 			return getCuadro(indiceCuadroActual).imagen.getWidth(null);

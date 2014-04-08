@@ -12,7 +12,6 @@ import javax.swing.JFrame;
  *
  * @author NLCJohn
  */
-public class JFrameDreamWalker extends JFrame{
-    
-    
+public class JFrameDreamWalker extends JFrame {
+	
 }

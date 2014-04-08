@@ -11,7 +11,6 @@ package dreamwalker;
  * @author NLCJohn
  */
 public class DreamWalker {
-
     /**
      * @param args the command line arguments
      */
