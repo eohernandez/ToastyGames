@@ -13,7 +13,8 @@ public class Base {
 	private int posX;				// posicion en x       
 	private int posY;				// posicion en y
 	private Animacion animacion;	// animacion
-	
+	private static int W;
+        private static int H;
 	/**
 	 * Metodo constructor usado para crear el objeto
 	 * @param posX es la <code>posicion en x</code> del objeto.
@@ -85,7 +86,41 @@ public class Base {
 	public boolean intersecta(Base obj) {
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
-     
+           /**
+     * Método que asigna el tamaño estatico del applet
+     *
+     * @param w
+     */
+    public static void setW(int w) {
+        W = w;
+    }
+
+    /**
+     * Método que me regresa el tamaño estatico de mi applet
+     *
+     * @return W que es el width
+     */
+    public static int getW() {
+        return W;
+    }
+
+    /**
+     * Método que asigna la variable estatica del applet del tamaño
+     *
+     * @param h
+     */
+    public static void setH(int h) {
+        H = h;
+    }
+
+    /**
+     * Método que regresa la variable estatica del applet
+     *
+     * @return H que es el <I> Height </I>
+     */
+    public static int getH() {
+        return H;
+    }
 	/**
 	 * Checa si el objeto <code>Base</code> intersecta con el mouse
 	 * @param x posicion x del mouse
