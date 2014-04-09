@@ -67,6 +67,26 @@ public class Base {
 	public Image getImagen() {
 		return animacion.getImagen();
 	}
+        /**
+	 * Metodo de acceso que regresa el ancho del icono 
+	 * @return un objeto de la clase <code>ImageIcon</code> que es el ancho del icono.
+	 */
+	public int getAncho() {
+                 
+		return animacion.getWidth();
+                
+	}
+	
+	/**
+	 * Metodo de acceso que regresa el alto del icono 
+	 * @return un objeto de la clase <code>ImageIcon</code> que es el alto del icono.
+	 */
+        
+	public int getAlto() {
+            
+		return animacion.getHeight();
+                
+	}
 	
 	/**
 	 * Metodo de acceso que regresa un nuevo rectangulo
