@@ -40,45 +40,37 @@ import javax.swing.JOptionPane;
  * @author NLCJohn
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
-   
-    static boolean playing;        
-    private int score;
+	static boolean playing;        
+	private int score;
 
-    private int randPosY;
+	private int randPosY;
 
-// strings
-    private String[] arr;
-    private String nombre;
-    private final String nombreArchivo = "guardar.txt";
+//	strings
+	private String[] arr;
+	private String nombre;
+	private final String nombreArchivo = "guardar.txt";
 
-// boleanos
-    private boolean pausa;      // bool que checa si se pauso
-    private boolean instrucciones;
-   
-    //floating
-    private long tiempoActual;  // tiempo actual
+//	boleanos
+	private boolean pausa;      // bool que checa si se pauso
+	private boolean instrucciones;
 
-    // images
-    private Image dbImage;	// Imagen a proyectar	
-    private Graphics dbg;	// Objeto grafico
+//	floating
+	private long tiempoActual;  // tiempo actual
 
-    //imagen de Background
-    private Image background;
-    
-    //HighScores
-    private HighScore hScore;
+//	images
+	private Image dbImage;	// Imagen a proyectar	
+	private Graphics dbg;	// Objeto grafico
 
-    AffineTransform identity = new AffineTransform();
+//	imagen de Background
+	private Image background;
 
-// animaciones
+//	HighScores
+	private HighScore hScore;
 
+	AffineTransform identity = new AffineTransform();
 
-// sounds
-    private SoundClip jump; // sonido cuando saltas
-    private SoundClip backMusic; //musica de fondo del juego
-    private SoundClip loseSound; //musica de perder el juego
-    private SoundClip crashSound; //musica cuando chocas
-    private SoundClip coin; //sonido cuando ganas punto
+//	animaciones
+	Fox fox;
 
     // animaciones
     
@@ -113,8 +105,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * Se crea un objeto de la misma clase
      */
     public JFrameDreamWalker() {
-        init();
-        start();
+		init();
+		start();
     }
 
     /**
@@ -123,29 +115,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      *
      */
     void init() {
+		setTitle("Dream Walker");
+		addKeyListener(this);
+		addMouseListener(this);
+		setSize(1152, 720);
+		setBackground(Color.decode("#C6FFFF"));
+		status = STATUS.MENU;
+		Base.setW(getWidth());
+		Base.setH(getHeight());
 
-        setTitle("Dream Walker");
-        addKeyListener(this);
-        addMouseListener(this);
-        setSize(1152, 720);
-        setBackground(Color.decode("#C6FFFF"));
-        status = STATUS.MENU;
-        Base.setW(getWidth());
-        Base.setH(getHeight());
-        
-        
-        hScore = new HighScore();
-        score = hScore.getActualHighscore();
-        
-        playing = true;
-        pausa = false;
-        
-        
-        menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
-        pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-  
-        menu = new Menu(menuBG);
-            
 
         instructions = new Instructions(menuBG);
         gameOver = new gameOver(menuBG);
@@ -182,10 +160,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      *
      */
     public void start() {
-        //Crea el thread
-        Thread hilo = new Thread(this);
-        //Inicializa el thread
-        hilo.start();
+//		Crea el thread
+		Thread hilo = new Thread(this);
+//		Inicializa el thread
+		hilo.start();
     }
 
     /**
@@ -222,12 +200,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * <code>Applet</code> y luego manda a dormir el hilo.
      *
      */
-    public void run() {
-
-        //Guarda el tiempo actual del sistema
-        tiempoActual = System.currentTimeMillis();
-
-        //Ciclo principal del Applet. Actualiza y despliega en pantalla la animación hasta que el Applet sea cerrado
+	public void run() {
+//		Guarda el tiempo actual del sistema
+		tiempoActual = System.currentTimeMillis();
+		
+//		Ciclo principal del Applet. Actualiza y despliega en pantalla la animación hasta que el Applet sea cerrado
         while (true) {
             if (!playing) {
                 setVisible(false);
@@ -264,14 +241,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * </code> por la parte inferior.
      */
     public void checaColision() {
-
-        
-        
-        
-        
-        
-
-    }
+		
+	}
 
     /**
      * El método actualiza() del <code>Applet</code> que actualiza las
@@ -340,22 +311,16 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-
-        g.drawImage(background, 8, 30, this);
+		g.drawImage(background, 8, 30, this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
-           
-            if ( !pausa ) {
-                
-            }
-            else {
-         
-            g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
-        }
-                
-        }
-        else if (status == STATUS.MENU) {
+			if ( !pausa ) {
+				
+            } else {
+				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
+			}
+		} else if (status == STATUS.MENU) {
             menu.render(g, this);
         } else if (status == STATUS.INSTRUCTIONS) {
             instructions.render(g, this);
@@ -363,10 +328,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             gameOver.render(g, this);
         } else if (status == STATUS.TROPHIES) {
             trophies.render(g, this);
-        } 
-
-
-    }
+        }
+	}
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -383,8 +346,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                
             } else if (e.getKeyCode() == KeyEvent.VK_P) {
                 pausa = !pausa;
-            
-            } 
+			}
         }
     
     }
@@ -421,9 +383,4 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void mouseExited(MouseEvent e) {
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
-    
-    
-      
 }

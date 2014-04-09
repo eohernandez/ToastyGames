@@ -14,7 +14,7 @@ public class Base {
 	private int posY;				// posicion en y
 	private Animacion animacion;	// animacion
 	private static int W;
-        private static int H;
+	private static int H;
 	/**
 	 * Metodo constructor usado para crear el objeto
 	 * @param posX es la <code>posicion en x</code> del objeto.

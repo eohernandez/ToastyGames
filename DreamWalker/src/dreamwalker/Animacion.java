@@ -77,8 +77,7 @@ public class Animacion {
         	return null;
         } else {
 			return getCuadro(indiceCuadroActual).imagen;
-		}
-                
+		}      
 	}
 	
 	private cuadroDeAnimacion getCuadro(int i) {

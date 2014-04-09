@@ -11,6 +11,7 @@ package dreamwalker;
  */
 public class Fox extends Base {
 	private int jumps, velX, velY;
+	private Animacion stand;
 	
 	/**
 	 * Metodo constructor default.
@@ -99,5 +100,13 @@ public class Fox extends Base {
 	 */
 	void addVelY(int v) {
 		velY += v;
+	}
+	
+	/**
+	 * Metodo que cambia la animacion usada cuando el personaje principal no camina.
+	 * @param a es la animacion
+	 */
+	void setStand(Animacion a) {
+		stand = a;
 	}
 }
