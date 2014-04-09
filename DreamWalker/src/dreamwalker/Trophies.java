@@ -21,7 +21,7 @@ import java.awt.event.MouseListener;
  * and open the template in the editor.
  */
 
-public class Instructions implements MouseListener {
+public class Trophies implements MouseListener {
     
     private final Botones goBack;
     private final Image back;
@@ -30,11 +30,11 @@ public class Instructions implements MouseListener {
      * Metodo constructor
      * @param background
      */
-    public Instructions(Image background) {
+    public Trophies(Image background) {
         this.back = background;
-        
+
         goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
-     }
+    }
     
     /**
      * Metodo para pintar
@@ -54,10 +54,9 @@ public class Instructions implements MouseListener {
      */
     @Override
     public void mouseClicked (MouseEvent e) {
-        if (JFrameDreamWalker.status == JFrameDreamWalker.STATUS.INSTRUCTIONS) {
+        if (JFrameDreamWalker.status == JFrameDreamWalker.STATUS.TROPHIES) {
             if (goBack.contiene (e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
-
             }
         }
     }
