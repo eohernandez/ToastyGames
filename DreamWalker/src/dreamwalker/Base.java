@@ -51,6 +51,26 @@ public class Base {
 	public void setY(int posY) {
 		this.posY = posY;
 	}
+        
+        
+            /**
+         * Método que fija una animacion para el objeto
+         *
+         * @param anim
+         */
+        public void setAnimacion(Animacion anim) {
+            this.animacion = anim;
+        }
+
+        /**
+         * Método que regresa la <code> Animacion </code> del objeto
+         *
+         * @return Anim
+         */
+        public Animacion getAnimacion() {
+            return this.animacion;
+        }
+
 	
 	/**
 	 * Metodo de acceso que regresa la posicion en y del objeto 

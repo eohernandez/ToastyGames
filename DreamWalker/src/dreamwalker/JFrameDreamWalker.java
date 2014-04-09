@@ -70,8 +70,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	AffineTransform identity = new AffineTransform();
 
 //	animaciones
-	Fox fox;
-
+    private Fox fox;
+    
     // animaciones
     
     private Animacion FoxStanding;
@@ -115,17 +115,17 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      *
      */
     void init() {
-		setTitle("Dream Walker");
-		addKeyListener(this);
-		addMouseListener(this);
-		setSize(1152, 720);
-		setBackground(Color.decode("#C6FFFF"));
-		status = STATUS.MENU;
-		Base.setW(getWidth());
-		Base.setH(getHeight());
+        setTitle("Dream Walker");
+        addKeyListener(this);
+        addMouseListener(this);
+        setSize(1152, 720);
+        setBackground(Color.decode("#A0CFCF"));
+        status = STATUS.MENU;
+        Base.setW(getWidth());
+        Base.setH(getHeight());
 
-                
-                hScore = new HighScore();
+
+        hScore = new HighScore();
         score = hScore.getActualHighscore();
         
         playing = true;
@@ -148,18 +148,20 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         for (int x = 1; x <= 8; x++) { 
             
-            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".png"));
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
-        imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding.png"));
-        FoxStanding.sumaCuadro(dbImage, 100);
+        imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding.gif"));
+      
+        FoxStanding.sumaCuadro(imagenAnimaciones, 100);
         
         for (int x = 1; x <= 3; x++) { 
             
-            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".png"));
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
             FoxJump2.sumaCuadro(imagenAnimaciones, 100);
         }
         
+        fox = new Fox(100,500, FoxStanding);
         
         
     }
@@ -262,7 +264,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
-
+              long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
+              
+              tiempoActual+= tiempoTranscurrido;
+              fox.getAnimacion().actualiza(tiempoTranscurrido);
+              
         
     }
 
@@ -328,8 +334,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
 			if ( !pausa ) {
+                                g.drawImage(fox.getAnimacion().getImagen(), 100, 200, this);
 				
-            } else {
+                        } else {
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
 		} else if (status == STATUS.MENU) {
