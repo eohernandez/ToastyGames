@@ -124,6 +124,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		Base.setW(getWidth());
 		Base.setH(getHeight());
 
+                
+                hScore = new HighScore();
+        score = hScore.getActualHighscore();
+        
+        playing = true;
+        pausa = false;
+        
+        
+        menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
+        pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
+  
+        menu = new Menu(menuBG);
 
         instructions = new Instructions(menuBG);
         gameOver = new gameOver(menuBG);
