@@ -80,7 +80,14 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private SoundClip crashSound; //musica cuando chocas
     private SoundClip coin; //sonido cuando ganas punto
 
- 
+    // animaciones
+    
+    private Animacion FoxStanding;
+    private Animacion FoxJump1;
+    private Animacion FoxJump2;
+    private Animacion FoxRunning;
+    
+    
     
     
     private Menu menu;
@@ -89,6 +96,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image menuBG;
     private Trophies trophies;
     private Image pausaImg;
+    private Image imagenAnimaciones;
     
      public static enum STATUS {
         MENU,
@@ -142,31 +150,28 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         instructions = new Instructions(menuBG);
         gameOver = new gameOver(menuBG);
         trophies = new Trophies(menuBG);
-       
-
-////        loseSound = new SoundClip("Resources/lostSound.wav");
-////        crashSound = new SoundClip("Resources/crashSound.wav");
-////        backMusic = new SoundClip("Resources/gameMusic.wav");
-////        jump = new SoundClip("Resources/jumpSound.wav");
-////        coin = new SoundClip("Resources/coin.wav");
-////
-////        gameOver = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resources/Gameover.png"));
-////        pausaImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resources/pause.png"));
-////        fotoAvion = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resour    ces/avion/ah.png"));
-////        background = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resources/background.png"));
-////        tableroInstrucciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resourses/instruccionesTiroParabolico.jpg"));
-////        fotoBarraAbajo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resources/tube1.png"));
-////        fotoBarraArriba = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Resources/tube2.png"));
-//
-////        animAvion = new Animacion();
-////        animArriba = new Animacion();
-////        animAbajo = new Animacion();
-////
-////        animArriba.sumaCuadro(fotoBarraArriba, tiempoActual);
-////        animAbajo.sumaCuadro(fotoBarraAbajo, tiempoActual);
-////        animAvion.sumaCuadro(fotoAvion, 700);
-//
-//        backMusic.play();
+        
+        FoxStanding  = new Animacion();
+        FoxRunning  = new Animacion();
+        FoxJump1  = new Animacion();
+        FoxJump2  = new Animacion();
+        
+        for (int x = 1; x <= 8; x++) { 
+            
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".png"));
+            FoxRunning.sumaCuadro(imagenAnimaciones, 100);
+        }
+        imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding.png"));
+        FoxStanding.sumaCuadro(dbImage, 100);
+        
+        for (int x = 1; x <= 3; x++) { 
+            
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".png"));
+            FoxJump2.sumaCuadro(imagenAnimaciones, 100);
+        }
+        
+        
+        
     }
 
     /**
