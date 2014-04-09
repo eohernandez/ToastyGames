@@ -62,8 +62,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image dbImage;	// Imagen a proyectar	
     private Graphics dbg;	// Objeto grafico
 
- 
+    //imagen de Background
     private Image background;
+    
+    //HighScores
+    private HighScore hScore;
 
     AffineTransform identity = new AffineTransform();
 
@@ -121,8 +124,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         status = STATUS.MENU;
         Base.setW(getWidth());
         Base.setH(getHeight());
-        score = 0;
-       
+        
+        
+        hScore = new HighScore();
+        score = hScore.getActualHighscore();
+        
         playing = true;
         pausa = false;
         
