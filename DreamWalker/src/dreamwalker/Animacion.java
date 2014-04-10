@@ -84,6 +84,10 @@ public class Animacion {
 		return (cuadroDeAnimacion)cuadros.get(i);
 	}
 	
+	public int getCuadros() {
+		return cuadros.size();
+	}
+	
 	public class cuadroDeAnimacion {
 		Image imagen;
 		long tiempoFinal;

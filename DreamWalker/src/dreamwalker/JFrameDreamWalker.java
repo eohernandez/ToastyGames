@@ -70,14 +70,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	AffineTransform identity = new AffineTransform();
 
 //	animaciones
-	Fox fox;
-
+    private Fox fox;
+    
     // animaciones
     
     private Animacion FoxStanding;
     private Animacion FoxJump1;
     private Animacion FoxJump2;
     private Animacion FoxRunning;
+    private Animacion animPiso;
     
     
     
@@ -87,8 +88,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private gameOver gameOver;
     private Image menuBG;
     private Trophies trophies;
+    private Floor floor;
     private Image pausaImg;
     private Image imagenAnimaciones;
+    private Image imagenPiso;
     
      public static enum STATUS {
         MENU,
@@ -115,16 +118,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      *
      */
     void init() {
-	setTitle("Dream Walker");
-	addKeyListener(this);
+
+        setTitle("Dream Walker");
+        addKeyListener(this);
         addMouseListener(this);
-	setSize(1152, 720);
-        setBackground(Color.decode("#C6FFFF"));
-	status = STATUS.MENU;
-	Base.setW(getWidth());
+        setSize(1152, 720);
+        setBackground(Color.decode("#A0CFCF"));
+        status = STATUS.MENU;
+        Base.setW(getWidth());
         Base.setH(getHeight());
 
-                
+        
+
         hScore = new HighScore();
         score = hScore.getActualHighscore();
         
@@ -134,7 +139,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-  
+        imagenPiso = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/piso.png"));
+        
         menu = new Menu(menuBG);
 
         instructions = new Instructions(menuBG);
@@ -145,23 +151,32 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxRunning  = new Animacion();
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
+        animPiso = new Animacion();
+        
+        animPiso.sumaCuadro(imagenPiso, 100);
+       
+        floor = new Floor ( 100 , 6*getHeight()/7, animPiso);
         
         for (int x = 1; x <= 8; x++) { 
-            
-            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".png"));
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
-        imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding.png"));
-        FoxStanding.sumaCuadro(dbImage, 100);
         
-        for (int x = 1; x <= 3; x++) { 
-            
-            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".png"));
-            FoxJump2.sumaCuadro(imagenAnimaciones, 100);
+		for (int x = 1; x<=17; x++) {
+			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png"));
+			FoxStanding.sumaCuadro(imagenAnimaciones, 100);
+		}
+		
+        for (int x = 1; x <= 3; x++) {
+			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
+			FoxJump2.sumaCuadro(imagenAnimaciones, 10);
         }
         
-        
-        
+        fox = new Fox(100,570, FoxRunning);
+		fox.setStand(FoxStanding);
+                fox.setAnim(FoxRunning);
+		fox.setVelX(0);
+		fox.setVelY(0);
     }
 
     /**
@@ -253,7 +268,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * </code> por la parte inferior.
      */
     public void checaColision() {
-		
+            
+            if (fox.intersecta(floor) && fox.getBrinca()) {
+                
+                fox.setX(fox.getX());
+                fox.landed();
+                fox.setY(fox.getY());
+                
+            }
+        
 	}
 
     /**
@@ -262,7 +285,36 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
-
+              long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
+              
+              tiempoActual+= tiempoTranscurrido;
+              fox.actualiza(tiempoTranscurrido);
+              
+               if (fox.getMoveLeft()) {
+                fox.setX(fox.getX() - 5);
+                }
+                if (fox.getMoveRight()) {
+                    fox.setX(fox.getX() + 5);
+                }
+                
+                if (fox.getBrinca()) {
+                     fox.brinca();
+                }
+                if(fox.getBrincaDoble()){
+                    fox.setAnim(FoxJump2);
+                }
+                if (fox.getX() <= 0) {
+                    fox.setX(0);
+                }
+                if (fox.getX()+fox.getAncho()>= getWidth()) {
+                    fox.setX(getWidth()-fox.getAncho());
+                }
+                if(!fox.getBrincaDoble()){
+                    fox.setAnim(FoxRunning);
+                    
+                }
+              
+              
         
     }
 
@@ -327,12 +379,26 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
-			if ( !pausa ) {
-				
-            } else {
+			if (!pausa) {
+				if (fox.getMoveRight() || fox.getMoveLeft()) {
+                                    g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
+                                    g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
+                                } else {
+                                    g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
+                                    if(fox.getBrincaDoble()){
+                                        g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
+                                    }
+                                    else{
+                                        g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
+                                    }   
+                                    
+                                      	
+				}
+			} else {
+                                
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
-		} else if (status == STATUS.MENU) {
+        } else if (status == STATUS.MENU) {
             menu.render(g, this);
         } else if (status == STATUS.INSTRUCTIONS) {
             instructions.render(g, this);
@@ -353,19 +419,35 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         if (status == STATUS.GAME) {
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                
+                fox.setMoveLeft(true);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-               
+                fox.setMoveRight(true);
+                
+            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                
+                fox.jump();
+                if(fox.getBrinca()||!fox.getBrincaDoble()||fox.getJumps()<2){
+                    fox.jumpDouble();
+                    System.out.println("doble1");
+                }
             } else if (e.getKeyCode() == KeyEvent.VK_P) {
                 pausa = !pausa;
-			}
+            }
         }
     
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+
+            fox.setMoveLeft(false);
+
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+            fox.setMoveRight(false);
+        }
+    
     }
 
     @Override
