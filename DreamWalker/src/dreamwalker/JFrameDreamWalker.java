@@ -147,23 +147,24 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxJump2  = new Animacion();
         
         for (int x = 1; x <= 8; x++) { 
-            
             imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
-        imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding.gif"));
-      
-        FoxStanding.sumaCuadro(imagenAnimaciones, 100);
         
-        for (int x = 1; x <= 3; x++) { 
-            
-            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
-            FoxJump2.sumaCuadro(imagenAnimaciones, 100);
+		for (int x = 1; x<=17; x++) {
+			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png"));
+			FoxStanding.sumaCuadro(imagenAnimaciones, 100);
+		}
+		
+        for (int x = 1; x <= 3; x++) {
+			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
+			FoxJump2.sumaCuadro(imagenAnimaciones, 100);
         }
         
-        fox = new Fox(100,500, FoxStanding);
-        
-        
+        fox = new Fox(100,500, FoxRunning);
+		fox.setStand(FoxStanding);
+		fox.setVelX(0);
+		fox.setVelY(0);
     }
 
     /**
@@ -267,7 +268,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
               long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
               
               tiempoActual+= tiempoTranscurrido;
-              fox.getAnimacion().actualiza(tiempoTranscurrido);
+              fox.actualiza(tiempoTranscurrido);
               
         
     }
@@ -333,10 +334,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
-			if ( !pausa ) {
-                                g.drawImage(fox.getAnimacion().getImagen(), 100, 200, this);
-				
-                        } else {
+			if (!pausa) {
+				if (fox.getMoving()) {
+					g.drawImage(fox.getImagen(), 100, 200, this);
+				} else {
+					g.drawImage(fox.getImagenS(), 100, 200, this);
+				}
+			} else {
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
 		} else if (status == STATUS.MENU) {

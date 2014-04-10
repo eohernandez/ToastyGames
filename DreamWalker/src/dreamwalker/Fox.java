@@ -5,6 +5,8 @@
 
 package dreamwalker;
 
+import java.awt.Image;
+
 /**
  *
  * @author manolo
@@ -108,5 +110,30 @@ public class Fox extends Base {
 	 */
 	void setStand(Animacion a) {
 		stand = a;
+	}
+	
+	/**
+	 * Metodo de acceso que regresa la imagen de standing
+	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
+	 */
+	public Image getImagenS() {
+		return stand.getImagen();
+	}
+	
+	/**
+	 * Metodo de acceso que regresa la imagen de standing
+	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
+	 */
+	public boolean getMoving() {
+		return !(velX==0 && velY==0);
+	}
+	
+	/**
+		Actualiza la imagen (cuadro) actual de la animación,
+		si es necesario.
+	*/
+	public void actualiza(long t) {
+		animacion.actualiza(t);
+		stand.actualiza(t);
 	}
 }

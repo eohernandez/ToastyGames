@@ -10,9 +10,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 public class Base {
-	private int posX;				// posicion en x       
-	private int posY;				// posicion en y
-	private Animacion animacion;	// animacion
+	private int posX;		// posicion en x       
+	private int posY;		// posicion en y
+	Animacion animacion;	// animacion
 	private static int W;
 	private static int H;
 	/**
@@ -53,25 +53,25 @@ public class Base {
 	}
         
         
-            /**
-         * Método que fija una animacion para el objeto
-         *
-         * @param anim
-         */
-        public void setAnimacion(Animacion anim) {
-            this.animacion = anim;
-        }
+		/**
+	 * Método que fija una animacion para el objeto
+	 *
+	 * @param anim
+	 */
+	public void setAnimacion(Animacion anim) {
+		this.animacion = anim;
+	}
 
-        /**
-         * Método que regresa la <code> Animacion </code> del objeto
-         *
-         * @return Anim
-         */
-        public Animacion getAnimacion() {
-            return this.animacion;
-        }
+	/**
+	 * Método que regresa la <code> Animacion </code> del objeto
+	 *
+	 * @return Anim
+	 */
+	public Animacion getAnimacion() {
+		return this.animacion;
+	}
 
-	
+
 	/**
 	 * Metodo de acceso que regresa la posicion en y del objeto 
 	 * @return posY es la <code>posicion en y</code> del objeto.
