@@ -24,9 +24,9 @@ public class Fox extends Base {
 	 */
 	public Fox() {
 		super(0, 0, null);
-                moveRight = false;
-                moveLeft = false;
-                
+		moveRight = false;
+		moveLeft = false;
+
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -145,24 +145,24 @@ public class Fox extends Base {
 	}
 	
 	 /**
-        * Método que activa la direccion donde se movio el objeto
-        *
-        * @param b booleano
-        */
-       public void setMoveRight(boolean b) {
-           moveRight = b;
-       }
+	* Método que activa la direccion donde se movio el objeto
+	*
+	* @param b booleano
+	*/
+	public void setMoveRight(boolean b) {
+	   moveRight = b;
+	}
 
-       /**
-        * Método que me regresa un booleano si se movio hacia la derecha la canasta
-        *
-        * @return boolean
-        */
-       public boolean getMoveRight() {
-           return moveRight;
-       }
-       
-       /**
+	/**
+	* Método que me regresa un booleano si se movio hacia la derecha la canasta
+	*
+	* @return boolean
+	*/
+	public boolean getMoveRight() {
+	   return moveRight;
+	}
+
+	/**
      * Método que activa la direccion donde se movio el objeto
      *
      * @param b booleano

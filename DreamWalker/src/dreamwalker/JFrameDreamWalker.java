@@ -172,8 +172,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         fox = new Fox(100,500, FoxRunning);
 		fox.setStand(FoxStanding);
-		fox.setVelX(0);
-		fox.setVelY(0);
     }
 
     /**
@@ -270,7 +268,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 
                 fox.setX(fox.getX());
                 fox.landed();
-                fox.setY(fox.getY());
+                fox.setY(floor.getY()-fox.getAlto());
                 
             }
         
