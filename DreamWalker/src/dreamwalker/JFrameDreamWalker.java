@@ -115,17 +115,17 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      *
      */
     void init() {
-		setTitle("Dream Walker");
-		addKeyListener(this);
-		addMouseListener(this);
-		setSize(1152, 720);
-		setBackground(Color.decode("#C6FFFF"));
-		status = STATUS.MENU;
-		Base.setW(getWidth());
-		Base.setH(getHeight());
+	setTitle("Dream Walker");
+	addKeyListener(this);
+        addMouseListener(this);
+	setSize(1152, 720);
+        setBackground(Color.decode("#C6FFFF"));
+	status = STATUS.MENU;
+	Base.setW(getWidth());
+        Base.setH(getHeight());
 
                 
-                hScore = new HighScore();
+        hScore = new HighScore();
         score = hScore.getActualHighscore();
         
         playing = true;
