@@ -14,12 +14,19 @@ import java.awt.Image;
 public class Fox extends Base {
 	private int jumps, velX, velY;
 	private Animacion stand;
+        private boolean moveRight;
+        private boolean moveLeft;
+        public static boolean brinco = false;
+        public static int acceleracion = 1;
 	
 	/**
 	 * Metodo constructor default.
 	 */
 	public Fox() {
 		super(0, 0, null);
+                moveRight = false;
+                moveLeft = false;
+                
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -33,6 +40,8 @@ public class Fox extends Base {
 	 */
 	public Fox(int posX, int posY, Animacion a) {
 		super(posX, posY, a);
+                moveRight = false;
+                moveLeft = false;
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -42,11 +51,14 @@ public class Fox extends Base {
 	 * Metodo que hace que el personaje principal brinque.
 	 */
 	void jump() {
-		if (jumps > 2) {
+                brinco = true;
+		if (jumps < 2) {
 			jumps++;
-			velY -= 10;
+			velY = 30;
 		}
 	}
+        
+        
 	
 	/**
 	 * Metodo que hace que se llama cuando el personaje toca el suelo al caer de un brinco.
@@ -54,7 +66,19 @@ public class Fox extends Base {
 	void landed() {
 		jumps = 0;
 		velY = 0;
+                brinco = false;
 	}
+        
+       /**
+        * Metodo actualiza la velocidad en y si es que brinco el objeto
+        */ 
+       public void brinca() {
+        if (brinco) {
+
+             setY(getY() - acceleracion*velY );
+             velY-=2;
+        }
+         }
 	
 	/**
 	 * Metodo que regresa la velocidad en X del personaje principal.
@@ -120,13 +144,41 @@ public class Fox extends Base {
 		return stand.getImagen();
 	}
 	
-	/**
-	 * Metodo de acceso que regresa la imagen de standing
-	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
-	 */
-	public boolean getMoving() {
-		return !(velX==0 && velY==0);
-	}
+	 /**
+        * Método que activa la direccion donde se movio el objeto
+        *
+        * @param b booleano
+        */
+       public void setMoveRight(boolean b) {
+           moveRight = b;
+       }
+
+       /**
+        * Método que me regresa un booleano si se movio hacia la derecha la canasta
+        *
+        * @return boolean
+        */
+       public boolean getMoveRight() {
+           return moveRight;
+       }
+       
+       /**
+     * Método que activa la direccion donde se movio el objeto
+     *
+     * @param b booleano
+     */
+    public void setMoveLeft(boolean b) {
+        moveLeft = b;
+    }
+
+    /**
+     * Método que regresa un booleano si se movio hacia la izquierda la canasta
+     *
+     * @return boolean
+     */
+    public boolean getMoveLeft() {
+        return moveLeft;
+    }
 	
 	/**
 		Actualiza la imagen (cuadro) actual de la animación,
