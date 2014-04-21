@@ -40,8 +40,8 @@ public class Fox extends Base {
 	 */
 	public Fox(int posX, int posY, Animacion a) {
 		super(posX, posY, a);
-                moveRight = false;
-                moveLeft = false;
+		moveRight = false;
+		moveLeft = false;
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -58,32 +58,31 @@ public class Fox extends Base {
 			velY = 30;
 		}
 	}
-        /**
+	
+	/**
 	 * Metodo que hace que el personaje principal brinque doble.
 	 */
 	void jumpDouble() {
-                if(brinco&&jumps < 3&&jumps>1){
-                   
-                    brincoDoble= true;
-                    jumps++;
-                    velY = 30;
-                    
-                }
-                
+		if (brinco&&jumps < 3&&jumps>1) {
+			brincoDoble= true;
+			jumps++;
+			velY = 30;
+		}       
 	}
-        /**
+    
+	/**
 	 * Metodo que regresa si el personaje se encuentra en el aire
 	 */
-        public boolean getBrinca(){
-            return brinco;
-        }
+	public boolean getBrinca(){
+		return brinco;
+	}
         
         /**
 	 * Metodo que regresa si el personaje se encuentra en el aire
 	 */
-        public boolean getBrincaDoble(){
-            return brincoDoble;
-        }
+	public boolean getBrincaDoble(){
+		return brincoDoble;
+	}
         
 	
 	/**
@@ -174,7 +173,7 @@ public class Fox extends Base {
 	 * Metodo de acceso que regresa la imagen de animacion
 	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
 	 */
-        public Image getImagenA() {
+	public Image getImagenA() {
 		return anim.getImagen();
 	}
 		
@@ -223,7 +222,6 @@ public class Fox extends Base {
 
     /**
      * Método que regresa un booleano si se movio hacia la izquierda la canasta
-     *
      * @return boolean
      */
     public boolean getMoveLeft() {
@@ -231,12 +229,11 @@ public class Fox extends Base {
     }
 	
 	/**
-		Actualiza la imagen (cuadro) actual de la animación,
-		si es necesario.
+	 * Actualiza la imagen (cuadro) actual de la animación,si es necesario.
 	*/
 	public void actualiza(long t) {
 		animacion.actualiza(t);
 		stand.actualiza(t);
-                anim.actualiza(t);
+		anim.actualiza(t);
 	}
 }

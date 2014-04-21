@@ -61,12 +61,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private Image dbImage;	// Imagen a proyectar	
 	private Graphics dbg;	// Objeto grafico
 
-//	imagen de Background
-	private Image background;
-
 //	HighScores
 	private HighScore hScore;
-
 	AffineTransform identity = new AffineTransform();
 
 //	animaciones
@@ -81,8 +77,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion animPiso;
     
     
-    
-    
     private Menu menu;
     private Instructions instructions;
     private gameOver gameOver;
@@ -92,6 +86,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image pausaImg;
     private Image imagenAnimaciones;
     private Image imagenPiso;
+	private Sky sky;
     
      public static enum STATUS {
         MENU,
@@ -140,7 +135,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
         imagenPiso = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/piso.png"));
-        
+		Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
+
         menu = new Menu(menuBG);
 
         instructions = new Instructions(menuBG);
@@ -152,8 +148,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
         animPiso = new Animacion();
-        
+		Animacion animSky = new Animacion();
+
         animPiso.sumaCuadro(imagenPiso, 100);
+		animSky.sumaCuadro(skyI, 100);
+
        
         floor = new Floor ( 100 , 6*getHeight()/7, animPiso);
         
@@ -174,10 +173,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         fox = new Fox(100,570, FoxRunning);
 		fox.setStand(FoxStanding);
-                fox.setAnim(FoxRunning);
+		fox.setAnim(FoxRunning);
 		fox.setVelX(0);
 		fox.setVelY(0);
-
+		sky = new Sky(0-6480+720, animSky);
     }
 
     /**
@@ -269,15 +268,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * </code> por la parte inferior.
      */
     public void checaColision() {
-            
-            if (fox.intersecta(floor) && fox.getBrinca()) {
-                
-                fox.setX(fox.getX());
-                fox.landed();
-                fox.setY(floor.getY()-fox.getAlto());
-                
-            }
-        
+		if (fox.intersecta(floor) && fox.getBrinca()) {
+			fox.setX(fox.getX());
+			fox.landed();
+			fox.setY(floor.getY()-fox.getAlto());
+		}
 	}
 
     /**
@@ -290,13 +285,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
 		tiempoActual+= tiempoTranscurrido;
 		fox.actualiza(tiempoTranscurrido);
+		sky.move();
 
 		if (fox.getMoveLeft()) {
 			fox.setX(fox.getX() - 5);
 		}
 		if (fox.getMoveRight()) {
 			fox.setX(fox.getX() + 5);
-		}if (fox.getBrinca()) {
+		}
+		if (fox.getBrinca()) {
 			fox.brinca();
 		}
 		if(fox.getBrincaDoble()) {
@@ -370,7 +367,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-		g.drawImage(background, 8, 30, this);
+		g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
@@ -412,9 +409,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 fox.setMoveLeft(true);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 fox.setMoveRight(true);
-                
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                
                 fox.jump();
                 if(fox.getBrinca()||!fox.getBrincaDoble()||fox.getJumps()<2){
                     fox.jumpDouble();
