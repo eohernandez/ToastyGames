@@ -286,37 +286,31 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
-              long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-              
-              tiempoActual+= tiempoTranscurrido;
-              fox.actualiza(tiempoTranscurrido);
-              
-               if (fox.getMoveLeft()) {
-                fox.setX(fox.getX() - 5);
-                }
-                if (fox.getMoveRight()) {
-                    fox.setX(fox.getX() + 5);
-                }
-                
-                if (fox.getBrinca()) {
-                     fox.brinca();
-                }
-                if(fox.getBrincaDoble()){
-                    fox.setAnim(FoxJump2);
-                }
-                if (fox.getX() <= 0) {
-                    fox.setX(0);
-                }
-                if (fox.getX()+fox.getAncho()>= getWidth()) {
-                    fox.setX(getWidth()-fox.getAncho());
-                }
-                if(!fox.getBrincaDoble()){
-                    fox.setAnim(FoxRunning);
-                    
-                }
-              
-              
-        
+		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
+
+		tiempoActual+= tiempoTranscurrido;
+		fox.actualiza(tiempoTranscurrido);
+
+		if (fox.getMoveLeft()) {
+			fox.setX(fox.getX() - 5);
+		}
+		if (fox.getMoveRight()) {
+			fox.setX(fox.getX() + 5);
+		}if (fox.getBrinca()) {
+			fox.brinca();
+		}
+		if(fox.getBrincaDoble()) {
+			fox.setAnim(FoxJump2);
+		}
+		if (fox.getX() <= 0) {
+			fox.setX(0);
+		}
+		if (fox.getX()+fox.getAncho()>= getWidth()) {
+			fox.setX(getWidth()-fox.getAncho());
+		}
+		if(!fox.getBrincaDoble()) {
+			fox.setAnim(FoxRunning);
+		}
     }
 
     /**
@@ -382,21 +376,17 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         if (status == STATUS.GAME ) {
 			if (!pausa) {
 				if (fox.getMoveRight() || fox.getMoveLeft()) {
-                                    g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
-                                    g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
-                                } else {
-                                    g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
-                                    if(fox.getBrincaDoble()){
-                                        g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
-                                    }
-                                    else{
-                                        g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
-                                    }   
-                                    
-                                      	
+					g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
+					g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
+				} else {
+					g.drawImage(floor.animacion.getImagen(), floor.getX(), floor.getY(), this);
+					if (fox.getBrincaDoble()) {
+						g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
+					} else {
+						g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
+					}
 				}
-			} else {
-                                
+			} else {         
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
         } else if (status == STATUS.MENU) {
@@ -417,7 +407,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
         if (status == STATUS.GAME) {
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 fox.setMoveLeft(true);
@@ -435,17 +424,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 pausa = !pausa;
             }
         }
-    
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-
             fox.setMoveLeft(false);
-
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
             fox.setMoveRight(false);
         }
     
