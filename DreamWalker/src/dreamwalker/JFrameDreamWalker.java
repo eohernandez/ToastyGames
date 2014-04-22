@@ -61,8 +61,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private Image dbImage;	// Imagen a proyectar	
 	private Graphics dbg;	// Objeto grafico
 
+//	imagen de Background
+	private Image background;
+
 //	HighScores
 	private HighScore hScore;
+
 	AffineTransform identity = new AffineTransform();
 
 //	animaciones
@@ -76,9 +80,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion FoxRunning;
 
     
-
    private LinkedList<Floor> floor;
 
+    
     private Menu menu;
     private Instructions instructions;
     private gameOver gameOver;
