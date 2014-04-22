@@ -14,10 +14,10 @@ import java.awt.Image;
 public class Fox extends Base {
 	private int jumps, velX, velY;
 	private Animacion stand, anim;
-        private boolean moveRight;
-        private boolean moveLeft;
-        private static boolean brinco = false, brincoDoble = false;
-        public static int acceleracion = 1;
+	private boolean moveRight;
+	private boolean moveLeft;
+	private static boolean brinco = false, brincoDoble = false;
+	public static int acceleracion = 1;
 	
 	/**
 	 * Metodo constructor default.
@@ -40,8 +40,8 @@ public class Fox extends Base {
 	 */
 	public Fox(int posX, int posY, Animacion a) {
 		super(posX, posY, a);
-                moveRight = false;
-                moveLeft = false;
+		moveRight = false;
+		moveLeft = false;
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -52,38 +52,37 @@ public class Fox extends Base {
 	 * Metodo que hace que el personaje principal brinque.
 	 */
 	void jump() {
-                brinco = true;
+        brinco = true;
 		if (jumps < 2) {
 			jumps++;
 			velY = 30;
 		}
 	}
-        /**
+	
+	/**
 	 * Metodo que hace que el personaje principal brinque doble.
 	 */
 	void jumpDouble() {
-                if(brinco&&jumps < 3&&jumps>1){
-                   
-                    brincoDoble= true;
-                    jumps++;
-                    velY = 30;
-                    
-                }
-                
+		if (brinco&&jumps < 3&&jumps>1) {
+			brincoDoble= true;
+			jumps++;
+			velY = 30;
+		}       
 	}
-        /**
+    
+	/**
 	 * Metodo que regresa si el personaje se encuentra en el aire
 	 */
-        public boolean getBrinca(){
-            return brinco;
-        }
+	public boolean getBrinca(){
+		return brinco;
+	}
         
         /**
 	 * Metodo que regresa si el personaje se encuentra en el aire
 	 */
-        public boolean getBrincaDoble(){
-            return brincoDoble;
-        }
+	public boolean getBrincaDoble(){
+		return brincoDoble;
+	}
         
 	
 	/**
@@ -92,27 +91,28 @@ public class Fox extends Base {
 	void landed() {
 		jumps = 0;
 		velY = 0;
-                brinco = false;
-                brincoDoble = false;
+		brinco = false;
+		brincoDoble = false;
 	}
         
-       /**
-        * Metodo actualiza la velocidad en y si es que brinco el objeto
-        */ 
-       public void brinca() {
-        if (brinco) {
-
-             setY(getY() - acceleracion*velY );
-             velY-=2;
-        }
-         }
-       /**
+	/**
+	 * Metodo actualiza la velocidad en y si es que brinco el objeto
+	 */ 
+	public void brinca() {
+		if (brinco) {
+			setY(getY() - acceleracion*velY);
+			velY-=2;
+		}
+	}
+	
+    /**
 	 * Metodo que regresa el numero de brincos del personaje
 	 * @return jumps
 	 */
 	 public int getJumps(){
-             return jumps;
-         }
+		return jumps;
+	}
+	 
 	/**
 	 * Metodo que regresa la velocidad en X del personaje principal.
 	 * @return velX
@@ -168,13 +168,15 @@ public class Fox extends Base {
 	void setAnim(Animacion a) {
 		anim = a;
 	}
-        /**
+	
+	/**
 	 * Metodo de acceso que regresa la imagen de animacion
 	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
 	 */
-        public Image getImagenA() {
+	public Image getImagenA() {
 		return anim.getImagen();
 	}
+		
 	/**
 	 * Metodo que cambia la animacion usada cuando el personaje principal no camina.
 	 * @param a es la animacion
@@ -220,7 +222,6 @@ public class Fox extends Base {
 
     /**
      * Método que regresa un booleano si se movio hacia la izquierda la canasta
-     *
      * @return boolean
      */
     public boolean getMoveLeft() {
@@ -228,12 +229,11 @@ public class Fox extends Base {
     }
 	
 	/**
-		Actualiza la imagen (cuadro) actual de la animación,
-		si es necesario.
+	 * Actualiza la imagen (cuadro) actual de la animación,si es necesario.
 	*/
 	public void actualiza(long t) {
 		animacion.actualiza(t);
 		stand.actualiza(t);
-                anim.actualiza(t);
+		anim.actualiza(t);
 	}
 }
