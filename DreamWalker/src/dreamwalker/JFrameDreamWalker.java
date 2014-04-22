@@ -61,12 +61,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private Image dbImage;	// Imagen a proyectar	
 	private Graphics dbg;	// Objeto grafico
 
-//	imagen de Background
-	private Image background;
-
 //	HighScores
 	private HighScore hScore;
-
 	AffineTransform identity = new AffineTransform();
 
 //	animaciones
@@ -80,9 +76,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion FoxRunning;
 
     
+
    private LinkedList<Floor> floor;
-    
-    
+
     private Menu menu;
     private Instructions instructions;
     private gameOver gameOver;
@@ -92,6 +88,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image pausaImg;
     private Image imagenAnimaciones;
     private Image imagenPiso;
+	private Sky sky;
     
      public static enum STATUS {
         MENU,
@@ -139,7 +136,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-        
+        Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
+
         menu = new Menu(menuBG);
 
         instructions = new Instructions(menuBG);
@@ -151,9 +149,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
 
-       
-       
-       
+		Animacion animSky = new Animacion();
+
+        
+		animSky.sumaCuadro(skyI, 100);
+
+
         floor = new LinkedList();
         floor.add(new Floor(0, 414  + (int) (Math.random()*280)));
         
@@ -176,10 +177,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
 		fox.setStand(FoxStanding);
-                fox.setAnim(FoxRunning);
+		fox.setAnim(FoxRunning);
 		fox.setVelX(0);
 		fox.setVelY(0);
-
+		sky = new Sky(0-6480+720, animSky);
     }
 
     /**
@@ -271,6 +272,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * </code> por la parte inferior.
      */
     public void checaColision() {
+
             
             for (Floor flo : floor) {
                 if ( flo.intersecta(fox) && fox.getBrinca()) {
@@ -281,6 +283,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
                 }
             }
+
 	}
 
     /**
@@ -289,8 +292,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
+
                long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-              
+              sky.move();
                tiempoActual+= tiempoTranscurrido;
                fox.actualiza(tiempoTranscurrido);
                fox.setX(fox.getX()-3);
@@ -343,8 +347,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                     }
                 }
               
-              
-        
     }
 
     /**
@@ -404,10 +406,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-		g.drawImage(background, 8, 30, this);
+		g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
+
 			if (!pausa) { 
                                 // si no esta pausado el juego, pinta todo                    
                                 for (Floor flo : floor) 
@@ -425,10 +428,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                         g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
                                     }   
                                     
-                                      	
 				}
-			} else {
-                                
+			} else {         
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
         } else if (status == STATUS.MENU) {
@@ -449,15 +450,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
         if (status == STATUS.GAME) {
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 fox.setMoveLeft(true);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 fox.setMoveRight(true);
-                
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                
                 fox.jump();
                 if(fox.getBrinca()||!fox.getBrincaDoble()||fox.getJumps()<2){
                     fox.jumpDouble();
@@ -467,17 +465,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 pausa = !pausa;
             }
         }
-    
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-
             fox.setMoveLeft(false);
-
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
             fox.setMoveRight(false);
         }
     
