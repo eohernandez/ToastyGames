@@ -77,7 +77,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     
 
-	private LinkedList<Floor> floor;
+   private LinkedList<Floor> floor;
 
     private Menu menu;
     private Instructions instructions;
@@ -90,7 +90,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image imagenPiso;
 	private Sky sky;
     
-    public static enum STATUS {
+     public static enum STATUS {
         MENU,
         INSTRUCTIONS,
         TROPHIES,
@@ -303,58 +303,68 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
-		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-		if (!pausa) {
-			sky.move();
-		}
-		tiempoActual+= tiempoTranscurrido;
-		fox.actualiza(tiempoTranscurrido);
-		fox.setX(fox.getX()-3);
-                fox.cae(); 
-                fox.setY(fox.getY());
+
+               long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
+              sky.move();
+               tiempoActual+= tiempoTranscurrido;
+               fox.actualiza(tiempoTranscurrido);
+               fox.setX(fox.getX()-3);
+               
+              
+               fox.cae(); 
+               fox.setY(fox.getY());
                
                   
-		
-		if (fox.getMoveLeft()) {
-			fox.setX(fox.getX() - 6);
-		}
-		if (fox.getMoveRight()) {
-			fox.setX(fox.getX() + 6);
-		}
-		if (fox.getBrinca()) {
-			fox.brinca();
-		}
-		if (fox.getBrincaDoble()) {
-			fox.setAnim(FoxJump2);
-		}
-		if (fox.getX() <= 0) {
-			fox.setX(0);
-		}
-		if (fox.getX()+fox.getAncho()>= getWidth()) {
-			fox.setX(getWidth()-fox.getAncho());
-		}
-		if (!fox.getBrincaDoble()) {
-			fox.setAnim(FoxRunning);
-		}
-		
-//		checa si el piso ya se termino
-		for (Floor flo : floor) {
-			if (flo.getX()  <= 0 && !flo.getPassed()) {
-				floor.add(new Floor(1152, 414  + (int) (Math.random()*306)));
-				flo.setPassed(true);
-				break;
-			}
-		}
-		
-//		actualiza el piso
-		for (Floor flo : floor) {
-			flo.actualizaPos();
-			if (flo.getX() <= -1156) {
-				floor.remove(flo);
-				break;
-			}
-		}
-	}
+               
+               if (fox.getMoveLeft()) {
+                fox.setX(fox.getX() - 6);
+                }
+                if (fox.getMoveRight()) {
+                    fox.setX(fox.getX() + 6);
+                }
+                
+                if (fox.getBrinca()) {
+                     fox.brinca();
+                }
+                if(fox.getBrincaDoble()){
+                    fox.setAnim(FoxJump2);
+                }
+                if (fox.getX() <= 0) {
+                    fox.setX(0);
+                }
+                if (fox.getX()+fox.getAncho()>= getWidth()) {
+                    fox.setX(getWidth()-fox.getAncho());
+                }
+                if(!fox.getBrincaDoble()){
+                    fox.setAnim(FoxRunning);
+                    
+                }
+                
+                // checa si el piso ya se termino
+                for (Floor flo : floor) {
+                   
+                    if (flo.getX()  <= 0 && !flo.getPassed()) {
+                        
+                        floor.add(new Floor(1152, 414  + (int) (Math.random()*306)));
+                        flo.setPassed(true);
+                        
+                         break;
+                    }
+                    
+                
+                }
+                
+                // actualiza el piso
+                for (Floor flo : floor) {
+                    flo.actualizaPos();
+                    if (flo.getX() <= -1156) {
+ 
+                        floor.remove(flo);
+                        break;
+                    }
+                }
+              
+    }
 
     /**
      * Metodo <I>update</I> sobrescrito de la clase <code>Applet</code>,

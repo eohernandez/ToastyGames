@@ -153,13 +153,11 @@ public class Floor  {
      * @param juego
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-        
-        g.drawImage(floors[floorIndex], posX, posY, juego);
-        g.drawImage(flowers[flowerIndex], posX+randPosFlower, posY-30, juego);
-        g.drawImage(weeds[weedIndex], posX+randPosWeed, posY-30, juego);
-        g.drawImage(trees[treeIndex], posX+randPosTree, posY-180, juego);
-        g.drawImage(bushes[bushIndex], posX+randPosBush, posY-44, juego);
-       
+		g.drawImage(floors[floorIndex], posX, posY, juego);
+		g.drawImage(trees[treeIndex], posX+randPosTree, posY-trees[treeIndex].getHeight(juego), juego);
+		g.drawImage(bushes[bushIndex], posX+randPosBush, posY-bushes[bushIndex].getHeight(juego), juego);
+        g.drawImage(weeds[weedIndex], posX+randPosWeed, posY-weeds[weedIndex].getHeight(juego), juego);
+        g.drawImage(flowers[flowerIndex], posX+randPosFlower, posY-flowers[flowerIndex].getHeight(juego), juego);
     }
 
 

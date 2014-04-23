@@ -33,7 +33,7 @@ public class Sky extends Base {
 	 * Metodo usado para avanzar la hora del dia.
 	 */
 	public void move() {
-		if (pY == 0) {
+		if (Math.floor(pY) == 0) {
 			pY = -6480+720;
 		} else {
 			pY += 0.32;
