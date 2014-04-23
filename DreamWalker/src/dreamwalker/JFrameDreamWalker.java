@@ -273,35 +273,26 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      */
     public void checaColision() {
 
-            
+            fox.setAterriza(false);
             for (Floor flo : floor) {
-                if (( flo.intersecta(fox) && fox.getBrinca()&& fox.getX()+fox.getAncho()-12>flo.getX()) || flo.intersecta(fox) &&!fox.getAterriza() ){
-//&& fox.getX()+fox.getAncho()-12>flo.getX())
-                    fox.setX(fox.getX());
+ 
+                if(flo.intersecta(fox)&&fox.getMoveLeft()&& fox.getX()>=flo.getX()+flo.getAncho()-10 ){
+                    fox.setX(flo.getX()+ flo.getAncho()+5);
+                 
+                }//flo.getAncho()-fox.getAncho()/2 = flo.getAncho()!!!!!
+                if(fox.within(flo.getX()-fox.getAncho()/2, flo.getAncho()-fox.getAncho()/2, fox.getX(), fox.getAncho()/2)&& flo.intersecta(fox)){
+  
+                    fox.setAterriza(true);
                     fox.landed();
                     fox.setY(flo.getY()-fox.getAlto());
-
+                    
                 }
+                
                 if( flo.intersecta(fox) && fox.getMoveRight()){
                     fox.setX(flo.getX()- fox.getAncho());
                  
                 }
-                if(flo.intersecta(fox) && fox.getMoveLeft() && !(fox.getX()+5>flo.getX()+flo.getAncho())){
-                    fox.setX(flo.getX()+ flo.getAncho());
-                 
-                }
-                if(flo.getX()+flo.getAncho()<fox.getX()&&flo.getX()+flo.getAncho()+fox.getAncho()>fox.getX()&&!flo.intersecta(fox)&& !fox.getBrinca()){
-                    
-                    fox.setAterriza(false);
-                    fox.cae();
-        
-                }
-                if(flo.getX()-10>fox.getX()+fox.getAncho()&&!flo.intersecta(fox)&& !fox.getBrinca()){
-                    //
-                    fox.setAterriza(false);
-                    fox.cae();
-        
-                }
+           
             }
 
 	}
@@ -318,6 +309,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                tiempoActual+= tiempoTranscurrido;
                fox.actualiza(tiempoTranscurrido);
                fox.setX(fox.getX()-3);
+               
+              
+               fox.cae(); 
+               fox.setY(fox.getY());
+               
+                  
                
                if (fox.getMoveLeft()) {
                 fox.setX(fox.getX() - 6);
