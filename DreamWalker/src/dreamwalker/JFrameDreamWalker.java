@@ -280,7 +280,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                     fox.setX(flo.getX()+ flo.getAncho()+5);
                  
                 }//flo.getAncho()-fox.getAncho()/2 = flo.getAncho()!!!!!
-                if(fox.within(flo.getX()-fox.getAncho()/2, flo.getAncho()-fox.getAncho()/2, fox.getX(), fox.getAncho()/2)&& flo.intersecta(fox)){
+                if(fox.within(flo.getX()-fox.getAncho()/2, flo.getAncho()-fox.getAncho(), fox.getX(), fox.getAncho()/2)&& flo.intersecta(fox)){
   
                     fox.setAterriza(true);
                     fox.landed();
