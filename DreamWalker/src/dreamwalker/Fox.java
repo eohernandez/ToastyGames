@@ -16,6 +16,7 @@ public class Fox extends Base {
 	private Animacion stand, anim;
 	private boolean moveRight;
 	private boolean moveLeft;
+        private boolean aterriza;
 	private static boolean brinco = false, brincoDoble = false;
 	public static int acceleracion = 1;
 	
@@ -83,7 +84,21 @@ public class Fox extends Base {
 	public boolean getBrincaDoble(){
 		return brincoDoble;
 	}
-        
+        /**
+	 * Metodo que regresa si el personaje ya aterrizo
+	 */
+	public boolean getAterriza(){
+		return aterriza;
+	}
+         /**
+	* Metodo cambia el estatus de aterriza
+	*
+	* @param b booleano
+	*/
+	public void setAterriza(boolean b) {
+	   aterriza = b;
+	}
+      
 	
 	/**
 	 * Metodo que hace que se llama cuando el personaje toca el suelo al caer de un brinco.
@@ -93,6 +108,7 @@ public class Fox extends Base {
 		velY = 0;
 		brinco = false;
 		brincoDoble = false;
+                aterriza = true;
 	}
         
 	/**
@@ -104,6 +120,15 @@ public class Fox extends Base {
 			velY-=2;
 		}
 	}
+        /**
+	 * Metodo actualiza la velocidad en y si el objeto esta callendo 
+	 */ 
+        public void cae(){
+            if(!aterriza){
+                setY(getY() - acceleracion*velY);
+                velY-=2;
+            }   
+        }
 	
     /**
 	 * Metodo que regresa el numero de brincos del personaje

@@ -275,12 +275,32 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
             
             for (Floor flo : floor) {
-                if ( flo.intersecta(fox) && fox.getBrinca()) {
-
+                if (( flo.intersecta(fox) && fox.getBrinca()&& fox.getX()+fox.getAncho()-12>flo.getX()) || flo.intersecta(fox) &&!fox.getAterriza() ){
+//&& fox.getX()+fox.getAncho()-12>flo.getX())
                     fox.setX(fox.getX());
                     fox.landed();
                     fox.setY(flo.getY()-fox.getAlto());
 
+                }
+                if( flo.intersecta(fox) && fox.getMoveRight()){
+                    fox.setX(flo.getX()- fox.getAncho());
+                 
+                }
+                if(flo.intersecta(fox) && fox.getMoveLeft() && !(fox.getX()+5>flo.getX()+flo.getAncho())){
+                    fox.setX(flo.getX()+ flo.getAncho());
+                 
+                }
+                if(flo.getX()+flo.getAncho()<fox.getX()&&flo.getX()+flo.getAncho()+fox.getAncho()>fox.getX()&&!flo.intersecta(fox)&& !fox.getBrinca()){
+                    
+                    fox.setAterriza(false);
+                    fox.cae();
+        
+                }
+                if(flo.getX()-10>fox.getX()+fox.getAncho()&&!flo.intersecta(fox)&& !fox.getBrinca()){
+                    //
+                    fox.setAterriza(false);
+                    fox.cae();
+        
                 }
             }
 

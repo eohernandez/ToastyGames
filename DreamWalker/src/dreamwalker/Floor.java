@@ -43,12 +43,18 @@ public class Floor  {
     private int randPosFlower;
     private int randPosWeed;
     
+    private int ancho;
+    private int alto; 
+    
     public Floor(int xPos, int yPos) {
         floors = new Image [3];
         trees = new Image [3];
         bushes = new Image [3];
         flowers = new Image [3];
         weeds = new Image [5];
+        
+        ancho = 1152;
+        alto  = 306;
         
         floorIndex = (int) (Math.random()*3);
         treeIndex = (int) (Math.random()*3);
@@ -121,7 +127,25 @@ public class Floor  {
         posX -= 3;
 
     }
+    /**
+	 * Metodo de acceso que regresa el alto de la base
+	 * @return alto
+	 */
+    public int getAlto(){
+        
+        return alto;
+        
+    }
+    /**
+	 * Metodo de acceso que regresa el ancho de la base
+	 * @return alto
+	 */
     
+    public int getAncho(){
+        
+        return ancho;
+        
+    }
     
         /**
      * Dibuja el suelo
@@ -174,7 +198,7 @@ public class Floor  {
     }
 
     /**
-     * Método que me regresa un boleano para saber si el avion ya paso este tubo
+     * Método que me regresa un boleano para saber si el objecto ya paso el piso
      *
      * @return paso boolean
      */
