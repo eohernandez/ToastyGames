@@ -77,7 +77,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     
 
-   private LinkedList<Floor> floor;
+	private LinkedList<Floor> floor;
 
     private Menu menu;
     private Instructions instructions;
@@ -90,7 +90,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image imagenPiso;
 	private Sky sky;
     
-     public static enum STATUS {
+    public static enum STATUS {
         MENU,
         INSTRUCTIONS,
         TROPHIES,
