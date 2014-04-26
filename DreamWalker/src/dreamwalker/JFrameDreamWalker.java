@@ -64,6 +64,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 //	HighScores
 	private HighScore hScore;
 	AffineTransform identity = new AffineTransform();
+        
+//	SoundClips   
+        private SoundClip backMusic;
 
 //	animaciones
     private Fox fox;
@@ -76,13 +79,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion FoxRunning;
 
     
-
-	private LinkedList<Floor> floor;
+    private LinkedList<Floor> floor;
 
     private Menu menu;
     private Instructions instructions;
     private gameOver gameOver;
     private Image menuBG;
+    private Image menuFox;
     private Trophies trophies;
 
     private Image pausaImg;
@@ -125,7 +128,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Base.setW(getWidth());
         Base.setH(getHeight());
 
-        
+        backMusic = new SoundClip("Images/Background/GameOver.wav");
+        backMusic.play();
 
         hScore = new HighScore();
         score = hScore.getActualHighscore();
@@ -135,10 +139,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
+        menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
         pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
         Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
 
-        menu = new Menu(menuBG);
+        menu = new Menu(menuBG, menuFox);
 
         instructions = new Instructions(menuBG);
         gameOver = new gameOver(menuBG);
