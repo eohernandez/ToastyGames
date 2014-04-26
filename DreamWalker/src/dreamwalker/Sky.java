@@ -10,7 +10,7 @@ package dreamwalker;
  * @author manolo
  */
 public class Sky extends Base {
-	private double pY;
+	private double skyY, puebloX;
 	
 	/**
 	 * Metodo constructor default.
@@ -26,17 +26,24 @@ public class Sky extends Base {
 	 */
 	public Sky(int posY, Animacion a) {
 		super(0, 0, a);
-		pY = posY;
+		skyY = posY;
+		puebloX = 1152;
 	}
 	
 	/**
 	 * Metodo usado para avanzar la hora del dia.
 	 */
 	public void move() {
-		if (Math.floor(pY) == 0) {
-			pY = -6480+720;
+		if (Math.floor(skyY) == 0) {
+			skyY = -6480+720;
 		} else {
-			pY += 0.32;
+			skyY += 0.32;
+		}
+		
+		if (Math.floor(puebloX) == -1500) {
+			puebloX = 0;
+		} else {
+			puebloX -= 0.2;
 		}
 	}
 	
@@ -46,6 +53,14 @@ public class Sky extends Base {
 	 */
 	@Override
 	public int getY() {
-		return (int) Math.floor(pY);
+		return (int) Math.floor(skyY);
+	}
+	
+	/**
+	 * Metodo de acceso que regresa la posicion en x del pueblo
+	 * @return posY es la <code>posicion en x</code> del pueblo.
+	 */
+	public int getPuebloX() {
+		return (int) Math.floor(puebloX);
 	}
 }
