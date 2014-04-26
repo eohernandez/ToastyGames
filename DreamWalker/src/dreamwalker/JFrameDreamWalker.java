@@ -304,14 +304,14 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      */
     public void actualiza() throws IOException {
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-		if (!pausa) {
+		if (status == STATUS.GAME) {
 			sky.move();
 		}
 		tiempoActual+= tiempoTranscurrido;
 		fox.actualiza(tiempoTranscurrido);
 		fox.setX(fox.getX()-3);
-                fox.cae(); 
-                fox.setY(fox.getY());
+		fox.cae(); 
+		fox.setY(fox.getY());
                
                   
 		
