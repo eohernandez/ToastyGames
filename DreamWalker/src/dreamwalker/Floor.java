@@ -259,4 +259,8 @@ public class Floor {
 	public boolean intersecta(Base obj) {
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
+	
+	public Rectangle cuadroDerecha () {
+	  return new Rectangle (getX()+7*getAncho()/8, getY(), 1*getAncho()/8, getAlto());
+	}
 }

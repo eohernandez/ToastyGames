@@ -44,6 +44,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private int score;
 
 	private int randPosY;
+        private int randPosX;
+        private int randPosYc;
+        private int randPosXc;
 
 //	strings
 	private String[] arr;
@@ -71,14 +74,22 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 //	animaciones
     private Fox fox;
     
+    //  crea espada
+    private BadGuys espada;
+    private Animacion espadaNormal;
     // animaciones
     
     private Animacion FoxStanding;
     private Animacion FoxJump1;
     private Animacion FoxJump2;
     private Animacion FoxRunning;
-
     
+    private Animacion canonNormal;
+    private Animacion canonOpen;
+    private Animacion canonFire;
+    
+    private LinkedList<BadGuys> canons;    
+
     private LinkedList<Floor> floor;
     private Image pueblo;
 
@@ -154,14 +165,52 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxRunning  = new Animacion();
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
-
-		Animacion animSky = new Animacion();
-		
-		animSky.sumaCuadro(skyI, 100);
-		
-		floor = new LinkedList();
-        floor.add(new Floor(0, 414  + (int) (Math.random()*280)));
+        canonNormal = new Animacion();
+        canonOpen = new Animacion();
+        canonFire = new Animacion();
+        espadaNormal = new Animacion();
         
+        
+        Animacion animSky = new Animacion();
+        animSky.sumaCuadro(skyI, 100);
+
+
+        floor = new LinkedList();
+        canons = new LinkedList();
+        
+        for (int x =1; x<= 6; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png"));
+            canonNormal.sumaCuadro(imagenAnimaciones, 100);
+        }
+        
+        for (int x =1; x<= 5; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png"));
+            canonOpen.sumaCuadro(imagenAnimaciones, 100);
+        }
+        
+        for (int x =1; x<= 2; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png"));
+            canonFire.sumaCuadro(imagenAnimaciones, 200);
+        }
+        
+        randPosY = 414  + (int) (Math.random()*280);
+        canons.add(new BadGuys(1156-200, randPosY - 111, canonNormal));
+        
+        
+        
+        floor.add(new Floor(0, randPosY ));
+        
+        //Animacion de espada
+        for (int x =1; x<= 4; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Espada/Espada" + x + ".png"));
+            espadaNormal.sumaCuadro(imagenAnimaciones, 100);
+        }
+        randPosYc = 0  + (int) (Math.random()*6); //randon*rango + minimo
+        randPosXc = getWidth() + (int) (Math.random()*200); //randon*rango + minimo
+        espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
+        espada.setVelX(4);
+        
+        //
         for (int x = 1; x <= 8; x++) { 
             imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
@@ -180,7 +229,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
 		fox.setStand(FoxStanding);
 		fox.setAnim(FoxRunning);
-		fox.setVelX(0);
+		fox.setVelX(3);
 		fox.setVelY(0);
 		sky = new Sky(0-6480+720, animSky);
     }
@@ -307,52 +356,146 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		if (status == STATUS.GAME) {
 			sky.move();
 		}
-		tiempoActual+= tiempoTranscurrido;
-		fox.actualiza(tiempoTranscurrido);
-		fox.setX(fox.getX()-3);
-		fox.cae(); 
-		fox.setY(fox.getY());
-		
-		if (fox.getMoveLeft()) {
-			fox.setX(fox.getX() - 6);
-		}
-		if (fox.getMoveRight()) {
-			fox.setX(fox.getX() + 6);
-		}
-		if (fox.getBrinca()) {
-			fox.brinca();
-		}
-		if (fox.getBrincaDoble()) {
-			fox.setAnim(FoxJump2);
-		}
-		if (fox.getX() <= 0) {
-			fox.setX(0);
-		}
-		if (fox.getX()+fox.getAncho()>= getWidth()) {
-			fox.setX(getWidth()-fox.getAncho());
-		}
-		if (!fox.getBrincaDoble()) {
-			fox.setAnim(FoxRunning);
-		}
-		
-//		checa si el piso ya se termino
-		for (Floor flo : floor) {
-			if (flo.getX()  <= 0 && !flo.getPassed()) {
-				floor.add(new Floor(1152, 414  + (int) (Math.random()*306)));
-				flo.setPassed(true);
-				break;
-			}
-		}
-		
-//		actualiza el piso
-		for (Floor flo : floor) {
-			flo.actualizaPos();
-			if (flo.getX() <= -1156) {
-				floor.remove(flo);
-				break;
-			}
-		}
-	}
+               tiempoActual+= tiempoTranscurrido;
+               fox.actualiza(tiempoTranscurrido);
+               fox.setX(fox.getX()-fox.getVelX());
+               fox.cae(); 
+               fox.setY(fox.getY());
+               
+               for (BadGuys bad : canons) {
+                   bad.actualiza(tiempoTranscurrido);
+               }
+               //Actualiza posiciones de la espada
+               espada.actualiza(tiempoTranscurrido);
+               espada.setX(espada.getX() - espada.getVelX());
+               
+               if(espada.getX() + espada.getAncho() < 0){
+                   
+                    randPosYc = 0  + (int) (Math.random()*50); //randon*rango + minimo
+                    randPosXc = getWidth() + (int) (Math.random()*400); //randon*rango + minimo
+                    espada.setX(randPosXc);
+                    espada.setY(randPosYc);
+                    espada.setCount(0);
+                    espada.setSigue(false);
+                    
+                        
+               }
+               if(espada.getCount()==1&&espada.getSigue()){
+                   espada.setX(espada.getX()+espada.getVelX()+8);
+                   if(espada.getX()+espada.getAncho()>=getWidth()){
+                       espada.setCount(espada.getCount()+1);
+                   }
+               }
+               if(espada.getSigue()&&espada.getCount()>1){
+                   espada.setX(espada.getX()-fox.getVelY()-1) ;
+               }
+               if(espada.getX()>fox.getX()&&fox.getX()+fox.getAncho()+20>espada.getX()&&espada.getCount()==0){
+                   espada.setSigue(true);
+                   espada.setCount(espada.getCount()+1);
+                   //System.out.println("Verdad");
+               }
+                                            
+               // checo si algun malo choco con algun piso por la derecha
+               // para que se quede parado si es eel caso
+               for (BadGuys bad : canons) {
+                   
+                   for (Floor flo : floor) {
+                       
+                       if (bad.checaIntersecionDerecha(flo)) {
+                           bad.setX(bad.getX());
+                           
+               
+                       }
+                       else 
+                       {
+                            bad.setX( bad.getX() - 5);
+             
+                       }
+                       break;
+                   }
+               }
+              
+               
+               // cambia animacion cuando el zorro esta cerca
+               for (BadGuys bad : canons ) {
+                   if ( fox.getX() + fox.getAncho() + 200 >= bad.getX()&& bad.getCambiaAnim()) {
+                      
+                       bad.setAnimacion(canonOpen);
+                       bad.setY(bad.getY()-30);
+                       bad.setCambiaAnim(false);        
+                   }
+               }
+               
+               // cambia animacion a disparo
+               for (BadGuys bad: canons) {
+                   
+                   if ( bad.getX() <= 200 ) {
+                       bad.setAnimacion(canonFire);
+                       
+                   }
+               }
+               
+               if (fox.getMoveLeft()) {
+                fox.setX(fox.getX() - 6);
+                }
+               
+                if (fox.getMoveRight()) {
+                    fox.setX(fox.getX() + 9);
+                }
+                
+                if (fox.getBrinca()) {
+                     fox.brinca();
+                }
+                if(fox.getBrincaDoble()){
+                    fox.setAnim(FoxJump2);
+                }
+                if (fox.getX() <= 0) {
+                    fox.setX(0);
+                }
+                if (fox.getX()+fox.getAncho()>= getWidth()) {
+                    fox.setX(getWidth()-fox.getAncho());
+                }
+                if(!fox.getBrincaDoble()){
+                    fox.setAnim(FoxRunning);
+                    
+                }
+                
+                // checa si el piso ya se termino
+                for (Floor flo : floor) {
+                   
+                    if (flo.getX()  <= 0 && !flo.getPassed()) {
+                        randPosY = 414  + (int) (Math.random()*306);
+                        floor.add(new Floor(1152, randPosY ));
+                        flo.setPassed(true);
+                        
+                         break;
+                    }
+                    
+                
+                }
+                
+                // ya se salio el cañon
+                for (BadGuys bad : canons) {
+                    if (bad.getX() + bad.getAncho() <= 0) {
+                        
+                        canons.remove(bad); 
+                        canons.add( new BadGuys (1156, randPosY -111, canonNormal));
+                        
+                        break;
+                    }
+                }
+                
+                // actualiza el piso
+                for (Floor flo : floor) {
+                    flo.actualizaPos();
+                    if (flo.getX() <= -1156) {
+ 
+                        floor.remove(flo);
+                        break;
+                    }
+                }
+              
+    }
 
     /**
      * Metodo <I>update</I> sobrescrito de la clase <code>Applet</code>,
@@ -411,7 +554,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-		g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
+        g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
@@ -425,6 +568,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				for (Floor flo : floor) {
 					flo.render(g, this);
 				}
+				g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+						
+				for (BadGuys bad : canons) {
+					g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+				}
 				if (fox.getMoveRight() || fox.getMoveLeft()) {
 					g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
 				} else {
@@ -434,18 +582,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 						g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
 					}
 				}
-			} else {         
+			} else {
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
-        } else if (status == STATUS.MENU) {
-            menu.render(g, this);
-        } else if (status == STATUS.INSTRUCTIONS) {
-            instructions.render(g, this);
-        } else if (status == STATUS.GAMEOVER) {
-            gameOver.render(g, this);
-        } else if (status == STATUS.TROPHIES) {
-            trophies.render(g, this);
-        }
+		} else if (status == STATUS.MENU) {
+			menu.render(g, this);
+		} else if (status == STATUS.INSTRUCTIONS) {
+			instructions.render(g, this);
+		} else if (status == STATUS.GAMEOVER) {
+			gameOver.render(g, this);
+		} else if (status == STATUS.TROPHIES) {
+			trophies.render(g, this);
+		}
 	}
 
     @Override
