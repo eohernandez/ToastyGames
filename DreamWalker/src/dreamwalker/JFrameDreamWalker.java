@@ -419,6 +419,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			if (sky.getPuebloX() < 0) {
 				g.drawImage(pueblo, sky.getPuebloX()+1500, 0, this);
 			}
+			sky.render(g, this);
 			if (!pausa) {
 //				si no esta pausado el juego, pinta todo
 				for (Floor flo : floor) {
