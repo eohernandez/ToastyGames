@@ -20,7 +20,7 @@ public class Fox extends Base {
 	private static boolean brinco = false, brincoDoble = false;
 	public static int acceleracion = 1;
 	
-	/**
+	/** 
 	 * Metodo constructor default.
 	 */
 	public Fox() {
@@ -98,7 +98,16 @@ public class Fox extends Base {
 	public void setAterriza(boolean b) {
 	   aterriza = b;
 	}
-        
+          /**
+         * within. regresa si la imagen se encuentra dentro del rango
+         * 
+         * @param x posicion en x
+         * @param xf posicion en x final
+         * @param posX posicion en x
+         * @param ancho ancho de la imagen posX
+         * 
+         * @return si es que se encuentra dentro del rango
+         */
         public boolean within(int x, int xf,int posX, int anchoFox){
             
             if(posX>x&&posX+anchoFox<xf)

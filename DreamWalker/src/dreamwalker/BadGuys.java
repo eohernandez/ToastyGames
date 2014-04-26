@@ -5,20 +5,24 @@
 
 package dreamwalker;
 
+import static dreamwalker.JFrameDreamWalker.toBufferedImage;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 /**
  *
  * @author manolo
  */
 public class BadGuys extends Base {
-	private int jumps, velX, velY;
+	private int jumps, velX, velY, count;
 	private Animacion stand, anim;
 	private boolean moveRight;
 	private boolean moveLeft;
         private boolean cambiaAnim;
 	private static boolean brinco = false, brincoDoble = false;
 	public static int acceleracion = 1;
+        private boolean sigue;
 	
 	/**
 	 * Metodo constructor default.
@@ -31,6 +35,8 @@ public class BadGuys extends Base {
 		jumps = 0;
 		velX = 0;
 		velY = 0;
+                count =0;
+                sigue = false;
 	}
 	
 	/**
@@ -46,7 +52,9 @@ public class BadGuys extends Base {
 		jumps = 0;
 		velX = 0;
 		velY = 0;
+                count = 0;
                 cambiaAnim = true;
+                sigue = false;
 	}
         
 	
@@ -99,8 +107,35 @@ public class BadGuys extends Base {
 	public void setCambiaAnim(boolean b) {
 	   cambiaAnim = b;
 	}
-      
-	
+        
+            /**
+         * Método que cambia si esta sigueiengo
+         *
+         * @param b booleano
+         */
+        public void setSigue(boolean b) {
+            sigue = b;
+        }
+        /**
+	 * Metodo que regresa si esta siguendo
+	 */
+	public boolean getSigue(){
+		return sigue;
+	}
+            /**
+         * Método que cambia la cuenta
+         *
+         * @param b int
+         */
+        public void setCount(int b) {
+            count = b;
+        }
+        /**
+	 * Metodo que regresa la cuenta
+	 */
+	public int getCount(){
+		return count;
+	}
 	/**
 	 * Metodo que hace que se llama cuando el personaje toca el suelo al caer de un brinco.
 	 */
@@ -261,4 +296,71 @@ public class BadGuys extends Base {
 		animacion.actualiza(t);
 		
 	}
+            /**
+         * Creates an empty image with transparency
+         * 
+         * @param width The width of required image
+         * @param height The height of required image
+         * @return The created image
+         */
+        public static Image getEmptyImage(int width, int height){
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            return toImage(img);
+        }
+            /**
+        * Converts a given BufferedImage into an Image
+        * 
+        * @param bimage The BufferedImage to be converted
+        * @return The converted Image
+        */
+       public static Image toImage(BufferedImage bimage){
+           // Casting is enough to convert from BufferedImage to Image
+           Image img = (Image) bimage;
+           return img;
+       }
+                /**
+         * Rotates an image. Actually rotates a new copy of the image.
+         * 
+         * @param img The image to be rotated
+         * @param angle The angle in degrees
+         * @return The rotated image
+         */
+        public static Image rotate(Image img, double angle)
+        {
+            double sin = Math.abs(Math.sin(Math.toRadians(angle))),
+                   cos = Math.abs(Math.cos(Math.toRadians(angle)));
+
+            int w = img.getWidth(null), h = img.getHeight(null);
+
+            int neww = (int) Math.floor(w*cos + h*sin),
+                newh = (int) Math.floor(h*cos + w*sin);
+
+            BufferedImage bimg = toBufferedImage(getEmptyImage(neww, newh));
+            Graphics2D g = bimg.createGraphics();
+
+            g.translate((neww-w)/2, (newh-h)/2);
+            g.rotate(Math.toRadians(angle), w/2, h/2);
+            g.drawRenderedImage(toBufferedImage(img), null);
+            g.dispose();
+
+            return toImage(bimg);
+        }
+           /**
+         * within. regresa si la imagen se encuentra dentro del rango
+         * 
+         * @param x posicion en x
+         * @param xf posicion en x final
+         * @param posX posicion en x
+         * @param ancho ancho de la imagen posX
+         * 
+         * @return si es que se encuentra dentro del rango
+         */
+        public boolean within(int x, int xf,int posX, int ancho){
+            
+            if(posX>x&&posX+ancho<xf)
+                return true;
+            else 
+                return false;
+            
+        }
 }

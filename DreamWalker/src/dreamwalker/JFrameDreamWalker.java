@@ -44,6 +44,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private int score;
 
 	private int randPosY;
+        private int randPosX;
+        private int randPosYc;
+        private int randPosXc;
 
 //	strings
 	private String[] arr;
@@ -71,6 +74,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 //	animaciones
     private Fox fox;
     
+    //  crea espada
+    private BadGuys espada;
+    private Animacion espadaNormal;
     // animaciones
     
     private Animacion FoxStanding;
@@ -161,6 +167,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         canonNormal = new Animacion();
         canonOpen = new Animacion();
         canonFire = new Animacion();
+        espadaNormal = new Animacion();
         
         
         Animacion animSky = new Animacion();
@@ -192,8 +199,17 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         floor.add(new Floor(0, randPosY ));
         
-    
+        //Animacion de espada
+        for (int x =1; x<= 4; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Espada/Espada" + x + ".png"));
+            espadaNormal.sumaCuadro(imagenAnimaciones, 100);
+        }
+        randPosYc = 0  + (int) (Math.random()*6); //randon*rango + minimo
+        randPosXc = getWidth() + (int) (Math.random()*200); //randon*rango + minimo
+        espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
+        espada.setVelX(4);
         
+        //
         for (int x = 1; x <= 8; x++) { 
             imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
@@ -212,7 +228,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
 		fox.setStand(FoxStanding);
 		fox.setAnim(FoxRunning);
-		fox.setVelX(0);
+		fox.setVelX(3);
 		fox.setVelY(0);
 		sky = new Sky(0-6480+720, animSky);
     }
@@ -344,16 +360,43 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		}
                tiempoActual+= tiempoTranscurrido;
                fox.actualiza(tiempoTranscurrido);
-               fox.setX(fox.getX()-3);
+               fox.setX(fox.getX()-fox.getVelX());
                fox.cae(); 
                fox.setY(fox.getY());
                
                for (BadGuys bad : canons) {
                    bad.actualiza(tiempoTranscurrido);
                }
+               //Actualiza posiciones de la espada
+               espada.actualiza(tiempoTranscurrido);
+               espada.setX(espada.getX() - espada.getVelX());
                
-               
-              
+               if(espada.getX() + espada.getAncho() < 0){
+                   
+                    randPosYc = 0  + (int) (Math.random()*50); //randon*rango + minimo
+                    randPosXc = getWidth() + (int) (Math.random()*400); //randon*rango + minimo
+                    espada.setX(randPosXc);
+                    espada.setY(randPosYc);
+                    espada.setCount(0);
+                    espada.setSigue(false);
+                    
+                        
+               }
+               if(espada.getCount()==1&&espada.getSigue()){
+                   espada.setX(espada.getX()+espada.getVelX()+8);
+                   if(espada.getX()+espada.getAncho()>=getWidth()){
+                       espada.setCount(espada.getCount()+1);
+                   }
+               }
+               if(espada.getSigue()&&espada.getCount()>1){
+                   espada.setX(espada.getX()-fox.getVelY()-1) ;
+               }
+               if(espada.getX()>fox.getX()&&fox.getX()+fox.getAncho()+20>espada.getX()&&espada.getCount()==0){
+                   espada.setSigue(true);
+                   espada.setCount(espada.getCount()+1);
+                   //System.out.println("Verdad");
+               }
+                                            
                // checo si algun malo choco con algun piso por la derecha
                // para que se quede parado si es eel caso
                for (BadGuys bad : canons) {
@@ -399,7 +442,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 }
                
                 if (fox.getMoveRight()) {
-                    fox.setX(fox.getX() + 6);
+                    fox.setX(fox.getX() + 9);
                 }
                 
                 if (fox.getBrinca()) {
@@ -519,7 +562,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         if (status == STATUS.GAME ) {
 
 			if (!pausa) { 
-                                // si no esta pausado el juego, pinta todo                    
+                                // si no esta pausado el juego, pinta todo  
+                                g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+                                
                                 for (Floor flo : floor) 
                                      flo.render(g, this);
                                 
