@@ -98,6 +98,15 @@ public class Fox extends Base {
 	public void setAterriza(boolean b) {
 	   aterriza = b;
 	}
+        
+        public boolean within(int x, int xf,int posX, int anchoFox){
+            
+            if(posX>x&&posX+anchoFox<xf)
+                return true;
+            else 
+                return false;
+            
+        }
       
 	
 	/**
@@ -124,10 +133,16 @@ public class Fox extends Base {
 	 * Metodo actualiza la velocidad en y si el objeto esta callendo 
 	 */ 
         public void cae(){
-            if(!aterriza){
+            if(!aterriza && !brinco){
                 setY(getY() - acceleracion*velY);
                 velY-=2;
             }   
+            if(aterriza&&!brinco){
+                
+                setY(getY());
+                velY=0;
+            }
+            
         }
 	
     /**

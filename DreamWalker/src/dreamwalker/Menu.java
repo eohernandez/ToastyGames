@@ -9,6 +9,7 @@ package dreamwalker;
 
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -29,17 +30,21 @@ public class Menu implements MouseListener {
     private final Botones TROPHIES;
     private final Botones QUIT;
     private final Image BACKGROUND;
+    private Image menuFox;
+
     
     /**
      * Metodo constructor
      * @param background imagen de fondo
+     * @param fox imagen de lobo
      */
-    public Menu(Image background) {
+    public Menu(Image background, Image fox) {
         this.BACKGROUND = background;
-        PLAY = new Botones(Base.getW()/2 - 50, Base.getH()/5, "Images/Botones/newGame.png");
-        INSTRUCTIONS = new Botones(Base.getW()/2 - 50, 2*Base.getH()/5, "Images/Botones/instructions.png");
-        TROPHIES = new Botones(Base.getW()/2 - 50, 3*Base.getH()/5, "Images/Botones/trophies.png");
-        QUIT = new Botones(Base.getW()/2 - 50, 4*Base.getH()/5, "Images/Botones/exit.png");
+        PLAY = new Botones(Base.getW() - 450, Base.getH()/5, "Images/Botones/newGame.png");
+        INSTRUCTIONS = new Botones(Base.getW() - 450, 2*Base.getH()/5, "Images/Botones/instructions.png");
+        TROPHIES = new Botones(Base.getW() - 450, 3*Base.getH()/5, "Images/Botones/trophies.png");
+        QUIT = new Botones(Base.getW() - 450, 4*Base.getH()/5, "Images/Botones/exit.png");
+        menuFox=fox;
     }
     /**
      * Dibuja la pantalla menu
@@ -53,7 +58,7 @@ public class Menu implements MouseListener {
         g.drawImage(INSTRUCTIONS.getImagenI(), INSTRUCTIONS.getPosX(), INSTRUCTIONS.getPosY(), juego);
         g.drawImage(TROPHIES.getImagenI(), TROPHIES.getPosX(), TROPHIES.getPosY(), juego);
         g.drawImage(QUIT.getImagenI(), QUIT.getPosX(), QUIT.getPosY(), juego);
-        
+        g.drawImage(menuFox, 20, 480, juego);
     }
 
     /**
