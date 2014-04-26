@@ -171,4 +171,10 @@ public class Base {
 	public boolean mouseOver(int x, int y) {
 		return getPerimetro().contains(x, y);
 	}   
+        
+       
+    
+         public boolean checaIntersecionDerecha (Floor obj) {
+             return getPerimetro().intersects(obj.cuadroDerecha());
+    }
 }
