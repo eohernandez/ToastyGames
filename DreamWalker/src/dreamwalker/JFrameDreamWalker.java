@@ -74,10 +74,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion FoxJump1;
     private Animacion FoxJump2;
     private Animacion FoxRunning;
-
     
-
-	private LinkedList<Floor> floor;
+    private Animacion canonNormal;
+    private Animacion canonOpen;
+    private Animacion canonFire;
+    
+    private LinkedList<BadGuys> canons;    
+    private LinkedList<Floor> floor;
 
     private Menu menu;
     private Instructions instructions;
@@ -88,7 +91,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image pausaImg;
     private Image imagenAnimaciones;
     private Image imagenPiso;
-	private Sky sky;
+    private Sky sky;
     
     public static enum STATUS {
         MENU,
@@ -148,15 +151,39 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxRunning  = new Animacion();
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
-
-		Animacion animSky = new Animacion();
-
+        canonNormal = new Animacion();
+        canonOpen = new Animacion();
+        canonFire = new Animacion();
         
-		animSky.sumaCuadro(skyI, 100);
+        
+        Animacion animSky = new Animacion();
+        animSky.sumaCuadro(skyI, 100);
 
 
         floor = new LinkedList();
-        floor.add(new Floor(0, 414  + (int) (Math.random()*280)));
+        canons = new LinkedList();
+        
+        for (int x =1; x<= 6; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png"));
+            canonNormal.sumaCuadro(imagenAnimaciones, 100);
+        }
+        
+        for (int x =1; x<= 5; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png"));
+            canonOpen.sumaCuadro(imagenAnimaciones, 100);
+        }
+        
+        for (int x =1; x<= 2; x++ ) {
+            imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png"));
+            canonFire.sumaCuadro(imagenAnimaciones, 200);
+        }
+        
+        randPosY = 414  + (int) (Math.random()*280);
+        canons.add(new BadGuys(1156-200, randPosY - 111, canonNormal));
+        
+        
+        
+        floor.add(new Floor(0, randPosY ));
         
     
         
@@ -314,14 +341,61 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void actualiza() throws IOException {
 
                long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-              sky.move();
+               sky.move();
                tiempoActual+= tiempoTranscurrido;
                fox.actualiza(tiempoTranscurrido);
+               
+               for (BadGuys bad : canons) {
+                   bad.actualiza(tiempoTranscurrido);
+               }
+               
+               
+              
+               // checo si algun malo choco con algun piso por la derecha
+               // para que se quede parado si es eel caso
+               for (BadGuys bad : canons) {
+                   
+                   for (Floor flo : floor) {
+                       
+                       if (bad.checaIntersecionDerecha(flo)) {
+                           bad.setX(bad.getX());
+                           
+               
+                       }
+                       else 
+                       {
+                            bad.setX( bad.getX() - 5);
+             
+                       }
+                       break;
+                   }
+               }
+              
+               
+               // cambia animacion cuando el zorro esta cerca
+               for (BadGuys bad : canons ) {
+                   if ( fox.getX() + fox.getAncho() + 200 >= bad.getX()&& bad.getCambiaAnim()) {
+                      
+                       bad.setAnimacion(canonOpen);
+                       bad.setY(bad.getY()-30);
+                       bad.setCambiaAnim(false);        
+                   }
+               }
+               
+               // cambia animacion a disparo
+               for (BadGuys bad: canons) {
+                   
+                   if ( bad.getX() <= 200 ) {
+                       bad.setAnimacion(canonFire);
+                       
+                   }
+               }
                fox.setX(fox.getX()-3);
                
                if (fox.getMoveLeft()) {
                 fox.setX(fox.getX() - 6);
                 }
+               
                 if (fox.getMoveRight()) {
                     fox.setX(fox.getX() + 6);
                 }
@@ -347,14 +421,25 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 for (Floor flo : floor) {
                    
                     if (flo.getX()  <= 0 && !flo.getPassed()) {
-                        
-                        floor.add(new Floor(1152, 414  + (int) (Math.random()*306)));
+                        randPosY = 414  + (int) (Math.random()*306);
+                        floor.add(new Floor(1152, randPosY ));
                         flo.setPassed(true);
                         
                          break;
                     }
                     
                 
+                }
+                
+                // ya se salio el cañon
+                for (BadGuys bad : canons) {
+                    if (bad.getX() + bad.getAncho() <= 0) {
+                        
+                        canons.remove(bad); 
+                        canons.add( new BadGuys (1156, randPosY -111, canonNormal));
+                        
+                        break;
+                    }
                 }
                 
                 // actualiza el piso
@@ -426,7 +511,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-		g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
+        g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
@@ -435,6 +520,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                 // si no esta pausado el juego, pinta todo                    
                                 for (Floor flo : floor) 
                                      flo.render(g, this);
+                                
+                                for (BadGuys bad : canons) {
+                                    g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+                                }
                                   
                                 if (fox.getMoveRight() || fox.getMoveLeft()) {
                                     
