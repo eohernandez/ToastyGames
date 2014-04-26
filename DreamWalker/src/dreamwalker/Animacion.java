@@ -79,6 +79,16 @@ public class Animacion {
 			return getCuadro(indiceCuadroActual).imagen;
 		}      
 	}
+        public int getCuadroActual(){
+            return indiceCuadroActual;
+        }
+        
+        /**
+	*	Regresa la imagen de i
+	*/
+	public synchronized Image getImagen(int i) {
+            return getCuadro(i).imagen;
+        }
 	
 	private cuadroDeAnimacion getCuadro(int i) {
 		return (cuadroDeAnimacion)cuadros.get(i);

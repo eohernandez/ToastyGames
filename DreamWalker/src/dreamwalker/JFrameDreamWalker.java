@@ -47,6 +47,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         private int randPosX;
         private int randPosYc;
         private int randPosXc;
+        private int dx;
+        private int dy;
 
 //	strings
 	private String[] arr;
@@ -83,6 +85,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion FoxJump1;
     private Animacion FoxJump2;
     private Animacion FoxRunning;
+    private Animacion foxDeath;
     
     private Animacion canonNormal;
     private Animacion canonOpen;
@@ -164,6 +167,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxRunning  = new Animacion();
         FoxJump1  = new Animacion();
         FoxJump2  = new Animacion();
+        foxDeath = new Animacion();
         canonNormal = new Animacion();
         canonOpen = new Animacion();
         canonFire = new Animacion();
@@ -215,14 +219,34 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
         
-		for (int x = 1; x<=17; x++) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png"));
-			FoxStanding.sumaCuadro(imagenAnimaciones, 100);
-		}
+        for (int x = 1; x<=17; x++) {
+                imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png"));
+                FoxStanding.sumaCuadro(imagenAnimaciones, 100);
+        }
 		
         for (int x = 1; x <= 3; x++) {
 			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
-			FoxJump2.sumaCuadro(imagenAnimaciones, 10);
+			FoxJump2.sumaCuadro(imagenAnimaciones, 25);
+        }
+        
+        for (int x = 1; x <= 50; x++) {
+			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxDeath" + x + ".gif"));
+                        foxDeath.sumaCuadro(imagenAnimaciones, 50);
+                        /*
+                        if(x>=1&&x<=7)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 130);
+                        if(x==8||x==11||x==12)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 80);
+                        if(x>=9&&x<=10)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 40);
+                        if(x>=13&&x<=14)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 40);
+                        if(x>=15&&x<=19)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 80);
+                        if(x>=20&&x<=22)
+                            foxDeath.sumaCuadro(imagenAnimaciones, 130);
+                        */
+                        
         }
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
@@ -344,6 +368,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 }
            
             }
+            if(espada.intersecta(fox)){
+                fox.setDeath(true);
+                dx= fox.getX();
+                dy= fox.getY();
+            }
 
 	}
 
@@ -359,10 +388,27 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			sky.move();
 		}
                tiempoActual+= tiempoTranscurrido;
-               fox.actualiza(tiempoTranscurrido);
-               fox.setX(fox.getX()-fox.getVelX());
-               fox.cae(); 
-               fox.setY(fox.getY());
+               
+               if(fox.getDeath()){
+                   
+                   foxDeath.actualiza(tiempoTranscurrido);
+                   fox.actualiza(tiempoTranscurrido);
+                   if(foxDeath.getCuadroActual()==33){
+                     fox.setX(-300);
+                   }
+                   if(foxDeath.getCuadroActual()>=49){
+                       fox.setDeath(false);
+                       
+                   }
+                   
+               }
+               else{
+                    fox.actualiza(tiempoTranscurrido);
+                    fox.setX(fox.getX()-fox.getVelX());
+                    fox.cae(); 
+                    fox.setY(fox.getY());
+               }
+               
                
                for (BadGuys bad : canons) {
                    bad.actualiza(tiempoTranscurrido);
@@ -436,31 +482,33 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                        
                    }
                }
+               if(!fox.getDeath()){
+                    if (fox.getMoveLeft()) {
+                    fox.setX(fox.getX() - 6);
+                    }
+
+                    if (fox.getMoveRight()) {
+                        fox.setX(fox.getX() + 9);
+                    }
+
+                    if (fox.getBrinca()) {
+                         fox.brinca();
+                    }
+                    if(fox.getBrincaDoble()){
+                        fox.setAnim(FoxJump2);
+                    }
+                    if (fox.getX() <= 0) {
+                        fox.setX(0);
+                    }
+                    if (fox.getX()+fox.getAncho()>= getWidth()) {
+                        fox.setX(getWidth()-fox.getAncho());
+                    }
+                    if(!fox.getBrincaDoble()){
+                        fox.setAnim(FoxRunning);
+
+                    }
+               }
                
-               if (fox.getMoveLeft()) {
-                fox.setX(fox.getX() - 6);
-                }
-               
-                if (fox.getMoveRight()) {
-                    fox.setX(fox.getX() + 9);
-                }
-                
-                if (fox.getBrinca()) {
-                     fox.brinca();
-                }
-                if(fox.getBrincaDoble()){
-                    fox.setAnim(FoxJump2);
-                }
-                if (fox.getX() <= 0) {
-                    fox.setX(0);
-                }
-                if (fox.getX()+fox.getAncho()>= getWidth()) {
-                    fox.setX(getWidth()-fox.getAncho());
-                }
-                if(!fox.getBrincaDoble()){
-                    fox.setAnim(FoxRunning);
-                    
-                }
                 
                 // checa si el piso ya se termino
                 for (Floor flo : floor) {
@@ -570,6 +618,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                 
                                 for (BadGuys bad : canons) {
                                     g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+                                }
+                                if(fox.getDeath()){
+                                    g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
                                 }
                                   
                                 if (fox.getMoveRight() || fox.getMoveLeft()) {
