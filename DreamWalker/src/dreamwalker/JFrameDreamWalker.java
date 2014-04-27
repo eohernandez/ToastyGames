@@ -97,6 +97,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image imagenAnimaciones;
     private Image imagenPiso;
     private Sky sky;
+    private boolean created;
     
     public static enum STATUS {
         MENU,
@@ -141,7 +142,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         playing = true;
         pausa = false;
-        
+        created = false;
         
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
@@ -185,12 +186,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             canonFire.sumaCuadro(imagenAnimaciones, 200);
         }
         
-        randPosY = 414  + (int) (Math.random()*280);
-        canons.add(new BadGuys(1156-200, randPosY - 111, canonNormal));
-        
-        
+        randPosY = 414  + (int) (Math.random()*306);
         
         floor.add(new Floor(0, randPosY ));
+      
+         canons.add(new BadGuys(1150, randPosY - 200, canonNormal));
+        
+        
         
     
         
@@ -308,6 +310,23 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void checaColision() {
 
             fox.setAterriza(false);
+            
+            
+            for (Floor flo : floor) {
+                
+                for (BadGuys bad : canons) {
+                    
+                    if ( bad.getX()+bad.getAncho() >= flo.getX() && bad.getX()+bad.getAncho() <= flo.getX()+flo.getAncho()) {
+                        if (bad.getY()+bad.getAlto() < flo.getY()) {
+                            
+                            bad.cae();
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+            
             for (Floor flo : floor) {
  
                 if(flo.intersecta(fox)&&fox.getMoveLeft()&& fox.getX()>=flo.getX()+flo.getAncho()-10 ){
@@ -352,6 +371,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                    bad.actualiza(tiempoTranscurrido);
                }
                
+               if (Floor.cantMalos == 0) {
+                   canons.remove();
+                   canons.add( new BadGuys (1156, randPosY -111, canonNormal));
+                        
+               }
+               
                
               
                // checo si algun malo choco con algun piso por la derecha
@@ -361,12 +386,19 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                    for (Floor flo : floor) {
                        
                        if (bad.checaIntersecionDerecha(flo)) {
-                           bad.setX(bad.getX());
-                           
+                          if (Floor.cantMalos != 0 && bad.getX() <= flo.getX()+flo.getAncho()) {
+                             
+                              bad.setX(bad.getX());
+                          }
+                          else {
+                             bad.setX(bad.getX()-5);
+                          }
+                          
                
                        }
                        else 
                        {
+                           
                             bad.setX( bad.getX() - 5);
              
                        }
@@ -424,8 +456,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                    
                     if (flo.getX()  <= 0 && !flo.getPassed()) {
                         randPosY = 414  + (int) (Math.random()*306);
+          
                         floor.add(new Floor(1152, randPosY ));
                         flo.setPassed(true);
+                        Floor.cantMalos--;
                         
                          break;
                     }
@@ -516,15 +550,20 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
+       
         if (status == STATUS.GAME ) {
-
+                       
 			if (!pausa) { 
                                 // si no esta pausado el juego, pinta todo                    
-                                for (Floor flo : floor) 
+                                for (Floor flo : floor)  {
+                                    
                                      flo.render(g, this);
+                                }
                                 
                                 for (BadGuys bad : canons) {
-                                    g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+                                    
+                                    if (Floor.cantMalos < 0)
+                                        g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
                                 }
                                   
                                 if (fox.getMoveRight() || fox.getMoveLeft()) {
