@@ -23,8 +23,7 @@ public class Floor  {
     private  int posY;
     public static double nivel = 1.0;
     private boolean paso;
-
-	
+    public static int cantMalos = 1;
 	
     private Image floors[];
     private Image bushes[]; 
@@ -274,7 +273,12 @@ public class Floor  {
 	}
         
          public Rectangle cuadroDerecha () {
-           return new Rectangle (getX()+7*getAncho()/8, getY(), 1*getAncho()/8, getAlto());
+             
+           return new Rectangle (getX()+7*getAncho()/8, getY()+20, 1*getAncho()/8, getAlto()-10);
+        }
+         public Rectangle cuadroArriba () {
+            // System.out.println(getX() + " " + getY() + " " + getAncho() + " "+ 10);
+           return new Rectangle (getX(), getY(), getAncho(), 10);
         }
 
 }

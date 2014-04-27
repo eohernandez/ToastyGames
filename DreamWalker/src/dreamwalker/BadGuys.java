@@ -19,6 +19,7 @@ public class BadGuys extends Base {
         private boolean cambiaAnim;
 	private static boolean brinco = false, brincoDoble = false;
 	public static int acceleracion = 1;
+        private boolean aterriza;
 	
 	/**
 	 * Metodo constructor default.
@@ -112,6 +113,32 @@ public class BadGuys extends Base {
                 cambiaAnim = true;
 	}
         
+        /**
+	 * Metodo actualiza la velocidad en y si el objeto esta callendo 
+	 */ 
+        public void cae(){
+            
+            setY(getY() - acceleracion*velY);
+            velY-=1;
+                       
+        }
+       
+        
+         /**
+	 * Metodo que regresa si el personaje ya aterrizo
+	 */
+	public boolean getAterriza(){
+		return aterriza;
+	}
+         /**
+	* Metodo cambia el estatus de aterriza
+	*
+	* @param b booleano
+	*/
+	public void setAterriza(boolean b) {
+	   aterriza = b;
+	}
+        
 	/**
 	 * Metodo actualiza la velocidad en y si es que brinco el objeto
 	 */ 
@@ -121,17 +148,9 @@ public class BadGuys extends Base {
 			velY-=2;
 		}
 	}
-        /**
-	 * Metodo actualiza la velocidad en y si el objeto esta callendo 
-	 */ 
-        public void cae(){
-            if(!cambiaAnim){
-                setY(getY() - acceleracion*velY);
-                velY-=2;
-            }   
-        }
+      
 	
-    /**
+        /**
 	 * Metodo que regresa el numero de brincos del personaje
 	 * @return jumps
 	 */

@@ -177,4 +177,7 @@ public class Base {
          public boolean checaIntersecionDerecha (Floor obj) {
              return getPerimetro().intersects(obj.cuadroDerecha());
     }
+         public boolean checaIntersecionArriba (Floor obj) {
+             return getPerimetro().intersects(obj.cuadroArriba());
+    }
 }
