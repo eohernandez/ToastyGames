@@ -111,6 +111,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     private Sky sky;
     private boolean created;
+    private boolean nombreIngresado;
 
     
     public static enum STATUS {
@@ -152,16 +153,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		backMusic.play();
 
         hScore = new HighScore();
-        score = hScore.getActualHighscore();
-        
+       
+        score = hScore.getActualHighscore(); 
         playing = true;
         pausa = false;
-
         created = false;
-        
-
-		sound = true;
-		
+        sound = true;
+        nombreIngresado = false;
 
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
@@ -294,7 +292,26 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      */
     public void restart() {
 
-       
+         playing = true;
+        pausa = false;
+        created = false;
+        sound = true;
+        nombreIngresado = false;
+        fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
+        fox.setStand(FoxStanding);
+        fox.setAnim(FoxRunning);
+        fox.setVelX(3);
+        fox.setVelY(0);
+        score = 0;
+        sky = new Sky(0-6480+720, animSky);
+        randPosY = 414  + (int) (Math.random()*306);
+        floor.clear();
+        canons.clear();
+        floor.add(new Floor(0, randPosY ));
+        canons.add(new BadGuys(1150, randPosY - 200, canonNormal));
+        espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
+        espada.setVelX(4);
+        Floor.cantMalos=1;
     }
 
     /**
@@ -429,7 +446,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
 			sky.move(tiempoTranscurrido);
-		}
+		
 		tiempoActual += tiempoTranscurrido;
 
 		if(fox.getDeath()) {
@@ -439,6 +456,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			  fox.setX(-300);
 			}
 			if(foxDeath.getCuadroActual()>=49){
+                                status = STATUS.GAMEOVER;
+                                restart();
+                                nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+                                nombreIngresado = true;
+                                grabaArchivo();
 				fox.setDeath(false);
 			}
 		} else {
@@ -549,6 +571,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				 floor.add(new Floor(1152, randPosY ));
 				 flo.setPassed(true);
                                  Floor.cantMalos--;
+                                 score++;
 				  break;
 			 }
 		 }
@@ -578,7 +601,24 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				 floor.remove(flo);
 				 break;
 			 }
-		 }    
+		 }
+                }
+    }
+    
+    /**
+     * Método para grabar archivo que envia todas las variables del juego dentro
+     * de un string, el cual es guardado con el nombre <code> NombreArchivo
+     * </code>
+     *
+     * @throws IOException
+     */
+     public void grabaArchivo() throws IOException {
+
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("guardar.txt", true)))) {
+        out.println(nombre + ", " + score);
+        }catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
     }
 
     /**

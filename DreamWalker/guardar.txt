@@ -1,0 +1,6 @@
+Emilio, 0
+Hola, 0
+eee, 2
+eee, 1
+fff, 1
+o, 0

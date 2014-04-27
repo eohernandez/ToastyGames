@@ -26,6 +26,7 @@ public class gameOver implements MouseListener {
     private final Botones newGame;
     private final Botones exit;
     private final Image back;
+    private final Botones goBack;
     
     /**
      * Metodo constructor
@@ -33,12 +34,14 @@ public class gameOver implements MouseListener {
      */
     public gameOver(Image background) {
         this.back = background;
+        goBack = new Botones (Base.getW()/5 + 100, 3*Base.getH()/5, "Images/Botones/goBack.png");
         newGame = new Botones(Base.getW()/5, Base.getH()/2, "Images/Botones/newGame.png");
         exit = new Botones(4*Base.getW()/5, Base.getH()/2, "Images/Botones/exit.png");
         newGame.setPosX(newGame.getPosX() - newGame.getAncho()/2);
         newGame.setPosY(newGame.getPosY() - newGame.getAlto()/2);
         exit.setPosX(exit.getPosX() - exit.getAncho()/2);
         exit.setPosY(exit.getPosY() - exit.getAlto()/2);
+       
     }
     /**
      * Dibuja la pantalla menu
@@ -50,7 +53,7 @@ public class gameOver implements MouseListener {
         g.drawImage(back, 0, 0, juego);
         g.drawImage(newGame.getImagenI(), newGame.getPosX(), newGame.getPosY(), juego);
         g.drawImage(exit.getImagenI(), exit.getPosX(), exit.getPosY(), juego);
-        
+        g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
     }
 
     /**
@@ -61,9 +64,11 @@ public class gameOver implements MouseListener {
     public void mouseClicked (MouseEvent e) {
         if(JFrameDreamWalker.status == JFrameDreamWalker.STATUS.GAMEOVER) {
             if (newGame.contiene (e.getX(), e.getY())) {
-                JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
+                JFrameDreamWalker.status = JFrameDreamWalker.STATUS.GAME;
             } else if (exit.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.playing = false;
+            } else if ( goBack.contiene(e.getX(), e.getY())) {
+                JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
             }
         }
     }
