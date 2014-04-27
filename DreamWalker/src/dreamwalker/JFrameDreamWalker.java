@@ -95,7 +95,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private LinkedList<BadGuys> canons;    
 
     private LinkedList<Floor> floor;
-    private Image pueblo;
 
     private Menu menu;
     private Instructions instructions;
@@ -157,7 +156,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
         pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-		pueblo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Pueblo.png"));
         Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
 
         menu = new Menu(menuBG, menuFox);
@@ -321,7 +319,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             if (status == STATUS.GAME) {
                 if (!pausa) {
                     try {
-                        //Actualiza la animacion
+//						Actualiza la animacion
                         actualiza();
                     } catch (IOException ex) {
                         Logger.getLogger(JFrameDreamWalker.class.getName()).log(Level.SEVERE, null, ex);
@@ -329,9 +327,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                     checaColision();
                 }
             }
-            //Manda a llamar al metodo paint() para mostrar en pantalla la animación
+//			Manda a llamar al metodo paint() para mostrar en pantalla la animación
             repaint();
-            //Hace una pausa de 20 milisegundos
+//			Hace una pausa de 20 milisegundos
             try {
                 Thread.sleep(20);
             } catch (InterruptedException ex) {
@@ -377,9 +375,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void actualiza() throws IOException {
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
-			sky.move();
+			sky.move(tiempoTranscurrido);
 		}
-		tiempoActual+= tiempoTranscurrido;
+		tiempoActual += tiempoTranscurrido;
 
 		if(fox.getDeath()) {
 			foxDeath.actualiza(tiempoTranscurrido);
@@ -579,10 +577,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.setFont(new Font("Serif", Font.BOLD, 34));
         g.drawString("" + score, 100, 80);
         if (status == STATUS.GAME ) {
-			g.drawImage(pueblo, sky.getPuebloX(), 0, this);
-			if (sky.getPuebloX() < 0) {
-				g.drawImage(pueblo, sky.getPuebloX()+1500, 0, this);
-			}
 			sky.render(g, this);
 			if (!pausa) {
 //				si no esta pausado el juego, pinta todo

@@ -14,10 +14,11 @@ import java.awt.Toolkit;
  * @author manolo
  */
 public class Sky extends Base {
-	private double skyY, puebloX;
-	private int nube1X, nube2X, nube3X, nube4X, nube1Y, nube2Y, nube3Y, nube4Y;
+	private Animacion sol, luna;
+	private double skyY, puebloX, solX, solY, lunaX, lunaY;
+	private int nube1X, nube2X, nube3X, nube4X, nube1Y, nube2Y, nube3Y, nube4Y, sX, sY, lX, lY;
 	private int nube1vX, nube2vX, nube3vX, nube4vX, nube1, nube2, nube3, nube4;
-	private Image nubes[];
+	private Image nubes[], pueblo;
 	
 	/**
 	 * Metodo constructor default.
@@ -33,8 +34,25 @@ public class Sky extends Base {
 	 */
 	public Sky(int posY, Animacion a) {
 		super(0, 0, a);
+		sol = new Animacion();
+		Image imagen;
+		for	(int x=1; x<=12; x++) {
+			imagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Sol/Sol" + x + ".png"));
+			sol.sumaCuadro(imagen, 100);
+		}
+		luna = new Animacion();
+		for  (int i=0; i<3; i++) {
+			for (int x=1; x<=3; x++) {
+				imagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Luna/Luna" + x + ".png"));
+				luna.sumaCuadro(imagen, 400);
+			}
+		}
+		imagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Luna/Luna4.png"));
+		luna.sumaCuadro(imagen, 100);
+		solX = lunaX = -270;
+		solY = lunaY = 400;
 		skyY = posY;
-		puebloX = 0;
+		puebloX = 300;
 		nube1X = nube2X = nube3X = nube4X = 1160;
 		nube1X += (int)(Math.random()*100);
 		nube2X += (int)(Math.random()*100);
@@ -56,17 +74,48 @@ public class Sky extends Base {
 		nube2 = (int)(Math.random()*3);
 		nube3 = (int)(Math.random()*3);
 		nube4 = (int)(Math.random()*3);
+		pueblo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Pueblo.png"));
 	}
 	
 	/**
 	 * Metodo usado para avanzar la hora del dia.
 	 */
-	public void move() {
+	public void move(long t) {
+		sol.actualiza(t);
+		luna.actualiza(t);
 		if (Math.floor(skyY) == 0) {
 			skyY = -6480+720;
 		} else {
 			skyY += 0.32;
 		}
+		
+		if (skyY < 0 || (0 < solX && solX < 1152)) {
+			solX += 0.16;
+			if (solX<576-(sol.getWidth()/2)) {
+				solY -= 0.1;
+			} else {
+				solY += 0.1;
+			}
+		} else {
+			solX = -270;
+			solY = 400;
+		}
+		if (-2750 < skyY || (0 < lunaX && lunaX < 1152)) {
+			lunaX += 0.16;
+			if (lunaX<576-(luna.getWidth()/2)) {
+				lunaY -= 0.1;
+			} else {
+				lunaY += 0.1;
+			}
+		} else {
+			lunaX = -270;
+			lunaY = 400;
+		}
+		
+		sX = (int)Math.floor(solX);
+		sY = (int)Math.floor(solY);
+		lX = (int)Math.floor(lunaX);
+		lY = (int)Math.floor(lunaY);
 		
 		if (Math.floor(puebloX) == -1500) {
 			puebloX = 0;
@@ -143,11 +192,15 @@ public class Sky extends Base {
      * @param juego
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-//		if (-6480+900 < skyY && skyY < -6480+2840) {
-			g.drawImage(nubes[nube1], nube1X, nube1Y, juego);
-			g.drawImage(nubes[nube2], nube2X, nube2Y, juego);
-			g.drawImage(nubes[nube3], nube3X, nube3Y, juego);
-			g.drawImage(nubes[nube4], nube4X, nube4Y, juego);
-//		}
+		g.drawImage(sol.getImagen(), sX, sY, juego);
+		g.drawImage(luna.getImagen(), lX, lY, juego);
+		g.drawImage(pueblo, getPuebloX(), 0, juego);
+		if (getPuebloX() < 0) {
+			g.drawImage(pueblo, getPuebloX()+1500, 0, juego);
+		}
+		g.drawImage(nubes[nube1], nube1X, nube1Y, juego);
+		g.drawImage(nubes[nube2], nube2X, nube2Y, juego);
+		g.drawImage(nubes[nube3], nube3X, nube3Y, juego);
+		g.drawImage(nubes[nube4], nube4X, nube4Y, juego);
     }
 }
