@@ -16,14 +16,16 @@ import java.awt.Toolkit;
  * @author daniel rodriguez
  * @author Emilio Flores
  */
-public class Floor  {
-
+public class Floor {
     private boolean movement;
     private  int posX;
     private  int posY;
     public static double nivel = 1.0;
     private boolean paso;
+<<<<<<< HEAD
     public static int cantMalos = 1;
+=======
+>>>>>>> 24f97d0749ec66cc9bdf0803e9d9de2e0f8b4cf3
 	
     private Image floors[];
     private Image bushes[]; 
@@ -83,7 +85,6 @@ public class Floor  {
         flower4Index = (int) (Math.random()*3);
         flower5Index = (int) (Math.random()*3);
         
-        
         randPosTree = (int) (Math.random()*464);
         randPosBush = (int) (Math.random()*328);
         randPosWeed = (int) (Math.random()*217);
@@ -91,7 +92,6 @@ public class Floor  {
         
         posX = xPos;
         posY = yPos;
-        
         
         paso = false;
         for (int x = 1; x <= 3; x ++ ) {
@@ -119,7 +119,6 @@ public class Floor  {
      * Método que resetea la posicion del piso si este ya se paso
      */
     public void addFloor () {
-       
         posX = 1156;
         posY = 414  + (int) (Math.random()*280);
        
@@ -144,36 +143,30 @@ public class Floor  {
         randPosBush = (int) (Math.random()*328);
         randPosWeed = (int) (Math.random()*217);
         randPosFlower = (int) (Math.random()*1000);
-        
-        
-    }
+	}
     
     /**
      * Método que actualiza la posX del objeto 
      */
-    public void actualizaPos () {   
-        posX -= 3;
-
-    }
+	public void actualizaPos () {
+		posX -= 3;
+	}
+	
     /**
 	 * Metodo de acceso que regresa el alto de la base
 	 * @return alto
 	 */
-    public int getAlto(){
-        
-        return alto;
-        
-    }
+	public int getAlto() {
+		return alto;
+	}
+	
     /**
 	 * Metodo de acceso que regresa el ancho de la base
 	 * @return alto
 	 */
-    
-    public int getAncho(){
-        
-        return ancho;
-        
-    }
+	public int getAncho() {
+		return ancho;
+	}
     
 	/**
      * Dibuja el suelo
@@ -199,7 +192,6 @@ public class Floor  {
         g.drawImage(flowers[flower5Index], posX+randPosFlower+860, posY-flowers[flower5Index].getHeight(juego), juego);
     }
 
-
     /**
      * Método que activa la direccion donde se movio el objeto
      *
@@ -208,16 +200,16 @@ public class Floor  {
     public void setMovement(boolean b) {
         movement = b;
     }
+	
     /**
 	 * Metodo de acceso que regresa la posicion en x del objeto 
 	 * @return posX es la <code>posicion en x</code> del objeto.
 	 */
-        
-	public int getX() {
+    public int getX() {
 		return posX;
 	}
-        
-        /**
+	
+	/**
 	 * Metodo de acceso que regresa la posicion en y del objeto 
 	 * @return posY es la <code>posicion en y</code> del objeto.
 	 */
@@ -271,6 +263,7 @@ public class Floor  {
 	public boolean intersecta(Base obj) {
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
+<<<<<<< HEAD
         
          public Rectangle cuadroDerecha () {
              
@@ -281,4 +274,10 @@ public class Floor  {
            return new Rectangle (getX(), getY(), getAncho(), 10);
         }
 
+=======
+	
+	public Rectangle cuadroDerecha () {
+	  return new Rectangle (getX()+7*getAncho()/8, getY(), 1*getAncho()/8, getAlto());
+	}
+>>>>>>> 24f97d0749ec66cc9bdf0803e9d9de2e0f8b4cf3
 }

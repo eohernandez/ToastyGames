@@ -17,16 +17,17 @@ public class Fox extends Base {
 	private boolean moveRight;
 	private boolean moveLeft;
         private boolean aterriza;
-	private static boolean brinco = false, brincoDoble = false;
+	private static boolean brinco = false, brincoDoble = false, death = false;
 	public static int acceleracion = 1;
 	
-	/**
+	/** 
 	 * Metodo constructor default.
 	 */
 	public Fox() {
 		super(0, 0, null);
 		moveRight = false;
 		moveLeft = false;
+                death = false;
 
 		jumps = 0;
 		velX = 0;
@@ -43,6 +44,7 @@ public class Fox extends Base {
 		super(posX, posY, a);
 		moveRight = false;
 		moveLeft = false;
+                death = false;
 		jumps = 0;
 		velX = 0;
 		velY = 0;
@@ -98,7 +100,30 @@ public class Fox extends Base {
 	public void setAterriza(boolean b) {
 	   aterriza = b;
 	}
-        
+         /**
+	 * Metodo que regresa si el personaje ya murio
+	 */
+	public boolean getDeath(){
+		return death;
+	}
+         /**
+	* Metodo cambia el estatus de death
+	*
+	* @param b booleano
+	*/
+	public void setDeath(boolean b) {
+	   death = b;
+	}
+          /**
+         * within. regresa si la imagen se encuentra dentro del rango
+         * 
+         * @param x posicion en x
+         * @param xf posicion en x final
+         * @param posX posicion en x
+         * @param ancho ancho de la imagen posX
+         * 
+         * @return si es que se encuentra dentro del rango
+         */
         public boolean within(int x, int xf,int posX, int anchoFox){
             
             if(posX>x&&posX+anchoFox<xf)
