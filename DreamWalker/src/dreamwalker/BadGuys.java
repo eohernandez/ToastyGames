@@ -22,11 +22,10 @@ public class BadGuys extends Base {
         private boolean cambiaAnim;
 	private static boolean brinco = false, brincoDoble = false;
 	public static int acceleracion = 1;
-<<<<<<< HEAD
+
         private boolean aterriza;
-=======
+
         private boolean sigue;
->>>>>>> 24f97d0749ec66cc9bdf0803e9d9de2e0f8b4cf3
 	
 	/**
 	 * Metodo constructor default.

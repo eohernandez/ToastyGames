@@ -22,10 +22,9 @@ public class Floor {
     private  int posY;
     public static double nivel = 1.0;
     private boolean paso;
-<<<<<<< HEAD
+
     public static int cantMalos = 1;
-=======
->>>>>>> 24f97d0749ec66cc9bdf0803e9d9de2e0f8b4cf3
+
 	
     private Image floors[];
     private Image bushes[]; 
@@ -263,7 +262,7 @@ public class Floor {
 	public boolean intersecta(Base obj) {
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
-<<<<<<< HEAD
+
         
          public Rectangle cuadroDerecha () {
              
@@ -274,10 +273,4 @@ public class Floor {
            return new Rectangle (getX(), getY(), getAncho(), 10);
         }
 
-=======
-	
-	public Rectangle cuadroDerecha () {
-	  return new Rectangle (getX()+7*getAncho()/8, getY(), 1*getAncho()/8, getAlto());
-	}
->>>>>>> 24f97d0749ec66cc9bdf0803e9d9de2e0f8b4cf3
 }
