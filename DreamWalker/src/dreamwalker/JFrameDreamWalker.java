@@ -247,29 +247,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         for (int x = 1; x <= 50; x++) {
 			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxDeath" + x + ".gif"));
 			foxDeath.sumaCuadro(imagenAnimaciones, 50);
-			/*
-			if(x>=1&&x<=7)
-					foxDeath.sumaCuadro(imagenAnimaciones, 130);
-			if(x==8||x==11||x==12)
-					foxDeath.sumaCuadro(imagenAnimaciones, 80);
-			if(x>=9&&x<=10)
-					foxDeath.sumaCuadro(imagenAnimaciones, 40);
-			if(x>=13&&x<=14)
-					foxDeath.sumaCuadro(imagenAnimaciones, 40);
-			if(x>=15&&x<=19)
-					foxDeath.sumaCuadro(imagenAnimaciones, 80);
-			if(x>=20&&x<=22)
-					foxDeath.sumaCuadro(imagenAnimaciones, 130);
-			*/          
         }
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
-		fox.setStand(FoxStanding);
-		fox.setAnim(FoxRunning);
-		fox.setVelX(3);
-		fox.setVelY(0);
-		sky = new Sky(0-6480+720, animSky);
-		setResizable(false);
+        fox.setStand(FoxStanding);
+        fox.setAnim(FoxRunning);
+        fox.setVelX(3);
+        fox.setVelY(0);
+        sky = new Sky(0-6480+720, animSky);
+        setResizable(false);
 	}
 
     /**
@@ -291,7 +277,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * jugar
      */
     public void restart() {
-		playing = true;
+       
+        playing = true;
         pausa = false;
         created = false;
         sound = true;
@@ -311,6 +298,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
         espada.setVelX(4);
         Floor.cantMalos=1;
+        foxDeath.iniciar();
+        FoxStanding.iniciar();
+        FoxRunning.iniciar();
+        
     }
 
     /**
@@ -422,8 +413,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             
             for (Floor flo : floor) {
                 if (flo.intersecta(fireball)) {
-                    fireball.volverInicio(0,0);
-                             
+                      fireball.volverInicio();
+                    //fireball = new FireBall(0,0,canonBall);
                 }
             }
             
@@ -461,6 +452,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                         hScore.setHighscoreAuto(nombre, score);
                                         fox.setDeath(false);
                                         restart();
+
 				}
 			} else {
 				fox.actualiza(tiempoTranscurrido);
@@ -578,8 +570,14 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			}
 //			dispara
 			for (BadGuys bad : canons) {
-				if (bad.getX() <= 0 && !fireball.getMovimiento()) {
-					fireball.arroja(bad.getX()+bad.getAncho()/2 -fireball.getAncho()/2,bad.getY()+bad.getAlto()/2 - fireball.getAlto()/2);
+				if (bad.getX() <= 0 && !fireball.getMovimiento() ) {
+                                        
+					//fireball.arroja(bad.getX()+bad.getAncho()/2 -fireball.getAncho()/2,bad.getY()+bad.getAlto()/2 - fireball.getAlto()/2);
+					fireball.arroja(bad.getX()+bad.getAncho()/2, bad.getY() + bad.getAlto()/2);
+                  
+                                        System.out.println(bad.getX() + "  " + bad.getAncho()/2);
+                                        System.out.println(bad.getY() + "  " + bad.getAlto()/2);
+                                         
 				}
 			}
 			if (fireball.getMovimiento()) {
