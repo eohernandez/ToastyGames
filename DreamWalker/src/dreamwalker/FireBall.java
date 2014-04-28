@@ -35,15 +35,15 @@ public class FireBall extends Base {
         super(posX, posY, animacion); 
         xInicial = posX;
         yInicial = posY;
-        volverInicio(posX,posY);
+        volverInicio();
     }
     /**
      * Metodo que regresa a la granada al inicio y desactiva el movimiento
      */
-    public void volverInicio(int x, int y) {
+    public void volverInicio() {
         
-        setX(x);
-        setY(y);
+        setX(0);
+        setY(0);
         movimiento = false;
     }
     /**

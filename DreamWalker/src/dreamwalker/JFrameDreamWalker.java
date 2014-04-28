@@ -423,7 +423,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             
             for (Floor flo : floor) {
                 if (flo.intersecta(fireball)) {
-                       
+                      fireball.volverInicio();
                     //fireball = new FireBall(0,0,canonBall);
                 }
             }
