@@ -4,3 +4,9 @@ eee, 2
 eee, 1
 fff, 1
 o, 0
+a, 0
+a, 0
+a, 0
+b, 0
+null, 0
+null, 0
