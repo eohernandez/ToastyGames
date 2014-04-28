@@ -58,7 +58,7 @@ public class Fox extends Base {
         brinco = true;
 		if (jumps < 2) {
 			jumps++;
-			velY = 30;
+			velY = 18;
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class Fox extends Base {
 		if (brinco&&jumps < 3&&jumps>1) {
 			brincoDoble= true;
 			jumps++;
-			velY = 30;
+			velY = 18;
 		}       
 	}
     
@@ -151,7 +151,7 @@ public class Fox extends Base {
 	public void brinca() {
 		if (brinco) {
 			setY(getY() - acceleracion*velY);
-			velY-=2;
+			velY-=1;
 		}
 	}
         /**
@@ -160,7 +160,7 @@ public class Fox extends Base {
         public void cae(){
             if(!aterriza && !brinco){
                 setY(getY() - acceleracion*velY);
-                velY-=2;
+                velY-=1;
             }   
             if(aterriza&&!brinco){
                 
