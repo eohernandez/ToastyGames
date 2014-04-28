@@ -17,3 +17,24 @@ null, 0
 null, 0
 , 2
 null, 2
+oeoke, 3
+ hol, 6
+null, 4
+hola, 5
+, 1
+null, 3
+null, 3
+null, 2
+null, 1
+null, 3
+null, 2
+null, 1
+null, 6
+null, 3
+null, 1
+null, 4
+null, 3
+null, 3
+null, 4
+null, 3
+null, 3
