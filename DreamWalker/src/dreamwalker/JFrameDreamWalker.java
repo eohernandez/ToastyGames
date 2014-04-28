@@ -593,77 +593,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				}
 			}
 		}
-<<<<<<< HEAD
-                
-		if(!fox.getDeath()){
-			 if (fox.getMoveLeft()) {
-			 fox.setX(fox.getX() - 6);
-			 }
-			 if (fox.getMoveRight()) {
-				 fox.setX(fox.getX() + 9);
-			 }
-			 if (fox.getBrinca()) {
-				  fox.brinca();
-			 }
-			 if(fox.getBrincaDoble()){
-				 fox.setAnim(FoxJump2);
-			 }
-			 if (fox.getX() <= 0) {
-				 fox.setX(0);
-			 }
-			 if (fox.getX()+fox.getAncho()>= getWidth()) {
-				 fox.setX(getWidth()-fox.getAncho());
-			 }
-			 if(!fox.getBrincaDoble()){
-				 fox.setAnim(FoxRunning);
-			 }
-		}
-		 // checa si el piso ya se termino
-		 for (Floor flo : floor) {
-			 if (flo.getX()  <= 0 && !flo.getPassed()) {
-				 randPosY = 414  + (int) (Math.random()*306);
-				 floor.add(new Floor(1152, randPosY ));
-				 flo.setPassed(true);
-                                 Floor.cantMalos--;
-                                 score++;
-				  break;
-			 }
-		 }
-		 // ya se salio el cañon
-		 for (BadGuys bad : canons) {
-			 if (bad.getX() + bad.getAncho() <= 0) {
-				 canons.remove(bad); 
-				 canons.add( new BadGuys (1156, randPosY -111, canonNormal));
-                        	 break;
-			 }
-		 }
-                 // dispara
-		 for (BadGuys bad : canons) {
-			 if (bad.getX() <= 0 && !fireball.getMovimiento()) {
-                             fireball.arroja(bad.getX()+bad.getAncho()/2,bad.getY()+bad.getAlto()/2 );
-                             System.out.println (bad.getX()+bad.getAncho()/2);
-                             System.out.println (fireball.getX());
-                             break;
-			 }
-		 }
-                 
-                 if (fireball.getMovimiento()) {
-                     fireball.avanza();
-                 }
-                 
-		 // actualiza el piso
-		 for (Floor flo : floor) {
-			 flo.actualizaPos();
-			 if (flo.getX() <= -1156) {
-				 floor.remove(flo);
-				 break;
-			 }
-		 }
-                }
-    }
-=======
-	}
->>>>>>> 4269b99c55692788319fa0b12b7bb9809963cd36
+
+     }
+
+
     
     /**
      * Método para grabar archivo que envia todas las variables del juego dentro
