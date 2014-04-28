@@ -672,9 +672,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
        
         if (status == STATUS.GAME ) {
 
-			sky.render(g, this);
-			if (!pausa) {
-//				si no esta pausado el juego, pinta todo
+                        	sky.render(g, this);
+
 				for (Floor flo : floor) {
 					flo.render(g, this);
 				}
@@ -724,11 +723,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     @Override
     public void keyPressed(KeyEvent e) {
         if (status == STATUS.GAME) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == KeyEvent.VK_LEFT && !pausa) {
                 fox.setMoveLeft(true);
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && !pausa) {
                 fox.setMoveRight(true);
-            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            } else if (e.getKeyCode() == KeyEvent.VK_SPACE && !pausa) {
                 fox.jump();
 				if (fox.getBrinca()||!fox.getBrincaDoble()||fox.getJumps()<2) {
 					fox.jumpDouble();
