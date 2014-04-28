@@ -671,34 +671,30 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawString("" + score, 100, 80);
        
         if (status == STATUS.GAME ) {
+			sky.render(g, this);
+			for (Floor flo : floor) {
+				flo.render(g, this);
+			}
+			g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+			if (fox.getDeath()) {
+				g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
+			}
 
-                        	sky.render(g, this);
-
-				for (Floor flo : floor) {
-					flo.render(g, this);
-				}
-				g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
-				
-
-				if(fox.getDeath()){
-					g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
-				}
-				
-				if (fox.getMoveRight() || fox.getMoveLeft()) {
+			if (fox.getMoveRight() || fox.getMoveLeft()) {
+				g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
+			} else {
+				if (fox.getBrincaDoble()) {
 					g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
 				} else {
-					if (fox.getBrincaDoble()) {
-						g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
-					} else {
-						g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
-					}
+					g.drawImage(fox.getImagenS(), fox.getX(), fox.getY(), this);
 				}
-				for (BadGuys bad : canons) {
-					if (Floor.cantMalos < 0) {
-						g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
-					}
+			}
+			for (BadGuys bad : canons) {
+				if (Floor.cantMalos < 0) {
+					g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
 				}
-			} else {
+			}
+			if (pausa) {
 				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
 			}
 			if (fireball.getMovimiento() ) {
