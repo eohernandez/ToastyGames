@@ -63,7 +63,7 @@ public class FireBall extends Base {
         velX = Math.random()*(maxVelX - minVx) + minVx;
        
          setX(x);
-        setY(y);
+         setY(y);
     }
     /**
      * Método que hace que el objeto granada avanze utilizando las formulas de la fisica
