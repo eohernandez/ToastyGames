@@ -154,7 +154,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
         hScore = new HighScore();
        
-        score = hScore.getActualHighscore(); 
         playing = true;
         pausa = false;
         created = false;
@@ -424,6 +423,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                  dx = fox.getX();
                  dy = fox.getY();
             }
+            
+            
 
 	}
 
@@ -446,12 +447,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				}
 				if(foxDeath.getCuadroActual()>=49){
 					status = STATUS.GAMEOVER;
-					
-					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-					nombreIngresado = true;
-					grabaArchivo();
+                                        nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+                                        nombreIngresado = true;
+                                        hScore.setHighscoreAuto(nombre, score);
+                                        fox.setDeath(false);
                                         restart();
-					fox.setDeath(false);
+
 				}
 			} else {
 				fox.actualiza(tiempoTranscurrido);

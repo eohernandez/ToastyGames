@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+record!, 0
+=======
 hoal, 0
 hola, 0
 EMILIO THE BEST, 0
@@ -32,6 +35,7 @@ null, 0
 null, 1
 null, 2
 null, 8
+<<<<<<< HEAD
 hola, 6
 null, 3
 null, 5
@@ -48,3 +52,6 @@ hola, 2
 , 2
 null, 2
 null, 4
+=======
+>>>>>>> FETCH_HEAD
+>>>>>>> e32d54463134c757d0c1734637135148be0ca8e6
