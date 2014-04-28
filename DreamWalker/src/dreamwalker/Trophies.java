@@ -11,10 +11,14 @@ package dreamwalker;
  * @author Emilio
  */
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -25,6 +29,7 @@ public class Trophies implements MouseListener {
     
     private final Botones goBack;
     private final Image back;
+    private HighScore a = new HighScore(); 
     
     /**
      * Metodo constructor
@@ -42,9 +47,19 @@ public class Trophies implements MouseListener {
      * @param juego
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
+        try {
+            a.leeArchivo();
+        } catch (IOException ex) {
+            Logger.getLogger(Trophies.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         g.drawImage(back, 0, 0, juego);
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
+        
+        g.setFont(new Font("Serif", Font.BOLD, 34));
+        for(int i =0; i < 5;i++){
+            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*30);
+        }
         
     }
 
