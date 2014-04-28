@@ -457,11 +457,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			}
 			if(foxDeath.getCuadroActual()>=49){
                                 status = STATUS.GAMEOVER;
-                                restart();
+                              
                                 nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
                                 nombreIngresado = true;
                                 grabaArchivo();
 				fox.setDeath(false);
+                                  restart();
 			}
 		} else {
 			 fox.actualiza(tiempoTranscurrido);
@@ -684,9 +685,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
        
         if (status == STATUS.GAME ) {
 
-			sky.render(g, this);
-			if (!pausa) {
-//				si no esta pausado el juego, pinta todo
+                        	sky.render(g, this);
+
 				for (Floor flo : floor) {
 					flo.render(g, this);
 				}
@@ -712,9 +712,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                             g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
                                     }
 				}
-			} else {
-				g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
-			}
+                                if ( pausa ) {
+                                    g.drawImage(pausaImg, getWidth() / 2 - new ImageIcon(pausaImg).getIconWidth() / 2, getHeight() / 2 - new ImageIcon(pausaImg).getIconHeight() / 2, this);
+			
+                                }
+			
                         if (fireball.getMovimiento() ) {
                                 g.drawImage(fireball.getImagen(), fireball.getX(), fireball.getY(), this);
                         }
@@ -738,11 +740,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     @Override
     public void keyPressed(KeyEvent e) {
         if (status == STATUS.GAME) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == KeyEvent.VK_LEFT && !pausa) {
                 fox.setMoveLeft(true);
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && !pausa) {
                 fox.setMoveRight(true);
-            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            } else if (e.getKeyCode() == KeyEvent.VK_SPACE && !pausa) {
                 fox.jump();
                 
                 if(fox.getBrinca()||!fox.getBrincaDoble()||fox.getJumps()<2){
