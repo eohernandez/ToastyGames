@@ -41,7 +41,8 @@ import javax.swing.JOptionPane;
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
 	static boolean playing;        
-	private int score;
+	public static int score;
+	public static int temp;
 
 	private int randPosY;
 	private int randPosX;
@@ -101,6 +102,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Instructions instructions;
     private gameOver gameOver;
     private Image menuBG;
+    private Image []gameOverBG;
     private Image menuFox;
     private Trophies trophies;
     private FireBall fireball;
@@ -166,9 +168,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
 
         menu = new Menu(menuBG, menuFox);
-
+        gameOverBG = new Image [3];
+        
         instructions = new Instructions(menuBG);
-        gameOver = new gameOver(menuBG);
+        
+        for (int x = 1; x<=3 ; x++ ) {
+            gameOverBG[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/GameOver" + x + ".png"));
+
+        }
+        gameOver = new gameOver(gameOverBG);
         trophies = new Trophies(menuBG);
         
                 
@@ -281,7 +289,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         playing = true;
         pausa = false;
         created = false;
-        sound = true;
         nombreIngresado = false;
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
         fox.setStand(FoxStanding);
@@ -301,6 +308,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         foxDeath.iniciar();
         FoxStanding.iniciar();
         FoxRunning.iniciar();
+        
         
     }
 
@@ -449,9 +457,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					status = STATUS.GAMEOVER;
                                         nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
                                         nombreIngresado = true;
-                                        hScore.setHighscoreAuto(nombre, score);
+                                        //hScore.setHighscoreAuto(nombre, score);
                                         fox.setDeath(false);
-                                        restart();
+                                       
+                                      //  restart();
 
 				}
 			} else {
@@ -557,6 +566,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					flo.setPassed(true);
 					Floor.cantMalos--;
 					score++;
+                                       
+                                        temp=score;
 					break;
 				}
 			}
@@ -575,8 +586,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					//fireball.arroja(bad.getX()+bad.getAncho()/2 -fireball.getAncho()/2,bad.getY()+bad.getAlto()/2 - fireball.getAlto()/2);
 					fireball.arroja(bad.getX()+bad.getAncho()/2, bad.getY() + bad.getAlto()/2);
                   
-                                        System.out.println(bad.getX() + "  " + bad.getAncho()/2);
-                                        System.out.println(bad.getY() + "  " + bad.getAlto()/2);
                                          
 				}
 			}
@@ -670,10 +679,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      */
     public void paint1(Graphics g) {
         g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
-        g.setFont(new Font("Sans-Serif", Font.BOLD, 34));
-        g.drawString("" + score, 100, 80);
-       
         if (status == STATUS.GAME ) {
+       
+        g.setFont(new Font("Sylfaen", Font.BOLD, 40));
+        g.drawString("" + score, 100, 100);
+       
 			sky.render(g, this);
 			for (Floor flo : floor) {
 				flo.render(g, this);
@@ -756,8 +766,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     @Override
     public void mouseClicked(MouseEvent e) {
         instructions.mouseClicked(e);
-        gameOver.mouseClicked(e);
-        menu.mouseClicked(e);
+        gameOver.mouseClicked(e, this);
+        menu.mouseClicked(e, this);
         trophies.mouseClicked(e);
     }
 

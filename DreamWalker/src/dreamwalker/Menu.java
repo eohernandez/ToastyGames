@@ -65,10 +65,11 @@ public class Menu implements MouseListener {
      * Revisa clicks en los botones
      * @param e 
      */
-    @Override
-    public void mouseClicked (MouseEvent e) {
+    
+    public void mouseClicked (MouseEvent e, JFrameDreamWalker juego) {
         if(JFrameDreamWalker.status == JFrameDreamWalker.STATUS.MENU) {
             if (PLAY.contiene (e.getX(), e.getY())) {
+                juego.restart();
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.GAME;
             } else if (INSTRUCTIONS.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.INSTRUCTIONS;
@@ -91,4 +92,9 @@ public class Menu implements MouseListener {
 
     @Override
     public void mouseExited (MouseEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
