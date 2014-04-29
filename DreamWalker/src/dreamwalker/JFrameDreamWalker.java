@@ -269,7 +269,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		fox.setAnim(FoxRunning);
 		fox.setVelX(3);
 		fox.setVelY(0);
-		sky = new Sky(0-6480+720, animSky);
+		sky = new Sky(animSky);
 		setResizable(false);
 	}
 
@@ -303,7 +303,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         fox.setVelX(3);
         fox.setVelY(0);
         score = 0;
-        sky = new Sky(0-6480+720, animSky);
+        sky = new Sky(animSky);
         randPosY = 414  + (int) (Math.random()*306);
         floor.clear();
         canons.clear();
