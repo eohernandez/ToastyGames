@@ -258,12 +258,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         }
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
-        fox.setStand(FoxStanding);
-        fox.setAnim(FoxRunning);
-        fox.setVelX(3);
-        fox.setVelY(0);
-        sky = new Sky(0-6480+720, animSky);
-        setResizable(false);
+		fox.setStand(FoxStanding);
+		fox.setAnim(FoxRunning);
+		fox.setVelX(3);
+		fox.setVelY(0);
+		sky = new Sky(animSky);
+		setResizable(false);
 	}
 
     /**
@@ -285,8 +285,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * jugar
      */
     public void restart() {
-       
-        playing = true;
+		playing = true;
         pausa = false;
         created = false;
         nombreIngresado = false;
@@ -296,7 +295,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         fox.setVelX(3);
         fox.setVelY(0);
         score = 0;
-        sky = new Sky(0-6480+720, animSky);
+        sky = new Sky(animSky);
         randPosY = 414  + (int) (Math.random()*306);
         floor.clear();
         canons.clear();
@@ -431,8 +430,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                  dx = fox.getX();
                  dy = fox.getY();
             }
-            
-            
 
 	}
 

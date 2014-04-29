@@ -32,7 +32,7 @@ public class Sky extends Base {
 	 * @param posY es el <code>posiscion en y</code> del objeto.
 	 * @param a es la <code>animacion</code> del objeto.
 	 */
-	public Sky(int posY, Animacion a) {
+	public Sky(Animacion a) {
 		super(0, 0, a);
 		sol = new Animacion();
 		Image imagen;
@@ -51,7 +51,11 @@ public class Sky extends Base {
 		luna.sumaCuadro(imagen, 100);
 		solX = lunaX = -270;
 		solY = lunaY = 400;
-		skyY = posY;
+		if (Math.random() > 0.5) {
+			skyY = -2749;
+		} else {
+			skyY = -6480+720;
+		}
 		puebloX = 300;
 		nube1X = nube2X = nube3X = nube4X = 1160;
 		nube1X += (int)(Math.random()*100);
@@ -81,31 +85,32 @@ public class Sky extends Base {
 	 * Metodo usado para avanzar la hora del dia.
 	 */
 	public void move(long t) {
+		int X=1; // para testing, aumenta la velocidad de movimiento del cielo, sol, luna, nubes
 		sol.actualiza(t);
 		luna.actualiza(t);
-		if (Math.floor(skyY) == 0) {
+		if (Math.floor(skyY) >= 0) {
 			skyY = -6480+720;
 		} else {
-			skyY += 0.32;
+			skyY += 0.32*X;
 		}
 		
-		if (skyY < 0 || (0 < solX && solX < 1152)) {
-			solX += 0.16;
+		if (skyY < 0 && skyY < -2750 || (0 < solX && solX < 1152)) {
+			solX += 0.16*X;
 			if (solX<576-(sol.getWidth()/2)) {
-				solY -= 0.1;
+				solY -= 0.1*X;
 			} else {
-				solY += 0.1;
+				solY += 0.1*X;
 			}
 		} else {
 			solX = -270;
 			solY = 400;
 		}
 		if (-2750 < skyY || (0 < lunaX && lunaX < 1152)) {
-			lunaX += 0.16;
+			lunaX += 0.16*X;
 			if (lunaX<576-(luna.getWidth()/2)) {
-				lunaY -= 0.1;
+				lunaY -= 0.1*X;
 			} else {
-				lunaY += 0.1;
+				lunaY += 0.1*X;
 			}
 		} else {
 			lunaX = -270;
@@ -120,26 +125,26 @@ public class Sky extends Base {
 		if (Math.floor(puebloX) == -1500) {
 			puebloX = 0;
 		} else {
-			puebloX -= 0.2;
+			puebloX -= 0.2*X;
 		}
 		
 		if (-6480+900 < skyY && skyY < -6480+2840) {
-			nube1X -= nube1vX;
-			nube2X -= nube2vX;
-			nube3X -= nube3vX;
-			nube4X -= nube4vX;
+			nube1X -= nube1vX*X;
+			nube2X -= nube2vX*X;
+			nube3X -= nube3vX*X;
+			nube4X -= nube4vX*X;
 		} else {
 			if (nube1X > -nubes[nube1].getWidth(null) && nube1 < 1152) {
-				nube1X -= nube1vX;
+				nube1X -= nube1vX*X;
 			}
 			if (nube2X > -nubes[nube2].getWidth(null) && nube2 < 1152) {
-				nube2X -= nube2vX;
+				nube2X -= nube2vX*X;
 			}
 			if (nube3X > -nubes[nube3].getWidth(null) && nube3 < 1152) {
-				nube3X -= nube3vX;
+				nube3X -= nube3vX*X;
 			}
 			if (nube4X > -nubes[nube4].getWidth(null) && nube4 < 1152) {
-				nube4X -= nube4vX;
+				nube4X -= nube4vX*X;
 			}
 		}
 		
