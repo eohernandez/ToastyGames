@@ -13,6 +13,7 @@ package dreamwalker;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 /*
@@ -25,6 +26,7 @@ public class Instructions implements MouseListener {
     
     private final Botones goBack;
     private final Image back;
+    private final Image instrucciones;
     
     /**
      * Metodo constructor
@@ -32,6 +34,8 @@ public class Instructions implements MouseListener {
      */
     public Instructions(Image background) {
         this.back = background;
+        instrucciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Instrucciones.png"));
+			
         
         goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
      }
@@ -44,8 +48,8 @@ public class Instructions implements MouseListener {
     public void render(Graphics g, JFrameDreamWalker juego) {
         
         g.drawImage(back, 0, 0, juego);
-        g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
-        
+        g.drawImage(instrucciones,0, Base.getH()/10, juego);
+        g.drawImage(goBack.getImagenI(), goBack.getPosX()-100, goBack.getPosY(), juego);
     }
 
     /**
