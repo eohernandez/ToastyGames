@@ -441,24 +441,24 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void actualiza() throws IOException {
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
-			sky.move(tiempoTranscurrido);
+			if (!fox.getDeath()) {
+				sky.move(tiempoTranscurrido);
+			}
 			tiempoActual += tiempoTranscurrido;
 
 			if(fox.getDeath()) {
 				foxDeath.actualiza(tiempoTranscurrido);
-				fox.actualiza(tiempoTranscurrido);
+//				fox.actualiza(tiempoTranscurrido);
 				if(foxDeath.getCuadroActual()==33) {
 					fox.setX(-300);
 				}
 				if(foxDeath.getCuadroActual()>=49){
 					status = STATUS.GAMEOVER;
-                                        nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-                                        nombreIngresado = true;
-                                        //hScore.setHighscoreAuto(nombre, score);
-                                        fox.setDeath(false);
-                                       
-                                      //  restart();
-
+					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+					nombreIngresado = true;
+					//hScore.setHighscoreAuto(nombre, score);
+					fox.setDeath(false);
+//					restart();
 				}
 			} else {
 				fox.actualiza(tiempoTranscurrido);
@@ -466,15 +466,17 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				fox.cae();
 				fox.setY(fox.getY());
 			}
-
+			
 			canonBall.actualiza(tiempoTranscurrido);
 			for (BadGuys bad : canons) {
 				bad.actualiza(tiempoTranscurrido);
 			}
 //			Actualiza posiciones de la espada
-			espada.actualiza(tiempoTranscurrido);
-			espada.setX(espada.getX() - espada.getVelX());
-
+			if (!fox.getDeath()) {
+				espada.actualiza(tiempoTranscurrido);
+				espada.setX(espada.getX() - espada.getVelX());
+			}
+			
 			if (Floor.cantMalos == 0) {
 				canons.remove();
 				canons.add( new BadGuys (1156, randPosY -111, canonNormal));
@@ -490,14 +492,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		   }
 
 		   if(espada.getCount()==1&&espada.getSigue()){
-			   espada.setX(espada.getX()+espada.getVelX()+8);
+			   if (!fox.getDeath()) {
+				   espada.setX(espada.getX()+espada.getVelX()+8);
+			   }
 			   if(espada.getX()+espada.getAncho()>=getWidth()){
 				   espada.setCount(espada.getCount()+1);
 			   }
 		   }
 
 		   if(espada.getSigue()&&espada.getCount()>1){
-			   espada.setX(espada.getX()-fox.getVelY()-1) ;
+			   if (!fox.getDeath()) {
+					espada.setX(espada.getX()-fox.getVelY()-1);
+			   }
 		   }
 
 		   if(espada.getX()>fox.getX()&&fox.getX()+fox.getAncho()+20>espada.getX()&&espada.getCount()==0){
@@ -509,7 +515,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 //			para que se quede parado si es eel caso
 			for (BadGuys bad : canons) {
 				for (Floor flo : floor) {
-					if (bad.checaIntersecionDerecha(flo)) {
+					if (bad.checaIntersecionDerecha(flo) || fox.getDeath()) {
 						bad.setX(bad.getX());
 					} else {
 						bad.setX( bad.getX() - 5);
@@ -532,15 +538,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				}
 			}
 
-			if(!fox.getDeath()){
+			if (!fox.getDeath()) {
 				 if (fox.getMoveLeft()) {
-				 fox.setX(fox.getX() - 6);
+					 fox.setX(fox.getX() - 6);
 				 }
 				 if (fox.getMoveRight()) {
 					 fox.setX(fox.getX() + 9);
 				 }
 				 if (fox.getBrinca()) {
-					  fox.brinca();
+					 fox.brinca();
 				 }
 				 if(fox.getBrincaDoble()){
 					fox.setAnim(FoxJump2);
@@ -563,8 +569,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					flo.setPassed(true);
 					Floor.cantMalos--;
 					score++;
-                                       
-                                        temp=score;
+					temp=score;
 					break;
 				}
 			}
@@ -586,17 +591,21 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                                          
 				}
 			}
-			if (fireball.getMovimiento()) {
-				fireball.avanza();
-			}
+			
+			if (!fox.getDeath()) {
+				if (fireball.getMovimiento()) {
+					fireball.avanza();
+				}
 //			actualiza el piso
-			for (Floor flo : floor) {
-				flo.actualizaPos();
-				if (flo.getX() <= -1156) {
-					floor.remove(flo);
-					break;
+				for (Floor flo : floor) {
+					flo.actualizaPos();
+					if (flo.getX() <= -1156) {
+						floor.remove(flo);
+						break;
+					}
 				}
 			}
+			
 		}
 
      }
@@ -690,7 +699,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
 			}
 
-			if (fox.getMoveRight() || fox.getMoveLeft()) {
+			if (fox.getMoveRight() || fox.getMoveLeft() && !fox.getDeath()) {
 				g.drawImage(fox.getImagenA(), fox.getX(), fox.getY(), this);
 			} else {
 				if (fox.getBrincaDoble()) {
@@ -701,7 +710,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			}
 			for (BadGuys bad : canons) {
 				if (Floor.cantMalos < 0) {
-					g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+					if (!fox.getDeath()) {
+						g.drawImage(bad.getImagen(), bad.getX(), bad.getY(), this);
+					} else {
+						g.drawImage(bad.getImagen(0), bad.getX(), bad.getY(), this);
+					}
 				}
 			}
 			if (pausa) {
