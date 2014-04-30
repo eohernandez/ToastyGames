@@ -24,6 +24,7 @@ public class HighScore {
     private int highScore[];
     private String nombre[];
     private final int MAX = 5;
+    private int numTrofeo = -1;
     
     public HighScore(){
         
@@ -94,7 +95,26 @@ public class HighScore {
         return nombre[i];
           
     }
-    public void setHighscoreAuto(String nombre1, int newHighScore){
+    /**
+	 * Metodo que regresa el Trofeo .
+	 * @return actualScore
+	 */
+    public int getTrofeo(){
+        
+        return numTrofeo;
+       
+    }
+    /**
+	 * Metodo que resetea el trofeo
+	 * 
+	 */
+    public void resetTrofeo(){
+        
+        numTrofeo = -1;
+       
+    }
+    
+    public int setHighscoreAuto(String nombre1, int newHighScore){
         try {
             leeArchivo();
         } catch (IOException ex) {
@@ -107,6 +127,17 @@ public class HighScore {
         } catch (IOException ex) {
             Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if(nombre[0]==nombre1 && highScore[0]==newHighScore){
+            return 0;
+        }
+        else if(nombre[1]==nombre1 && highScore[1]==newHighScore){
+            return 1;
+        }
+        else if(nombre[2]==nombre1 && highScore[2]==newHighScore){
+            return 2;
+        }
+        else return -1;
         
     }
       public void insertScore( int mscore, String nombre1){

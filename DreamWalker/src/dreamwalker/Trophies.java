@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 public class Trophies implements MouseListener {
     
     private final Botones goBack;
+    private final Botones reset;
     private final Image back;
     private HighScore a = new HighScore(); 
     
@@ -39,6 +40,7 @@ public class Trophies implements MouseListener {
         this.back = background;
 
         goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
+        reset = new Botones (Base.getW()/10, 3*Base.getH()/5, "Images/Botones/reset.gif");
     }
     
     /**
@@ -55,6 +57,7 @@ public class Trophies implements MouseListener {
         
         g.drawImage(back, 0, 0, juego);
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
+        g.drawImage(reset.getImagenI(), reset.getPosX(), reset.getPosY(), juego);
         
         g.setFont(new Font("Serif", Font.BOLD, 34));
         for(int i =0; i < 5;i++){
@@ -72,6 +75,13 @@ public class Trophies implements MouseListener {
         if (JFrameDreamWalker.status == JFrameDreamWalker.STATUS.TROPHIES) {
             if (goBack.contiene (e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
+            }else if (reset.contiene (e.getX(), e.getY())) {
+                try {
+                    a.initHighScore();
+                    a.grabaArchivo();
+                } catch (IOException ex) {
+                    Logger.getLogger(Trophies.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

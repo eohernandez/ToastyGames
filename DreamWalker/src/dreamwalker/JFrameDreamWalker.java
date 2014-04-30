@@ -50,6 +50,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private int randPosXc;
 	private int dx;
 	private int dy;
+        private int trofeo;
 
 //	strings
 	private String[] arr;
@@ -161,6 +162,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         created = false;
         sound = true;
         nombreIngresado = false;
+        trofeo = -1;
 
         menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
         menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
@@ -451,12 +453,14 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					fox.setX(-300);
 				}
 				if(foxDeath.getCuadroActual()>=49){
+                                        gameOver.setTrofeo(trofeo);
 					status = STATUS.GAMEOVER;
                                         nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
                                         nombreIngresado = true;
-                                        hScore.setHighscoreAuto(nombre, score);
+                                        trofeo = hScore.setHighscoreAuto(nombre, score);
+                                        gameOver.setTrofeo(trofeo);
                                         fox.setDeath(false);
-                                       
+                                        trofeo = -1;
                                  //       restart();
 
 				}
