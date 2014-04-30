@@ -87,6 +87,14 @@ public class Base {
 	public Image getImagen() {
 		return animacion.getImagen();
 	}
+	
+	/**
+	 * Metodo de acceso que regresa la imagen del icono 
+	 * @return un objeto de la clase <code>Image</code> que es la imagen del icono.
+	 */
+	public Image getImagen(int i) {
+		return animacion.getImagen(i);
+	}
         /**
 	 * Metodo de acceso que regresa el ancho del icono 
 	 * @return un objeto de la clase <code>ImageIcon</code> que es el ancho del icono.

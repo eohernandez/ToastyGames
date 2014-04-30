@@ -16,6 +16,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,6 +31,7 @@ public class gameOver implements MouseListener {
     private final Botones exit;
     private final Image []back;
     private final Botones goBack;
+    private int trofeo =-1; 
     
     
     /**
@@ -58,7 +62,16 @@ public class gameOver implements MouseListener {
         g.setFont(new Font("Sylfaen", Font.BOLD, 40));
         
         g.drawString("" + JFrameDreamWalker.temp, Base.getW()/2 - 10, 8*Base.getH()/20);
-        g.drawImage(back[0], 0, 0, juego);
+        //System.out.println(a.getTrofeo());
+        if(trofeo==0){
+            g.drawImage(back[0], 0, 0, juego);
+        }
+        else if(trofeo==1){
+            g.drawImage(back[1], 0, 0, juego);
+        }
+        else if(trofeo==2){
+            g.drawImage(back[2], 0, 0, juego);
+        }
         g.drawImage(newGame.getImagenI(), newGame.getPosX(), newGame.getPosY(), juego);
         g.drawImage(exit.getImagenI(), exit.getPosX(), exit.getPosY(), juego);
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
@@ -80,6 +93,13 @@ public class gameOver implements MouseListener {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
             }
         }
+    }
+    /**
+     * Recive el numero del trofeo
+     * @param t 
+     */
+    public void setTrofeo(int t){
+        trofeo = t;
     }
 
     @Override
