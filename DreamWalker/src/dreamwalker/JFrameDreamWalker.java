@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,7 +94,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion canonOpen;
     private Animacion canonFire;
     private Animacion canonBall;
-    
+    URL sonidoURL;
+    URL imagenURL;
     private LinkedList<BadGuys> canons;    
 
     private LinkedList<Floor> floor;
@@ -150,9 +152,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         status = STATUS.MENU;
         Base.setW(getWidth());
         Base.setH(getHeight());
-
-		backMusic = new SoundClip("Images/Background/GameOver.wav");
-		backMusic.play();
+        
+        
+        backMusic = new SoundClip("Images/Background/GameOver.wav");
+        backMusic.play();
 
         hScore = new HighScore();
        
@@ -161,19 +164,29 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         created = false;
         sound = true;
         nombreIngresado = false;
-
-        menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
-        menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
-        pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-        Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
-
+        
+        imagenURL = this.getClass().getResource("Images/Background/menu.png");
+        menuBG = new ImageIcon (imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Fox/FoxGif.gif");
+        menuFox = new ImageIcon (imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Botones/pause.png");
+        pausaImg = new ImageIcon (imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Background/sky.png");
+        
+        Image skyI = new ImageIcon(imagenURL).getImage();
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
         
         instructions = new Instructions(menuBG);
         
         for (int x = 1; x<=3 ; x++ ) {
-            gameOverBG[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/GameOver" + x + ".png"));
+            imagenURL = this.getClass().getResource("Images/Background/GameOver" + x + ".png");
+	    gameOverBG[x-1] = new ImageIcon (imagenURL).getImage();
+			
+            //gameOverBG[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/GameOver" + x + ".png"));
 
         }
         gameOver = new gameOver(gameOverBG);
@@ -192,29 +205,36 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         canonBall = new Animacion(); 
         animSky = new Animacion();
         animSky.sumaCuadro(skyI, 100);
-
+        
+        
         
         floor = new LinkedList();
         canons = new LinkedList();
         
         for (int x =1; x<= 6; x++ ) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png"));
+                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonNormal.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x =1; x<= 4; x++ ) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Spells/FireBall/FireBall" + x + ".png"));
+                        imagenURL = this.getClass().getResource("Images/Spells/FireBall/FireBall" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonBall.sumaCuadro(imagenAnimaciones, 100);
         }
         fireball = new FireBall(0,500, canonBall);
         
         for (int x =1; x<= 5; x++ ) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png"));
+                        
+                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonOpen.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x =1; x<= 2; x++ ) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png"));
+			
+                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonFire.sumaCuadro(imagenAnimaciones, 200);
         }
         
@@ -228,9 +248,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		
 //		Animacion de espada
         for (int x =1; x<= 4; x++ ) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Enemigos/Espada/Espada" + x + ".png"));
-			espadaNormal.sumaCuadro(imagenAnimaciones, 100);
+			imagenURL = this.getClass().getResource("Images/Enemigos/Espada/Espada" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        espadaNormal.sumaCuadro(imagenAnimaciones, 100);
         }
+        
         randPosYc = 0  + (int) (Math.random()*6); //randon*rango + minimo
         randPosXc = getWidth() + (int) (Math.random()*200); //randon*rango + minimo
         espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
@@ -238,23 +260,28 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         //
         for (int x = 1; x <= 8; x++) { 
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif"));
+                        imagenURL = this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+      
 			FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x = 1; x<=17; x++) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png"));
-			FoxStanding.sumaCuadro(imagenAnimaciones, 100);
+			imagenURL = this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        FoxStanding.sumaCuadro(imagenAnimaciones, 100);
         }
 		
         for (int x = 1; x <= 3; x++) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif"));
-			FoxJump2.sumaCuadro(imagenAnimaciones, 25);
+                        imagenURL = this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        FoxJump2.sumaCuadro(imagenAnimaciones, 25);
         }
         
         for (int x = 1; x <= 50; x++) {
-			imagenAnimaciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxDeath" + x + ".gif"));
-			foxDeath.sumaCuadro(imagenAnimaciones, 50);
+			imagenURL = this.getClass().getResource("Images/Fox/FoxDeath" + x + ".gif");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        foxDeath.sumaCuadro(imagenAnimaciones, 50);
         }
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);

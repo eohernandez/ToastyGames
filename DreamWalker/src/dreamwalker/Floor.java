@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 
 
@@ -24,7 +26,8 @@ public class Floor {
     private boolean paso;
 
     public static int cantMalos = 1;
-
+    
+    URL imagenURL;
 	
     private Image floors[];
     private Image bushes[]; 
@@ -94,24 +97,36 @@ public class Floor {
         
         paso = false;
         for (int x = 1; x <= 3; x ++ ) {
-            floors[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Colinas/Colina" + x + ".png"));  
+            imagenURL = this.getClass().getResource("Images/Background/Colinas/Colina"+ x+ ".png");
+       
+            floors[x-1] = new ImageIcon(imagenURL).getImage();
         }
 		
         for (int x = 1; x <= 3; x ++ ) {  
-            trees[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesArbol" + x + ".png"));  
+             imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesArbol" + x + ".png");
+            trees[x-1] = new ImageIcon(imagenURL).getImage();
         }
         
         for (int x = 1; x <= 3; x ++ ) {  
-            bushes[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesArbusto" + x + ".png"));  
+            
+            imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesArbusto" + x + ".png");
+           
+            bushes[x-1] = new ImageIcon(imagenURL).getImage();
         }
         
-		for (int x = 1; x <= 5; x ++ ) {  
-            weeds[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesWeed" + x + ".png"));  
+        for (int x = 1; x <= 5; x ++ ) { 
+            imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesWeed" + x + ".png");   
+            weeds[x-1] = new ImageIcon(imagenURL).getImage();
         }
         
-        flowers[0] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesFloresAmarillas.png"));  
-        flowers[1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesFloresAzules.png"));  
-        flowers[2] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Detalles/DetallesFloresRojas.png"));  
+        imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesFloresAmarillas.png");      
+        flowers[0] = new ImageIcon(imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesFloresAzules.png");  
+        flowers[1] =new ImageIcon(imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Background/Detalles/DetallesFloresRojas.png");  
+        flowers[2] = new ImageIcon(imagenURL).getImage();
     }
     
     /**
@@ -173,12 +188,13 @@ public class Floor {
      * @param juego
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-		g.drawImage(floors[floorIndex], posX, posY, juego);
-		g.drawImage(trees[tree1Index], posX+randPosTree, posY-trees[tree1Index].getHeight(juego), juego);
-		g.drawImage(trees[tree2Index], posX+randPosTree+464, posY-trees[tree2Index].getHeight(juego), juego);
-		g.drawImage(bushes[bush1Index], posX+randPosBush, posY-bushes[bush1Index].getHeight(juego), juego);
-		g.drawImage(bushes[bush2Index], posX+randPosBush+328, posY-bushes[bush2Index].getHeight(juego), juego);
-		g.drawImage(bushes[bush3Index], posX+randPosBush+656, posY-bushes[bush3Index].getHeight(juego), juego);
+        
+        g.drawImage(floors[floorIndex], posX, posY, juego);
+        g.drawImage(trees[tree1Index], posX+randPosTree, posY-trees[tree1Index].getHeight(juego), juego);
+        g.drawImage(trees[tree2Index], posX+randPosTree+464, posY-trees[tree2Index].getHeight(juego), juego);
+        g.drawImage(bushes[bush1Index], posX+randPosBush, posY-bushes[bush1Index].getHeight(juego), juego);
+        g.drawImage(bushes[bush2Index], posX+randPosBush+328, posY-bushes[bush2Index].getHeight(juego), juego);
+        g.drawImage(bushes[bush3Index], posX+randPosBush+656, posY-bushes[bush3Index].getHeight(juego), juego);
         g.drawImage(weeds[weed1Index], posX+randPosWeed, posY-weeds[weed1Index].getHeight(juego), juego);
         g.drawImage(weeds[weed2Index], posX+randPosWeed+217, posY-weeds[weed2Index].getHeight(juego), juego);
         g.drawImage(weeds[weed3Index], posX+randPosWeed+434, posY-weeds[weed3Index].getHeight(juego), juego);
