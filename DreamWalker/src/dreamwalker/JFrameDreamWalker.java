@@ -448,7 +448,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
 			if(fox.getDeath()) {
 				foxDeath.actualiza(tiempoTranscurrido);
-//				fox.actualiza(tiempoTranscurrido);
+				fox.actualiza(tiempoTranscurrido);
 				if(foxDeath.getCuadroActual()==33) {
 					fox.setX(-300);
 				}
@@ -456,7 +456,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					status = STATUS.GAMEOVER;
 					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
 					nombreIngresado = true;
-					//hScore.setHighscoreAuto(nombre, score);
+					hScore.setHighscoreAuto(nombre, score);
 					fox.setDeath(false);
 //					restart();
 				}
