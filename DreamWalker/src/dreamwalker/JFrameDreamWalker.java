@@ -95,8 +95,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion canonOpen;
     private Animacion canonFire;
     private Animacion canonBall;
-    URL sonidoURL;
-    URL imagenURL;
+   private URL sonidoURL;
+    private URL imagenURL;
     private LinkedList<BadGuys> canons;    
 
     private LinkedList<Floor> floor;
@@ -155,7 +155,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Base.setH(getHeight());
         
         
-        backMusic = new SoundClip("Images/Background/GameOver.wav");
+        backMusic = new SoundClip("Images/Background/Gameover.wav");
         backMusic.play();
 
         hScore = new HighScore();
@@ -165,7 +165,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         created = false;
         sound = true;
         nombreIngresado = false;
-<<<<<<< HEAD
+
         
         imagenURL = this.getClass().getResource("Images/Background/menu.png");
         menuBG = new ImageIcon (imagenURL).getImage();
@@ -179,15 +179,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         imagenURL = this.getClass().getResource("Images/Background/sky.png");
         
         Image skyI = new ImageIcon(imagenURL).getImage();
-=======
+
         trofeo = -1;
 
-        menuBG = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/menu.png"));
-        menuFox = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Fox/FoxGif.gif"));
-        pausaImg = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Botones/pause.png"));
-        Image skyI = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/sky.png"));
 
->>>>>>> dc0c70b19c8791358358713467ce462ce865b9ec
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
         
