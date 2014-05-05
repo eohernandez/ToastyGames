@@ -51,7 +51,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private int randPosXc;
 	private int dx;
 	private int dy;
-        private int trofeo;
+	private int trofeo;
 
 //	strings
 	private String[] arr;
@@ -95,7 +95,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion canonOpen;
     private Animacion canonFire;
     private Animacion canonBall;
-   private URL sonidoURL;
+	private URL sonidoURL;
     private URL imagenURL;
     private LinkedList<BadGuys> canons;    
 
@@ -140,11 +140,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     /**
      * Se inicializan las variables en el metodo <I>Init</>
-     * Se inicializa el tamaño del applet en 1000x500
+     * Se inicializa el tamaño del applet en 1152x720px
      *
      */
     void init() {
-
         setTitle("Dream Walker");
         addKeyListener(this);
         addMouseListener(this);
@@ -190,11 +189,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         for (int x = 1; x<=3 ; x++ ) {
             imagenURL = this.getClass().getResource("Images/Background/GameOver" + x + ".png");
-	    gameOverBG[x-1] = new ImageIcon (imagenURL).getImage();
-			
-            //gameOverBG[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/GameOver" + x + ".png"));
-
-        }
+			gameOverBG[x-1] = new ImageIcon (imagenURL).getImage();
+//			gameOverBG[x-1] = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/GameOver" + x + ".png"));
+		}
         gameOver = new gameOver(gameOverBG);
         trophies = new Trophies(menuBG);
         
@@ -218,28 +215,26 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         canons = new LinkedList();
         
         for (int x =1; x<= 6; x++ ) {
-                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png");
+			imagenURL = this.getClass().getResource("Images/Enemigos/Canon/Canon" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonNormal.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x =1; x<= 4; x++ ) {
-                        imagenURL = this.getClass().getResource("Images/Spells/FireBall/FireBall" + x + ".png");
+			imagenURL = this.getClass().getResource("Images/Spells/FireBall/FireBall" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonBall.sumaCuadro(imagenAnimaciones, 100);
         }
         fireball = new FireBall(0,500, canonBall);
         
         for (int x =1; x<= 5; x++ ) {
-                        
-                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png");
+			imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAbre" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonOpen.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x =1; x<= 2; x++ ) {
-			
-                        imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png");
+			imagenURL = this.getClass().getResource("Images/Enemigos/Canon/CanonAnticipacionDisparoVolteado-" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonFire.sumaCuadro(imagenAnimaciones, 200);
         }
@@ -256,7 +251,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         for (int x =1; x<= 4; x++ ) {
 			imagenURL = this.getClass().getResource("Images/Enemigos/Espada/Espada" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
-                        espadaNormal.sumaCuadro(imagenAnimaciones, 100);
+			espadaNormal.sumaCuadro(imagenAnimaciones, 100);
         }
         
         randPosYc = 0  + (int) (Math.random()*6); //randon*rango + minimo
@@ -265,29 +260,28 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         espada.setVelX(4);
         
         //
-        for (int x = 1; x <= 8; x++) { 
-                        imagenURL = this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif");
+        for (int x = 1; x <= 8; x++) {
+			imagenURL = this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
-      
 			FoxRunning.sumaCuadro(imagenAnimaciones, 100);
         }
         
         for (int x = 1; x<=17; x++) {
 			imagenURL = this.getClass().getResource("Images/Fox/FoxStanding" + x + ".png");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
-                        FoxStanding.sumaCuadro(imagenAnimaciones, 100);
+			FoxStanding.sumaCuadro(imagenAnimaciones, 100);
         }
 		
         for (int x = 1; x <= 3; x++) {
-                        imagenURL = this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif");
+			imagenURL = this.getClass().getResource("Images/Fox/FoxJump" + x + ".gif");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
-                        FoxJump2.sumaCuadro(imagenAnimaciones, 25);
+			FoxJump2.sumaCuadro(imagenAnimaciones, 25);
         }
         
         for (int x = 1; x <= 50; x++) {
 			imagenURL = this.getClass().getResource("Images/Fox/FoxDeath" + x + ".gif");
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
-                        foxDeath.sumaCuadro(imagenAnimaciones, 50);
+			foxDeath.sumaCuadro(imagenAnimaciones, 50);
         }
         
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
@@ -482,19 +476,19 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			if(fox.getDeath()) {
 				foxDeath.actualiza(tiempoTranscurrido);
 				fox.actualiza(tiempoTranscurrido);
-				if(foxDeath.getCuadroActual()==33) {
+				if (foxDeath.getCuadroActual()==33) {
 					fox.setX(-300);
 				}
-				if(foxDeath.getCuadroActual()>=49){
-                                        gameOver.setTrofeo(trofeo);
+				if (foxDeath.getCuadroActual()>=49) {
+					gameOver.setTrofeo(trofeo);
 					status = STATUS.GAMEOVER;
-                                        nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-                                        nombreIngresado = true;
-                                        trofeo = hScore.setHighscoreAuto(nombre, score);
-                                        gameOver.setTrofeo(trofeo);
-                                        fox.setDeath(false);
-                                        trofeo = -1;
-                                 //       restart();
+					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+					nombreIngresado = true;
+					trofeo = hScore.setHighscoreAuto(nombre, score);
+					gameOver.setTrofeo(trofeo);
+					fox.setDeath(false);
+					trofeo = -1;
+//					restart();
 
 				}
 			} else {
@@ -718,7 +712,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * En este metodo se dibuja la imagen con la posicion actualizada, ademas
      * que cuando la imagen es cargada te despliega una advertencia. ph
      *
-     * @param g es el <code>objeto grafico</code> usado para dibujar.
+     * @param g es el elemento grafico usado para dibujar.
      */
     public void paint1(Graphics g) {
         g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
@@ -770,12 +764,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			trophies.render(g, this);
 		}
 	}
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+	
     @Override
     public void keyPressed(KeyEvent e) {
         if (status == STATUS.GAME) {
@@ -817,24 +806,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         menu.mouseClicked(e, this);
         trophies.mouseClicked(e);
     }
-
+	
+	@Override
+    public void keyTyped(KeyEvent e) {}
     @Override
-    public void mousePressed(MouseEvent e) {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    public void mousePressed(MouseEvent e) {}
     @Override
-    public void mouseReleased(MouseEvent e) {
-    //     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    public void mouseReleased(MouseEvent e) {}
     @Override
-    public void mouseEntered(MouseEvent e) {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    public void mouseEntered(MouseEvent e) {}
     @Override
-    public void mouseExited(MouseEvent e) {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mouseExited(MouseEvent e) {}
 }

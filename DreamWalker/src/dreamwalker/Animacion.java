@@ -26,7 +26,7 @@ public class Animacion {
 
 	
 	/**
-		Crea una nueva Animacion vacía
+	 * Crea una nueva Animacion vacía
 	*/
 	public Animacion() {
 		cuadros = new ArrayList();
@@ -37,23 +37,26 @@ public class Animacion {
         
 	
 	/**
-		Añade una cuadro a la animación con la duración
-		indicada (tiempo que se muestra la imagen).
+	 * Añade una cuadro a la animación con la duración indicada.
+	 * @param imagen imagen a agregar
+	 * @param duracion tiempo que dura la imagen
 	*/	
 	public synchronized void sumaCuadro(Image imagen, long duracion) {
     	duracionTotal += duracion;
 		cuadros.add(new cuadroDeAnimacion(imagen, duracionTotal));
     }
 	
-	// Inicializa la animación desde el principio. 
+	/**
+	 * Inicializa la animación desde el principio.
+	 */ 
 	public synchronized void iniciar() {
     	tiempoDeAnimacion = 0;
 		indiceCuadroActual = 0;
     }
 	
 	/**
-		Actualiza la imagen (cuadro) actual de la animación,
-		si es necesario.
+	 * Actualiza la imagen actual de la animación si es necesario.
+	 * @param tiempoTranscurrido tiempo a actualizar
 	*/
 	public synchronized void actualiza(long tiempoTranscurrido) {
 		if (cuadros.size() > 1) {
@@ -69,8 +72,8 @@ public class Animacion {
 	}
 	
 	/**
-		Captura la imagen actual de la animación. Regeresa null
-		si la animación no tiene imágenes.
+	 * Captura la imagen actual de la animación. 
+	 * @return la imagen actual o null si no tiene imágenes.
 	*/
 	public synchronized Image getImagen() {
 		if (cuadros.size() == 0) {
@@ -79,21 +82,37 @@ public class Animacion {
 			return getCuadro(indiceCuadroActual).imagen;
 		}      
 	}
-        public int getCuadroActual(){
-            return indiceCuadroActual;
-        }
-        
-        /**
-	*	Regresa la imagen de i
-	*/
-	public synchronized Image getImagen(int i) {
-            return getCuadro(i).imagen;
-        }
 	
+	/**
+	 * Metodo para obtener el indice de la imagen actual
+	 * @return indice actual de la animacion
+	 */
+	public int getCuadroActual() {
+		return indiceCuadroActual;
+	}
+	
+	/**
+	 * Regresa la imagen en el indice que se pide
+	 * @param i indice a regresar
+	 * @return imagen en el indice i
+	 */
+	public synchronized Image getImagen(int i) {
+		return getCuadro(i).imagen;
+	}
+	
+	/**
+	 * Metodo que regresa el cuadro en el indice indicado
+	 * @param i indice
+	 * @return cuadro en el indice i
+	 */
 	private cuadroDeAnimacion getCuadro(int i) {
 		return (cuadroDeAnimacion)cuadros.get(i);
 	}
 	
+	/**
+	 * Metodo para saber el numero de cuadros
+	 * @return numero de cuadros
+	 */
 	public int getCuadros() {
 		return cuadros.size();
 	}
@@ -102,37 +121,60 @@ public class Animacion {
 		Image imagen;
 		long tiempoFinal;
 		
+		/**
+		 * Metodo constructor
+		 */
 		public cuadroDeAnimacion() {
 			this.imagen = null;
 			this.tiempoFinal = 0;
 		}
 		
+		/**
+		 * Metodo para agregar una imagen
+		 * @param imagen imagen a agregar
+		 * @param tiempoFinal el tiempo final de la imagen
+		 */
 		public cuadroDeAnimacion(Image imagen, long tiempoFinal) {
 			this.imagen = imagen;
 			this.tiempoFinal = tiempoFinal;
 		}
 		
+		/**
+		 * Metodo para obtener la imagen
+		 * @return imagen
+		 */
 		public Image getImagen() {
 			return imagen;
 		}
 		
+		/**
+		 * Metodo para obtener el tiempo final
+		 * @return tiempo final
+		 */
 		public long getTiempoFinal() {
 			return tiempoFinal;
 		}
 		
+		/**
+		 * Metodo para cambiar la imagen
+		 * @param imagen 
+		 */
 		public void setImagen (Image imagen) {
 			this.imagen = imagen;
 		}
 		
+		/**
+		 * Metodo para cambiar el tiempo final
+		 * @param tiempoFinal 
+		 */
 		public void setTiempoFinal(long tiempoFinal) {
 			this.tiempoFinal = tiempoFinal;
 		}
-               
 	}
 	
 	/**
 	 *	Metodo de acceso que regresa el ancho de la imagen
-	 * @return width
+	 * @return width, -1 si no existe una imagen
 	*/
 	public int getWidth() {
 		if (cuadros.isEmpty()) {
@@ -144,7 +186,7 @@ public class Animacion {
 	
 	/**
 	 *	Metodo de acceso que regresa el alto de la imagen
-	 * @return height
+	 * @return height, -1 si no existe una imagen
 	*/
 	public int getHeight() {
 		if (cuadros.isEmpty()) {

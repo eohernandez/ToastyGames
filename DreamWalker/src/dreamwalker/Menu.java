@@ -6,25 +6,18 @@ package dreamwalker;
  * and open the template in the editor.
  */
 
-
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 public class Menu implements MouseListener {
-    
-    
-
     private final Botones PLAY;
     private final Botones INSTRUCTIONS;
     private final Botones TROPHIES;
@@ -36,7 +29,7 @@ public class Menu implements MouseListener {
     /**
      * Metodo constructor
      * @param background imagen de fondo
-     * @param fox imagen de lobo
+     * @param fox imagen de zorro
      */
     public Menu(Image background, Image fox) {
         this.BACKGROUND = background;
@@ -46,10 +39,11 @@ public class Menu implements MouseListener {
         QUIT = new Botones(Base.getW() - 450, 4*Base.getH()/5, "Images/Botones/exit.png");
         menuFox=fox;
     }
+	
     /**
      * Dibuja la pantalla menu
-     * @param g
-     * @param juego
+     * @param g elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
         
@@ -63,9 +57,9 @@ public class Menu implements MouseListener {
 
     /**
      * Revisa clicks en los botones
-     * @param e 
+     * @param e MouseEvent
+	 * @param juego JFrame
      */
-    
     public void mouseClicked (MouseEvent e, JFrameDreamWalker juego) {
         if(JFrameDreamWalker.status == JFrameDreamWalker.STATUS.MENU) {
             if (PLAY.contiene (e.getX(), e.getY())) {
@@ -83,18 +77,12 @@ public class Menu implements MouseListener {
 
     @Override
     public void mousePressed (MouseEvent e) {}
-
     @Override
     public void mouseReleased (MouseEvent e) {}
-
     @Override
     public void mouseEntered (MouseEvent e) {}
-
     @Override
     public void mouseExited (MouseEvent e) {}
-
     @Override
-    public void mouseClicked(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mouseClicked(MouseEvent e) {}
 }

@@ -60,6 +60,11 @@ public class Floor {
     private int ancho;
     private int alto; 
     
+	/**
+	 * Metodo consructor
+	 * @param xPos posicion en X
+	 * @param yPos posicion en Y
+	 */
     public Floor(int xPos, int yPos) {
         floors = new Image [3];
         trees = new Image [3];
@@ -132,7 +137,7 @@ public class Floor {
     /**
      * Método que resetea la posicion del piso si este ya se paso
      */
-    public void addFloor () {
+    public void addFloor() {
         posX = 1156;
         posY = 414  + (int) (Math.random()*280);
        
@@ -160,9 +165,9 @@ public class Floor {
 	}
     
     /**
-     * Método que actualiza la posX del objeto 
+     * Metodo que actualiza la posicion X del objeto 
      */
-	public void actualizaPos () {
+	public void actualizaPos() {
 		posX -= 3;
 	}
 	
@@ -176,7 +181,7 @@ public class Floor {
 	
     /**
 	 * Metodo de acceso que regresa el ancho de la base
-	 * @return alto
+	 * @return ancho
 	 */
 	public int getAncho() {
 		return ancho;
@@ -184,11 +189,10 @@ public class Floor {
     
 	/**
      * Dibuja el suelo
-     * @param g
-     * @param juego
+     * @param g elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-        
         g.drawImage(floors[floorIndex], posX, posY, juego);
         g.drawImage(trees[tree1Index], posX+randPosTree, posY-trees[tree1Index].getHeight(juego), juego);
         g.drawImage(trees[tree2Index], posX+randPosTree+464, posY-trees[tree2Index].getHeight(juego), juego);
@@ -208,8 +212,7 @@ public class Floor {
     }
 
     /**
-     * Método que activa la direccion donde se movio el objeto
-     *
+     * Método que activa el movimiento del objeto
      * @param b booleano
      */
     public void setMovement(boolean b) {
@@ -218,7 +221,7 @@ public class Floor {
 	
     /**
 	 * Metodo de acceso que regresa la posicion en x del objeto 
-	 * @return posX es la <code>posicion en x</code> del objeto.
+	 * @return posX es la posicion en x del objeto.
 	 */
     public int getX() {
 		return posX;
@@ -226,24 +229,22 @@ public class Floor {
 	
 	/**
 	 * Metodo de acceso que regresa la posicion en y del objeto 
-	 * @return posY es la <code>posicion en y</code> del objeto.
+	 * @return posY es la posicion en y del objeto.
 	 */
 	public int getY() {
 		return posY;
 	}
 
     /**
-     * Método que me regresa un booleano si se movio hacia la derecha la canasta
-     *
-     * @return boolean
+     * Metodo que regresa un booleano si esta en movimiento
+     * @return movement boolean
      */
     public boolean getMovement() {
         return movement;
     }
 
     /**
-     * Método que me regresa un boleano para saber si el objecto ya paso el piso
-     *
+     * Metodo que regresa un boleano para saber si el objecto ya paso el piso
      * @return paso boolean
      */
     public boolean getPassed() {
@@ -251,9 +252,8 @@ public class Floor {
     }
 
     /**
-     * Método de modificacion de la variable <code> paso </code>
-     *
-     * @param itPassed
+     * Metodo de modificacion de la variable paso
+     * @param itPassed boolean si ha pasado el piso
      */
     public void setPassed(boolean itPassed) {
         paso = itPassed;
@@ -272,21 +272,26 @@ public class Floor {
 	/**
 	 * Checa si el objeto <code>Base</code> intersecta a otro <code>Base</code>
 	 * @param obj con el objeto que se checa la interseccion
-	 * @return un valor boleano <code>true</code> si lo intersecta <code>false</code>
-	 * en caso contrario
+	 * @return un valor boleano si lo intersecta o no
 	 */
 	public boolean intersecta(Base obj) {
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
-
-        
-         public Rectangle cuadroDerecha () {
-             
-           return new Rectangle (getX()+7*getAncho()/8, getY()+20, 1*getAncho()/8, getAlto()-10);
-        }
-         public Rectangle cuadroArriba () {
-            // System.out.println(getX() + " " + getY() + " " + getAncho() + " "+ 10);
-           return new Rectangle (getX(), getY(), getAncho(), 10);
-        }
-
+	
+	/**
+	 * Regresa un Rectangulo a la derecha del objeto para verificar intersecciones
+	 * @return Rectangulo a la derecha del objeto
+	 */
+	public Rectangle cuadroDerecha() {
+		return new Rectangle (getX()+7*getAncho()/8, getY()+20, 1*getAncho()/8, getAlto()-10);
+	}
+	
+	/**
+	 * Regresa un Rectangulo a la derecha del objeto para verificar intersecciones
+	 * @return Rectangulo arriba del objeto
+	 */
+	public Rectangle cuadroArriba() {
+//		System.out.println(getX() + " " + getY() + " " + getAncho() + " "+ 10);
+		return new Rectangle (getX(), getY(), getAncho(), 10);
+	}
 }

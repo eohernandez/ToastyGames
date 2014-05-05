@@ -52,10 +52,11 @@ public class gameOver implements MouseListener {
         exit.setPosY(exit.getPosY() - exit.getAlto()/2);
        
     }
+	
     /**
      * Dibuja la pantalla menu
-     * @param g
-     * @param juego
+     * @param g elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
         
@@ -79,9 +80,9 @@ public class gameOver implements MouseListener {
 
     /**
      * Checa si se pico algun boton
-     * @param e 
+     * @param e MouseEvent
+	 * @param juego JFrame
      */
-    
     public void mouseClicked (MouseEvent e, JFrameDreamWalker juego) {
         if(JFrameDreamWalker.status == JFrameDreamWalker.STATUS.GAMEOVER) {
             if (newGame.contiene (e.getX(), e.getY())) {
@@ -94,9 +95,10 @@ public class gameOver implements MouseListener {
             }
         }
     }
+	
     /**
      * Recive el numero del trofeo
-     * @param t 
+     * @param t numero de trofeo
      */
     public void setTrofeo(int t){
         trofeo = t;
@@ -104,18 +106,12 @@ public class gameOver implements MouseListener {
 
     @Override
     public void mousePressed (MouseEvent e) {}
-
     @Override
     public void mouseReleased (MouseEvent e) {}
-
     @Override
     public void mouseEntered (MouseEvent e) {}
-
     @Override
     public void mouseExited (MouseEvent e) {}
-
     @Override
-    public void mouseClicked(MouseEvent e) {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mouseClicked(MouseEvent e) {}
 }
