@@ -42,8 +42,8 @@ public class Instructions implements MouseListener {
     
     /**
      * Metodo para pintar
-     * @param g
-     * @param juego
+     * @param g elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
         
@@ -54,7 +54,7 @@ public class Instructions implements MouseListener {
 
     /**
      * Revisa clicks en los botones
-     * @param e 
+     * @param e MouseEvent
      */
     @Override
     public void mouseClicked (MouseEvent e) {
@@ -68,13 +68,10 @@ public class Instructions implements MouseListener {
 
     @Override
     public void mousePressed (MouseEvent e) {}
-
     @Override
     public void mouseReleased (MouseEvent e) {}
-
     @Override
     public void mouseEntered (MouseEvent e) {}
-
     @Override
     public void mouseExited (MouseEvent e) {}
 }
