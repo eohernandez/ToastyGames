@@ -35,56 +35,39 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author NLCJohn
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
-	static boolean playing;        
-	public static int score;
-	public static int temp;
+    static boolean playing;        
+    public static int score;
+    public static int temp;
 
-	private int randPosY;
-	private int randPosX;
-	private int randPosYc;
-	private int randPosXc;
-	private int dx;
-	private int dy;
-        private int trofeo;
+    private int randPosY;
+    private int randPosYc;
+    private int randPosXc;
+    private int dx;
+    private int dy;
+    private int trofeo;
 
-//	strings
-	private String[] arr;
-	private String nombre;
-	private final String nombreArchivo = "guardar.txt";
-
+    private String nombre;
 //	boleanos
-	private boolean pausa;      // bool que checa si se pauso
-	private boolean instrucciones;
-	private boolean sound;
-
+    private boolean pausa;      // bool que checa si se pauso
+    private boolean sound;
 //	floating
-	private long tiempoActual;  // tiempo actual
-
+    private long tiempoActual;  // tiempo actual
 //	images
-	private Image dbImage;	// Imagen a proyectar	
-	private Graphics dbg;	// Objeto grafico
+    private Image dbImage;	// Imagen a proyectar	
+    private Graphics dbg;	// Objeto grafico
 
 //	HighScores
-	private HighScore hScore;
-	AffineTransform identity = new AffineTransform();
-        
+    private HighScore hScore;        
 //	SoundClips
-	private SoundClip backMusic;
+    private SoundClip backMusic;
 
 //	animaciones
-    private Fox fox;
-    
-//	crea espada
-    private BadGuys espada;
     private Animacion espadaNormal;
-	
-//	animaciones
     private Animacion animSky;
     private Animacion FoxStanding;
     private Animacion FoxJump1;
@@ -109,7 +92,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Image menuFox;
     private Trophies trophies;
     private FireBall fireball;
-
+    private BadGuys espada;
+    private Fox fox;
+    
     private Image pausaImg;
     private Image imagenAnimaciones;
     private Image imagenPiso;

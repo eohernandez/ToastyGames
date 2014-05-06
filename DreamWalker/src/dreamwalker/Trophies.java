@@ -59,9 +59,9 @@ public class Trophies implements MouseListener {
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
         g.drawImage(reset.getImagenI(), reset.getPosX(), reset.getPosY(), juego);
         
-        g.setFont(new Font("Serif", Font.BOLD, 34));
+        g.setFont(new Font("Sylfaen", Font.BOLD, 40));
         for(int i =0; i < 5;i++){
-            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*30);
+            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*60);
         }
         
     }
