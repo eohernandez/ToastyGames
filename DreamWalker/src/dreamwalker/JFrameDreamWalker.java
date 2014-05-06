@@ -40,7 +40,7 @@ import javax.swing.JOptionPane;
  * @author NLCJohn
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
-<<<<<<< HEAD
+
     static boolean playing;        
     public static int score;
     public static int temp;
@@ -53,25 +53,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private int trofeo;
 
     private String nombre;
-=======
-	static boolean playing;        
-	public static int score;
-	public static int temp;
 
-	private int randPosY;
-	private int randPosX;
-	private int randPosYc;
-	private int randPosXc;
-	private int dx;
-	private int dy;
-	private int trofeo;
 
-//	strings
-	private String[] arr;
-	private String nombre;
-	private final String nombreArchivo = "guardar.txt";
 
->>>>>>> 7d2b4e4d09e6511d7d59be940c463604214dcaa4
 //	boleanos
     private boolean pausa;      // bool que checa si se pauso
     private boolean sound;
