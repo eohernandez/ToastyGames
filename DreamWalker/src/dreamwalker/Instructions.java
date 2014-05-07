@@ -27,16 +27,18 @@ public class Instructions implements MouseListener {
     private final Botones goBack;
     private final Image back;
     private final Image instrucciones;
+    private final Image creditos;
+	private boolean credits;
     
     /**
      * Metodo constructor
      * @param background
      */
     public Instructions(Image background) {
+		credits = false;
         this.back = background;
-        instrucciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Instrucciones.png"));
-			
-        
+		instrucciones = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Credits.png"));
+		creditos = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Images/Background/Instrucciones.png"));
         goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
      }
     
@@ -46,9 +48,12 @@ public class Instructions implements MouseListener {
      * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-        
         g.drawImage(back, 0, 0, juego);
-        g.drawImage(instrucciones,0, Base.getH()/10, juego);
+		if (credits) {
+			g.drawImage(instrucciones,0, Base.getH()/10, juego);
+		} else {
+			g.drawImage(creditos,0, Base.getH()/10, juego);
+		}
         g.drawImage(goBack.getImagenI(), goBack.getPosX()-100, goBack.getPosY(), juego);
     }
 
@@ -61,8 +66,9 @@ public class Instructions implements MouseListener {
         if (JFrameDreamWalker.status == JFrameDreamWalker.STATUS.INSTRUCTIONS) {
             if (goBack.contiene (e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
-
-            }
+            } else if ((686 < e.getY() && e.getY() < 716) && (655 < e.getX() && e.getX() < 805)) {
+				credits = !credits;
+			}
         }
     }
 

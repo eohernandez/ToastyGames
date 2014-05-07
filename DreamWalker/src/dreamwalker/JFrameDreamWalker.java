@@ -822,8 +822,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         if (status == STATUS.GAME ) {
        
 			g.setFont(new Font("Sylfaen", Font.BOLD, 40));
-			g.drawImage(scoreB, 60, 65, this);
-                        g.drawString("" + score, 100, 100);
+			g.drawImage(scoreB, 63, 61, this);
+			g.drawString("" + score, 100, 100);
        
 			sky.render(g, this);
 			
