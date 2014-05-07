@@ -45,7 +45,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     static boolean playing;        
     public static int score;
     public static int temp;
-
+    public int tempScore;
+    public int dificultad;
     private int randPosY;
     private int randPosYc;
     private int randPosXc;
@@ -156,6 +157,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         deathSound = new SoundClip("Images/Background/DeathSound.wav");
        
         backMusic.play();
+        backMusic.setLooping(true);
 
         hScore = new HighScore();
        
@@ -181,6 +183,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
         trofeo = -1;
 
+        tempScore = 0;
+
+
+
+        nombre = "";
 
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
@@ -313,7 +320,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		sky = new Sky(animSky);
                 crawlerRapido.iniciar();
 		setResizable(false);
+                dificultad = 0;
 	}
+        
 
     /**
      * Metodo <I>start</I> sobrescrito de la clase <code>Applet</code>.<P>
@@ -507,7 +516,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
+                        
 			if (!fox.getDeath()) {
+                            
+                            if (tempScore == 6) {
+                                crawler.setVelX(crawler.getVelX()-dificultad);
+                                dificultad++;
+                                tempScore=0;
+                              }
+                            for (BadGuys bad : canons )  {
+                                bad.setX(bad.getX()-dificultad);
+                                break;
+                              }
 				sky.move(tiempoTranscurrido);
 			}
 			tiempoActual += tiempoTranscurrido;
@@ -525,8 +545,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				if (foxDeath.getCuadroActual()>=49) {
 					gameOver.setTrofeo(trofeo);
 					status = STATUS.GAMEOVER;
-					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-					nombreIngresado = true;
+                                        nombre="";
+                                        nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+                                        nombreIngresado = true;
 					trofeo = hScore.setHighscoreAuto(nombre, score);
 					gameOver.setTrofeo(trofeo);
 					fox.setDeath(false);
@@ -708,6 +729,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					Floor.cantMalos--;
 					score++;
 					temp=score;
+                                        tempScore++;
 					break;
 				}
 			}
@@ -825,26 +847,34 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         if (status == STATUS.GAME ) {
        
-        g.setFont(new Font("Sylfaen", Font.BOLD, 40));
-        g.drawString("" + score, 100, 100);
+			g.setFont(new Font("Sylfaen", Font.BOLD, 40));
+			g.drawString("" + score, 100, 100);
        
 			sky.render(g, this);
-                        
-                        if(crawler.getCount()==0){
-                            g.drawImage(crawler.getImagen(), crawler.getX(), crawler.getY(), this);
-                        }
-                        if(crawler.getCount()==1){
-                             g.drawImage(crawlerRapido.getImagen(), crawler.getX(), crawler.getY(), this);
-                        }
-                        try{
-                            for (Floor flo : floor) {
-                                    flo.render(g, this);
-                            }
-                        }catch (ConcurrentModificationException e){
-                            
-                        }
-			g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
-                        
+			
+			if (fox.getDeath()) {
+				if(crawler.getCount()==0) {
+					g.drawImage(crawler.getImagen(0), crawler.getX(), crawler.getY(), this);
+				}
+				if(crawler.getCount()==1) {
+					g.drawImage(crawlerRapido.getImagen(0), crawler.getX(), crawler.getY(), this);
+				}
+				g.drawImage(espada.getImagen(0), espada.getX(), espada.getY(), this);
+			} else {
+				if(crawler.getCount()==0) {
+					g.drawImage(crawler.getImagen(), crawler.getX(), crawler.getY(), this);
+				}
+				if(crawler.getCount()==1) {
+					g.drawImage(crawlerRapido.getImagen(), crawler.getX(), crawler.getY(), this);
+				}
+				g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+			}
+			
+			try {
+				for (Floor flo : floor) {
+					flo.render(g, this);
+				}
+			} catch (ConcurrentModificationException e) {}
                         
 			if (fox.getDeath()) {
 				g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
