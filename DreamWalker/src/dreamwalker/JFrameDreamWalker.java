@@ -176,7 +176,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
         trofeo = -1;
 
-
+        nombre = "";
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
         
@@ -510,8 +510,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				if (foxDeath.getCuadroActual()>=49) {
 					gameOver.setTrofeo(trofeo);
 					status = STATUS.GAMEOVER;
-					nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-					nombreIngresado = true;
+                                        nombre="";
+                                        nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+                                        nombreIngresado = true;
 					trofeo = hScore.setHighscoreAuto(nombre, score);
 					gameOver.setTrofeo(trofeo);
 					fox.setDeath(false);
