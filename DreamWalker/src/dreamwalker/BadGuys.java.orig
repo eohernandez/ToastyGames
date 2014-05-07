@@ -37,9 +37,14 @@ public class BadGuys extends Base {
 		jumps = 0;
 		velX = 0;
 		velY = 0;
+<<<<<<< HEAD
                 count =0;
                 count2 = 0;
                 sigue = false;
+=======
+		count = 0;
+		sigue = false;
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
 	}
 	
 	/**
@@ -55,10 +60,16 @@ public class BadGuys extends Base {
 		jumps = 0;
 		velX = 0;
 		velY = 0;
+<<<<<<< HEAD
                 count = 0;
                 count2 = 0;
                 cambiaAnim = true;
                 sigue = false;
+=======
+		count = 0;
+		cambiaAnim = true;
+		sigue = false;
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
 	}
         
 	/**
@@ -100,7 +111,16 @@ public class BadGuys extends Base {
 	public void setCount(int b) {
 		count = b;
 	}
-               /**
+	
+	/**
+	 * Metodo que regresa la cuenta
+	 * @return la cuenta
+	 */
+	public int getCount(){
+		return count;
+	}
+<<<<<<< HEAD
+           /**
          * Método que cambia la segunda cuenta
          *
          * @param b int
@@ -112,17 +132,11 @@ public class BadGuys extends Base {
 	 * Metodo que regresa la segunda cuenta
 	 */
 	public int getCount2(){
-            return count2;
+		return count2;
 	}
+=======
 	
-	/**
-	 * Metodo que regresa la cuenta
-	 * @return la cuenta
-	 */
-	public int getCount(){
-		return count;
-	}
-	
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
 	/**
 	 * Metodo que se llama cuando el personaje toca el suelo al caer de un brinco.
 	 */
@@ -290,6 +304,68 @@ public class BadGuys extends Base {
 		g.dispose();
 		return toImage(bimg);
 	}
+	
+	/**
+	 * Metodo que regresa si la imagen se encuentra dentro del rango
+	 * @param x posicion en x
+	 * @param xf posicion en x final
+	 * @param posX posicion en x
+	 * @param ancho ancho de la imagen posX
+	 * @return si es que se encuentra dentro del rango
+	 */
+	public boolean within(int x, int xf,int posX, int ancho) {
+		return (posX>x&&posX+ancho<xf);
+	}
+<<<<<<< HEAD
+            /**
+         * Creates an empty image with transparency
+         * 
+         * @param width The width of required image
+         * @param height The height of required image
+         * @return The created image
+         */
+        public static Image getEmptyImage(int width, int height){
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            return toImage(img);
+        }
+            /**
+        * Converts a given BufferedImage into an Image
+        * 
+        * @param bimage The BufferedImage to be converted
+        * @return The converted Image
+        */
+       public static Image toImage(BufferedImage bimage){
+           // Casting is enough to convert from BufferedImage to Image
+           Image img = (Image) bimage;
+           return img;
+       }
+                /**
+         * Rotates an image. Actually rotates a new copy of the image.
+         * 
+         * @param img The image to be rotated
+         * @param angle The angle in degrees
+         * @return The rotated image
+         */
+        public static Image rotate(Image img, double angle)
+        {
+            double sin = Math.abs(Math.sin(Math.toRadians(angle))),
+                   cos = Math.abs(Math.cos(Math.toRadians(angle)));
+
+            int w = img.getWidth(null), h = img.getHeight(null);
+
+            int neww = (int) Math.floor(w*cos + h*sin),
+                newh = (int) Math.floor(h*cos + w*sin);
+
+            BufferedImage bimg = toBufferedImage(getEmptyImage(neww, newh));
+            Graphics2D g = bimg.createGraphics();
+
+            g.translate((neww-w)/2, (newh-h)/2);
+            g.rotate(Math.toRadians(angle), w/2, h/2);
+            g.drawRenderedImage(toBufferedImage(img), null);
+            g.dispose();
+
+            return toImage(bimg);
+        }
            /**
          * within. regresa si la imagen se encuentra dentro del rango
          * 
@@ -336,4 +412,6 @@ public class BadGuys extends Base {
 		return getPerimetroChico().intersects(obj.getPerimetro());
                 
 	}
+=======
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
 }
