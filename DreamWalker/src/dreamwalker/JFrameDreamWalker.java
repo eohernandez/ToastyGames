@@ -52,8 +52,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
     private String nombre;
 
-
-
 //	boleanos
     private boolean pausa;      // bool que checa si se pauso
     private boolean sound;
@@ -346,7 +344,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         fox.setAnim(FoxRunning);
         fox.setVelX(3);
         fox.setVelY(0);
-        score = 0;
+        score = -1;
         sky = new Sky(animSky);
         randPosY = 414  + (int) (Math.random()*306);
         floor.clear();
