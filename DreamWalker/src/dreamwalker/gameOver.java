@@ -88,10 +88,13 @@ public class gameOver implements MouseListener {
             if (newGame.contiene (e.getX(), e.getY())) {
                 juego.restart();
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.GAME;
+                JFrameDreamWalker.playMusic.play();
+                JFrameDreamWalker.backMusic.stop();
             } else if (exit.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.playing = false;
             } else if ( goBack.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
+        
             }
         }
     }

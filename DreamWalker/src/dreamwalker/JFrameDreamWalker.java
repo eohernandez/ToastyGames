@@ -71,7 +71,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 //	HighScores
     private HighScore hScore;        
 //	SoundClips
-    private SoundClip backMusic;
+    public static SoundClip backMusic;
+    public static SoundClip playMusic;
+    public static SoundClip deathSound;
 
 //	animaciones
     private Animacion espadaNormal;
@@ -149,7 +151,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Base.setH(getHeight());
         
         
-        backMusic = new SoundClip("Images/Background/Gameover.wav");
+        backMusic = new SoundClip("Images/Background/MainMusic.wav");
+        playMusic = new SoundClip("Images/Background/PlayMusic.wav"); 
+        deathSound = new SoundClip("Images/Background/DeathSound.wav");
+       
         backMusic.play();
 
         hScore = new HighScore();
@@ -454,6 +459,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             for (BadGuys bad : canons) {
 				if (bad.intersecta(fox)) {
 					fox.setDeath(true);
+                                        
+                                        playMusic.stop();
 					dx = fox.getX();
 					dy = fox.getY();
 				}
@@ -461,11 +468,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
             if (espada.intersectaChico(fox)) {
                     fox.setDeath(true);
+                    
+                    playMusic.stop();
                     dx = fox.getX();
                     dy = fox.getY();
             }
             if (crawler.intersectaChico(fox)) {
                     fox.setDeath(true);
+                    
+                    playMusic.stop();
                     dx = fox.getX();
                     dy = fox.getY();
             }
@@ -479,6 +490,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
             
             if (fireball.intersecta(fox)) {
                 fox.setDeath(true);
+                
+                playMusic.stop();
                  dx = fox.getX();
                  dy = fox.getY();
             }
@@ -491,6 +504,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
      * cada segmento de animacion.
      */
     public void actualiza() throws IOException {
+        
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
 			if (!fox.getDeath()) {
@@ -501,6 +515,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                         crawlerRapido.actualiza(tiempoTranscurrido);
                         
 			if(fox.getDeath()) {
+                            
 				foxDeath.actualiza(tiempoTranscurrido);
                                 
 				fox.actualiza(tiempoTranscurrido);
@@ -886,9 +901,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
                 pausa = !pausa;
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
 				if (sound) {
-					backMusic.stop();
+					playMusic.stop();
 				} else {
-					backMusic.play();
+					playMusic.play();
+                                        
 				}
 				sound = !sound;
 			}

@@ -46,7 +46,7 @@ public class Menu implements MouseListener {
      * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
-        
+       
         g.drawImage(BACKGROUND, 0, 0, juego);
         g.drawImage(PLAY.getImagenI(), PLAY.getPosX(), PLAY.getPosY(), juego);
         g.drawImage(INSTRUCTIONS.getImagenI(), INSTRUCTIONS.getPosX(), INSTRUCTIONS.getPosY(), juego);
@@ -65,6 +65,8 @@ public class Menu implements MouseListener {
             if (PLAY.contiene (e.getX(), e.getY())) {
                 juego.restart();
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.GAME;
+                JFrameDreamWalker.backMusic.stop();
+                JFrameDreamWalker.playMusic.play();
             } else if (INSTRUCTIONS.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.INSTRUCTIONS;
             } else if (QUIT.contiene(e.getX(), e.getY())) {

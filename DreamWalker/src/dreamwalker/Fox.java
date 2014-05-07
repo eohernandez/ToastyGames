@@ -115,6 +115,8 @@ public class Fox extends Base {
 	*/
 	public void setDeath(boolean b) {
 	   death = b;
+           if (b)
+           {JFrameDreamWalker.deathSound.play(); JFrameDreamWalker.backMusic.play();}
 	}
 	
 	/**
