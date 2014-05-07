@@ -13,18 +13,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -101,6 +95,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Instructions instructions;
     private gameOver gameOver;
     private Image menuBG;
+    private Image scoreB;
     private Image []gameOverBG;
     private Image menuFox;
     private Trophies trophies;
@@ -110,11 +105,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     
     private Image pausaImg;
     private Image imagenAnimaciones;
-    private Image imagenPiso;
+
 
     private Sky sky;
-    private boolean created;
-    private boolean nombreIngresado;
+
 
     
     public static enum STATUS {
@@ -163,13 +157,14 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
        
         playing = true;
         pausa = false;
-        created = false;
         sound = true;
-        nombreIngresado = false;
 
-        
         imagenURL = this.getClass().getResource("Images/Background/menu.png");
         menuBG = new ImageIcon (imagenURL).getImage();
+        
+        imagenURL = this.getClass().getResource("Images/Background/scoreB.png");
+        scoreB = new ImageIcon (imagenURL).getImage();
+        
         
         imagenURL = this.getClass().getResource("Images/Fox/FoxGif.gif");
         menuFox = new ImageIcon (imagenURL).getImage();
@@ -345,8 +340,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void restart() {
 		playing = true;
         pausa = false;
-        created = false;
-        nombreIngresado = false;
+
         fox = new Fox(100, floor.get(0).getY()- new ImageIcon (FoxStanding.getImagen()).getIconHeight(), FoxRunning);
         fox.setStand(FoxStanding);
         fox.setAnim(FoxRunning);
@@ -368,6 +362,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         FoxStanding.iniciar();
         FoxRunning.iniciar();
         crawlerRapido.iniciar();
+        tempScore = 0;
+        dificultad = 0;
         
         
     }
@@ -547,7 +543,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					status = STATUS.GAMEOVER;
                                         nombre="";
                                         nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
-                                        nombreIngresado = true;
 					trofeo = hScore.setHighscoreAuto(nombre, score);
 					gameOver.setTrofeo(trofeo);
 					fox.setDeath(false);
@@ -812,28 +807,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawImage(dbImage, 0, 0, this);
     }
 
-    /**
-     * Converts a given Image into a BufferedImage
-     *
-     * @param img The Image to be converted
-     * @return The converted BufferedImage
-     */
-    public static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
+    
 
     /**
      * Metodo <I>paint</I> sobrescrito de la clase <code>Applet</code>, heredado
@@ -848,7 +822,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         if (status == STATUS.GAME ) {
        
 			g.setFont(new Font("Sylfaen", Font.BOLD, 40));
-			g.drawString("" + score, 100, 100);
+			g.drawImage(scoreB, 60, 65, this);
+                        g.drawString("" + score, 100, 100);
        
 			sky.render(g, this);
 			
