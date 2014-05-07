@@ -10,8 +10,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 public class Base {
-	private int posX;		// posicion en x       
-	private int posY;		// posicion en y
+	int posX;		// posicion en x       
+	int posY;		// posicion en y
 	Animacion animacion;	// animacion
 	private static int W;
 	private static int H;

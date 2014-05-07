@@ -41,6 +41,29 @@ import javax.swing.JOptionPane;
  * @author NLCJohn
  */
 public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListener, Runnable {
+<<<<<<< HEAD
+	static boolean playing;        
+	public static int score;
+	public static int temp;
+
+	private int randPosY;
+	private int randPosX;
+	private int randPosYc;
+	private int randPosXc;
+        
+        private int randPosYcr;
+        private int randPosXcr;
+        
+	private int dx;
+	private int dy;
+        private int trofeo;
+
+//	strings
+	private String[] arr;
+	private String nombre;
+	private final String nombreArchivo = "guardar.txt";
+=======
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
 
     static boolean playing;        
     public static int score;
@@ -49,8 +72,6 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private int randPosY;
     private int randPosYc;
     private int randPosXc;
-    private int randPosYcr;
-    private int randPosXcr;
     private int dx;
     private int dy;
     private int trofeo;
@@ -75,6 +96,15 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 
 //	animaciones
     private Animacion espadaNormal;
+<<<<<<< HEAD
+	
+//      Crear Crowler
+    private BadGuys crawler;
+    private Animacion crawlerNormal;
+    private Animacion crawlerRapido;
+//	animaciones
+=======
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
     private Animacion animSky;
     private Animacion FoxStanding;
     private Animacion FoxJump1;
@@ -85,10 +115,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion canonOpen;
     private Animacion canonFire;
     private Animacion canonBall;
-    private BadGuys crawler;
-    private Animacion crawlerNormal;
-    private Animacion crawlerRapido;
+<<<<<<< HEAD
+    
     private URL sonidoURL;
+=======
+	private URL sonidoURL;
+>>>>>>> bb1430a9455c82988426cc8198804e6bf8ea7cf5
     private URL imagenURL;
     private LinkedList<BadGuys> canons;    
 
