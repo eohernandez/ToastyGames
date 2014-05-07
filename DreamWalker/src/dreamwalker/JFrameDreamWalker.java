@@ -152,6 +152,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         
         backMusic = new SoundClip("Images/Background/Gameover.wav");
         backMusic.play();
+        backMusic.setLooping(true);
 
         hScore = new HighScore();
        
