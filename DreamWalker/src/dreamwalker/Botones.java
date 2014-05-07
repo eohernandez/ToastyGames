@@ -14,9 +14,9 @@ public class Botones {
     
     /**
      * Constructor para crear un boton
-     * @param posX es la <I> posicion X </I> del objeto.
-     * @param posY es la <I> posicion Y </I> del objeto.
-     * @param image es la <I> Imagen </I>del objeto.
+     * @param posX es la posicion X del objeto.
+     * @param posY es la posicion Y del objeto.
+     * @param image es la Imagen del objeto.
      */
     public Botones (int posX, int posY, Image image) {
         this.posX = posX;
@@ -26,9 +26,9 @@ public class Botones {
     
     /**
      * Constructor para crear un boton
-     * @param posX es la <I> posicion X </I> del objeto.
-     * @param posY es la <I> posicion Y </I> del objeto.
-     * @param fileName URL de la imagen
+     * @param posX es la posicion X del objeto.
+     * @param posY es la posicion Y del objeto.
+     * @param urll URL de la imagen
      */
     public Botones (int posX, int posY, String urll) {
         this.posX = posX;
@@ -40,7 +40,7 @@ public class Botones {
     
     /**
      * Metodo para modificar la posX 
-     * @param posX es la <I> Pos X </I> del objeto.
+     * @param posX es la Pos X del objeto.
      */
     public void setPosX(int posX) {
         this.posX = posX;
@@ -48,7 +48,7 @@ public class Botones {
 
     /**
      * Metodo de acceso que regresa la posicion en x del objeto 
-     * @return posX es la <code>posicion en x</code> del objeto.
+     * @return posX es la posicion en x del objeto.
      */
     public int getPosX() {
         return posX;
@@ -56,7 +56,7 @@ public class Botones {
 
     /**
      * Metodo modificador usado para cambiar la posicion en y del objeto 
-     * @param posY es la <code>posicion en y</code> del objeto.
+     * @param posY es la posicion en y del objeto.
      */
     public void setPosY(int posY) {
         this.posY = posY;
@@ -64,7 +64,7 @@ public class Botones {
 
     /**
      * Metodo de acceso que regresa la posicion en y del objeto 
-     * @return posY es la <code>posicion en y</code> del objeto.
+     * @return posY es la posicion en y del objeto.
      */
     public int getPosY() {
         return posY;
@@ -72,7 +72,7 @@ public class Botones {
 
     /**
      * Metodo modificador usado para cambiar el icono del objeto 
-     * @param icono es el <code>icono</code> del objeto.
+     * @param icono es el icono del objeto.
      */
     public void setImageIcon(ImageIcon icono) {
         this.icono = icono;
@@ -80,7 +80,7 @@ public class Botones {
     
     /**
      * Metodo de acceso que regresa el icono del objeto 
-     * @return icono es el <code>icono</code> del objeto.
+     * @return icono es el icono del objeto.
      */
     public ImageIcon getImageIcon() {
         return icono;
@@ -88,7 +88,7 @@ public class Botones {
     
     /**
      * Metodo de acceso que regresa el ancho del icono 
-     * @return un objeto de la clase <code>ImageIcon</code> que es el ancho del icono.
+     * @return el ancho del icono.
      */
     public int getAncho() {
         return icono.getIconWidth();
@@ -96,7 +96,7 @@ public class Botones {
     
     /**
      * Metodo de acceso que regresa el alto del icono 
-     * @return un objeto de la clase <code>ImageIcon</code> que es el alto del icono.
+     * @return  el alto del icono.
      */
     public int getAlto() {
         return icono.getIconHeight();
@@ -112,10 +112,10 @@ public class Botones {
     }
     
     /**
-     * Metodo que indica si un punto está dentro del <code>Boton</code>
+     * Metodo que indica si un punto está dentro del Boton
      * @param x coordenada X
      * @param y coordenada Y
-     * @return <code>true</code> o <code>false</code>
+     * @return si esta o no dentro del boton
      */
     public boolean contiene(int x, int y) {
         return getPerimetro().contains(x, y);

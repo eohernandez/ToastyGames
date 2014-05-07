@@ -51,7 +51,7 @@ public class SoundClip {
 
 	/** 
 	 * Metodo de acceso que regresa un objeto de tipo Clip
-	 * @return clip es un <code>objeto Clip</code>.
+	 * @return clip es un objeto <code>Clip</code>.
 	 */
 	public Clip getClip() { 
 		return clip; 
@@ -59,7 +59,7 @@ public class SoundClip {
 
 	/** 
 	 * Metodo modificador usado para modificar si el sonido se repite.
-	 * @param _looping es un valor <code>boleano</code>. 
+	 * @param looping es un valor <code>boleano</code>. 
 	 */
 	public void setLooping(boolean looping) {
 		this.looping = looping; 
@@ -75,7 +75,7 @@ public class SoundClip {
 
 	/** 
 	 * Metodo modificador usado para definir el numero de repeticiones.
-	 * @param _repeat es un <code>entero</code> que es el numero de repeticiones. 
+	 * @param repeat es un <code>entero</code> que es el numero de repeticiones. 
 	 */
 	public void setRepeat(int repeat) {
 		this.repeat = repeat;
@@ -91,7 +91,7 @@ public class SoundClip {
 
 	/**
 	 * Metodo modificador que asigna un nombre al archivo.
-	 * @param _filename es un <code>String</code> con el nombre del archivo. 
+	 * @param filename es un <code>String</code> con el nombre del archivo. 
 	 */
 	public void setFilename(String filename) { 
 		this.filename = filename; 
@@ -107,15 +107,16 @@ public class SoundClip {
 
 	/**
 	 * Metodo que verifica si el archivo de audio esta cargado.
-	 * @return sample es un <code>objeto sample</code>.
+	 * @return sample es un <code>booleano</code>.
 	 */
 	public boolean isLoaded() {
-		return (boolean)(sample != null);
+		return (sample != null);
 	}
 
 	/** 
 	 * Metodo de acceso que regresa el url del archivo
-	 * @param filename es un <code>String</code> con el nombre del archivo. 
+	 * @param filename es un <code>String</code> con el nombre del archivo.
+	 * @return url del archivo
 	 */
 	private URL getURL(String filename) {
 		URL url = null;
@@ -131,6 +132,7 @@ public class SoundClip {
 	/** 
 	 * Metodo que carga el archivo de sonido.
 	 * @param audiofile es un <code>String</code> con el nombre del archivo de sonido.
+	 * @return un booleano si pudo o no agregarlo
 	 */
 	public boolean load(String audiofile) {
 		try {
@@ -159,10 +161,11 @@ public class SoundClip {
 		clip.setFramePosition(0);
 
 		//Reproduce el sonido con repeticion opcional.
-		if (looping)
+		if (looping) {
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
-		else
+		} else {
 			clip.loop(repeat);
+		}
 	}
 
 	/**

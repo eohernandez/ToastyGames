@@ -45,8 +45,8 @@ public class Trophies implements MouseListener {
     
     /**
      * Metodo para pintar
-     * @param g
-     * @param juego
+     * @param g elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
         try {
@@ -59,16 +59,16 @@ public class Trophies implements MouseListener {
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
         g.drawImage(reset.getImagenI(), reset.getPosX(), reset.getPosY(), juego);
         
-        g.setFont(new Font("Serif", Font.BOLD, 34));
+        g.setFont(new Font("Sylfaen", Font.BOLD, 40));
         for(int i =0; i < 5;i++){
-            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*30);
+            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*60);
         }
         
     }
 
     /**
      * Revisa clicks en los botones
-     * @param e 
+     * @param e MouseEvent
      */
     @Override
     public void mouseClicked (MouseEvent e) {
@@ -86,17 +86,12 @@ public class Trophies implements MouseListener {
         }
     }
     
-    
-
     @Override
     public void mousePressed (MouseEvent e) {}
-
     @Override
     public void mouseReleased (MouseEvent e) {}
-
     @Override
     public void mouseEntered (MouseEvent e) {}
-
     @Override
     public void mouseExited (MouseEvent e) {}
 }

@@ -29,7 +29,6 @@ public class Sky extends Base {
 	
 	/**
 	 * Metodo constructor que hereda los atributos de la clase <code>Objeto</code>.
-	 * @param posY es el <code>posiscion en y</code> del objeto.
 	 * @param a es la <code>animacion</code> del objeto.
 	 */
 	public Sky(Animacion a) {
@@ -83,6 +82,7 @@ public class Sky extends Base {
 	
 	/**
 	 * Metodo usado para avanzar la hora del dia.
+	 * @param t es el tiempo transcurrido para avanzar las animaciones
 	 */
 	public void move(long t) {
 		int X=1; // para testing, aumenta la velocidad de movimiento del cielo, sol, luna, nubes
@@ -193,8 +193,8 @@ public class Sky extends Base {
 	
 	/**
      * Dibuja el suelo
-     * @param g
-     * @param juego
+     * @param g el elemento grafico
+     * @param juego JFrame
      */
     public void render(Graphics g, JFrameDreamWalker juego) {
 		g.drawImage(sol.getImagen(), sX, sY, juego);
