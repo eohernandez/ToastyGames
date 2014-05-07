@@ -811,26 +811,34 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawImage(sky.getImagen(), sky.getX(), sky.getY(), this);
         if (status == STATUS.GAME ) {
        
-        g.setFont(new Font("Sylfaen", Font.BOLD, 40));
-        g.drawString("" + score, 100, 100);
+			g.setFont(new Font("Sylfaen", Font.BOLD, 40));
+			g.drawString("" + score, 100, 100);
        
 			sky.render(g, this);
-                        
-                        if(crawler.getCount()==0){
-                            g.drawImage(crawler.getImagen(), crawler.getX(), crawler.getY(), this);
-                        }
-                        if(crawler.getCount()==1){
-                             g.drawImage(crawlerRapido.getImagen(), crawler.getX(), crawler.getY(), this);
-                        }
-                        try{
-                            for (Floor flo : floor) {
-                                    flo.render(g, this);
-                            }
-                        }catch (ConcurrentModificationException e){
-                            
-                        }
-			g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
-                        
+			
+			if (fox.getDeath()) {
+				if(crawler.getCount()==0) {
+					g.drawImage(crawler.getImagen(0), crawler.getX(), crawler.getY(), this);
+				}
+				if(crawler.getCount()==1) {
+					g.drawImage(crawlerRapido.getImagen(0), crawler.getX(), crawler.getY(), this);
+				}
+				g.drawImage(espada.getImagen(0), espada.getX(), espada.getY(), this);
+			} else {
+				if(crawler.getCount()==0) {
+					g.drawImage(crawler.getImagen(), crawler.getX(), crawler.getY(), this);
+				}
+				if(crawler.getCount()==1) {
+					g.drawImage(crawlerRapido.getImagen(), crawler.getX(), crawler.getY(), this);
+				}
+				g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+			}
+			
+			try {
+				for (Floor flo : floor) {
+					flo.render(g, this);
+				}
+			} catch (ConcurrentModificationException e) {}
                         
 			if (fox.getDeath()) {
 				g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
