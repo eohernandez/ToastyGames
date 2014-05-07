@@ -40,7 +40,7 @@ public class Trophies implements MouseListener {
         this.back = background;
 
         goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
-        reset = new Botones (Base.getW()/10, 3*Base.getH()/5, "Images/Botones/reset.png");
+        reset = new Botones (6*Base.getW()/10, 4*Base.getH()/5, "Images/Botones/reset.png");
     }
     
     /**
