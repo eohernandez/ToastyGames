@@ -176,13 +176,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Image skyI = new ImageIcon(imagenURL).getImage();
 
         trofeo = -1;
-<<<<<<< HEAD
+
         tempScore = 0;
 
-=======
+
 
         nombre = "";
->>>>>>> 36d0b9b3bd551ce982a54f4534c004308888528e
+
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
         
