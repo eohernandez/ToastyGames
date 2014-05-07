@@ -29,6 +29,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 	private int randPosX;
 	private int randPosYc;
 	private int randPosXc;
+        
+        private int randPosYcr;
+        private int randPosXcr;
+        
 	private int dx;
 	private int dy;
         private int trofeo;
@@ -84,6 +89,10 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private BadGuys espada;
     private Animacion espadaNormal;
 	
+//      Crear Crowler
+    private BadGuys crawler;
+    private Animacion crawlerNormal;
+    private Animacion crawlerRapido;
 //	animaciones
     private Animacion animSky;
     private Animacion FoxStanding;
@@ -95,7 +104,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     private Animacion canonOpen;
     private Animacion canonFire;
     private Animacion canonBall;
-   private URL sonidoURL;
+    
+    private URL sonidoURL;
     private URL imagenURL;
     private LinkedList<BadGuys> canons;    
 
@@ -209,6 +219,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         canonFire = new Animacion();
         espadaNormal = new Animacion();
         canonBall = new Animacion(); 
+        crawlerNormal = new Animacion();
+        crawlerRapido = new Animacion();
         animSky = new Animacion();
         animSky.sumaCuadro(skyI, 100);
         
@@ -228,6 +240,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
 			canonBall.sumaCuadro(imagenAnimaciones, 100);
         }
+        
         fireball = new FireBall(0,500, canonBall);
         
         for (int x =1; x<= 5; x++ ) {
@@ -264,6 +277,24 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
         espada.setVelX(4);
         
+        //		Animacion de crawler
+        for (int x =1; x<= 4; x++ ) {
+			imagenURL = this.getClass().getResource("Images/Enemigos/Crawler/Crawler" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        crawlerNormal.sumaCuadro(imagenAnimaciones, 100);
+        }
+        for (int x =1; x<= 4; x++ ) {
+			imagenURL = this.getClass().getResource("Images/Enemigos/Crawler/Crawler" + x + ".png");
+			imagenAnimaciones = new ImageIcon (imagenURL).getImage();
+                        crawlerRapido.sumaCuadro(imagenAnimaciones, 25);
+        }
+        
+        randPosYcr = 125  + (int) (Math.random()*6); //randon*rango + minimo
+        randPosXcr = -1000 - (int) (Math.random()*200); //randon*rango + minimo
+       // crawler = new BadGuys(randPosXcr,randPosYcr,crawlerNormal);
+        crawler = new BadGuys(randPosXcr,randPosYcr,crawlerNormal);
+        crawler.setVelX(-3);
+        
         //
         for (int x = 1; x <= 8; x++) { 
                         imagenURL = this.getClass().getResource("Images/Fox/FoxRun" + x + ".gif");
@@ -296,6 +327,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		fox.setVelX(3);
 		fox.setVelY(0);
 		sky = new Sky(animSky);
+                crawlerRapido.iniciar();
 		setResizable(false);
 	}
 
@@ -336,10 +368,13 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         canons.add(new BadGuys(1150, randPosY - 200, canonNormal));
         espada = new BadGuys(randPosXc,randPosYc,espadaNormal);
         espada.setVelX(4);
+        crawler = new BadGuys(randPosXcr,randPosYcr,crawlerNormal);
+        crawler.setVelX(-3);
         Floor.cantMalos=1;
         foxDeath.iniciar();
         FoxStanding.iniciar();
         FoxRunning.iniciar();
+        crawlerRapido.iniciar();
         
         
     }
@@ -445,7 +480,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				}
             }
 
-            if (espada.intersecta(fox)) {
+            if (espada.intersectaChico(fox)) {
+                    fox.setDeath(true);
+                    dx = fox.getX();
+                    dy = fox.getY();
+            }
+            if (crawler.intersectaChico(fox)) {
                     fox.setDeath(true);
                     dx = fox.getX();
                     dy = fox.getY();
@@ -478,9 +518,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				sky.move(tiempoTranscurrido);
 			}
 			tiempoActual += tiempoTranscurrido;
-
+                        
+                        crawlerRapido.actualiza(tiempoTranscurrido);
+                        
 			if(fox.getDeath()) {
 				foxDeath.actualiza(tiempoTranscurrido);
+                                
 				fox.actualiza(tiempoTranscurrido);
 				if(foxDeath.getCuadroActual()==33) {
 					fox.setX(-300);
@@ -508,10 +551,12 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			for (BadGuys bad : canons) {
 				bad.actualiza(tiempoTranscurrido);
 			}
-//			Actualiza posiciones de la espada
+//			Actualiza posiciones de la espada y crawler
 			if (!fox.getDeath()) {
 				espada.actualiza(tiempoTranscurrido);
 				espada.setX(espada.getX() - espada.getVelX());
+                                crawler.actualiza(tiempoTranscurrido);
+				
 			}
 			
 			if (Floor.cantMalos == 0) {
@@ -548,6 +593,63 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 			   espada.setCount(espada.getCount()+1);
 //			   System.out.println("Verdad");
 			}
+                   
+                   //Crawler
+                   
+                   
+                   
+			if(crawler.getX() > 1300) {
+                            
+				 randPosYcr = 125  + (int) (Math.random()*6); //randon*rango + minimo
+                                 randPosXcr = -1000 - (int) (Math.random()*400); //randon*rango + minimo
+                                 crawler = new BadGuys(randPosXcr,randPosYcr,crawlerNormal);
+                                 crawler.setVelX(-3);
+				 crawler.setCount(0);
+				 crawler.setSigue(false);
+                   
+		   }
+                        if(crawler.getY() > 800) {
+				 randPosYcr = 125  + (int) (Math.random()*6); //randon*rango + minimo
+                                 randPosXcr = -1000 - (int) (Math.random()*400); //randon*rango + minimo
+                                 crawler = new BadGuys(randPosXcr,randPosYcr,crawlerNormal);
+                                 crawler.setVelX(-3);
+				 crawler.setCount(0);
+                                 crawler.setCount2(0);
+				 crawler.setSigue(false);
+                   
+		   }
+                   if(crawler.getCount()==0){
+                       if(!fox.getDeath()){
+                         crawler.setX(crawler.getX() - crawler.getVelX());
+                       }
+                   }
+
+		   if(crawler.getCount()==1&&crawler.getSigue()){
+                      
+                    
+			   if (!fox.getDeath()) {
+                                crawler.setCount2(crawler.getCount2()+1);
+                                   if(crawler.getCount2()>=50){
+                                        crawler.setX(crawler.getX());
+                                       crawler.setVelY(18);
+                                       crawler.setY(crawler.getY()+ crawler.getVelY());
+                                   }else{
+                                       crawler.setX(crawler.getX()+1);
+                                   }
+                                       
+			   }
+
+		   }
+
+                   
+		   if(crawler.getX()+crawler.getAncho()/2>fox.getX()&&fox.getX()+fox.getAncho()+20<crawler.getX()+crawler.getAncho()&&crawler.getCount()==0){
+			   crawler.setSigue(true);
+			   crawler.setCount(crawler.getCount()+1);
+			  
+			}
+                   
+                   
+                   
 //			checo si algun malo choco con algun piso por la derecha
 //			para que se quede parado si es eel caso
 			for (BadGuys bad : canons) {
@@ -597,6 +699,11 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 				if(!fox.getBrincaDoble()){
 					fox.setAnim(FoxRunning);
 				}
+                                if(fox.getX()>=getWidth()*.85){
+                    
+                                        fox.setX((int) (getWidth()*.85));
+                    
+                                }
 		   }
 //   		checa si el piso ya se termino
 			for (Floor flo : floor) {
@@ -728,10 +835,23 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         g.drawString("" + score, 100, 100);
        
 			sky.render(g, this);
-			for (Floor flo : floor) {
-				flo.render(g, this);
-			}
+                        
+                        if(crawler.getCount()==0){
+                            g.drawImage(crawler.getImagen(), crawler.getX(), crawler.getY(), this);
+                        }
+                        if(crawler.getCount()==1){
+                             g.drawImage(crawlerRapido.getImagen(), crawler.getX(), crawler.getY(), this);
+                        }
+                        try{
+                            for (Floor flo : floor) {
+                                    flo.render(g, this);
+                            }
+                        }catch (ConcurrentModificationException e){
+                            
+                        }
 			g.drawImage(espada.getImagen(), espada.getX(), espada.getY(), this);
+                        
+                        
 			if (fox.getDeath()) {
 				g.drawImage(foxDeath.getImagen(), dx - fox.getAncho()/2+5, dy - fox.getAlto()/2-30, this);
 			}

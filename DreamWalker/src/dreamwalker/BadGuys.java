@@ -8,6 +8,7 @@ package dreamwalker;
 import static dreamwalker.JFrameDreamWalker.toBufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -15,7 +16,7 @@ import java.awt.image.BufferedImage;
  * @author manolo
  */
 public class BadGuys extends Base {
-	private int jumps, velX, velY, count;
+	private int jumps, velX, velY, count, count2;
 	private Animacion stand, anim;
 	private boolean moveRight;
 	private boolean moveLeft;
@@ -39,6 +40,7 @@ public class BadGuys extends Base {
 		velX = 0;
 		velY = 0;
                 count =0;
+                count2 = 0;
                 sigue = false;
 	}
 	
@@ -56,6 +58,7 @@ public class BadGuys extends Base {
 		velX = 0;
 		velY = 0;
                 count = 0;
+                count2 = 0;
                 cambiaAnim = true;
                 sigue = false;
 	}
@@ -138,6 +141,20 @@ public class BadGuys extends Base {
 	 */
 	public int getCount(){
 		return count;
+	}
+           /**
+         * Método que cambia la segunda cuenta
+         *
+         * @param b int
+         */
+        public void setCount2(int b) {
+            count2 = b;
+        }
+        /**
+	 * Metodo que regresa la segunda cuenta
+	 */
+	public int getCount2(){
+		return count2;
 	}
 	/**
 	 * Metodo que hace que se llama cuando el personaje toca el suelo al caer de un brinco.
@@ -384,4 +401,32 @@ public class BadGuys extends Base {
                 return false;
             
         }
+        
+        /**
+	 * Metodo de acceso que regresa un nuevo rectangulo chico
+	 * @return un objeto de la clase <code>Rectangle</code> que es el perimetro 
+	 * del rectangulo
+	 */
+        
+	public Rectangle getPerimetroChico(){
+            
+		return new Rectangle(super.getX(),super.getY(), (int) ((int) getAncho() * .75) ,(int) ((int) getAlto() * .75));
+                
+	}
+	
+        
+        /**
+	 * Checa si el objeto <code>Base</code> intersecta a otro <code>Base</code>
+	 *
+	 * @return un valor boleano <code>true</code> si lo intersecta <code>false</code>
+	 * en caso contrario
+	 */
+        
+          
+        
+	public boolean intersectaChico(Base obj){
+            
+		return getPerimetroChico().intersects(obj.getPerimetro());
+                
+	}
 }
