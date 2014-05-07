@@ -45,7 +45,8 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     static boolean playing;        
     public static int score;
     public static int temp;
-
+    public int tempScore;
+    public int dificultad;
     private int randPosY;
     private int randPosYc;
     private int randPosXc;
@@ -175,7 +176,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
         Image skyI = new ImageIcon(imagenURL).getImage();
 
         trofeo = -1;
-
+        tempScore = 0;
 
         menu = new Menu(menuBG, menuFox);
         gameOverBG = new Image [3];
@@ -308,7 +309,9 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 		sky = new Sky(animSky);
                 crawlerRapido.iniciar();
 		setResizable(false);
+                dificultad = 0;
 	}
+        
 
     /**
      * Metodo <I>start</I> sobrescrito de la clase <code>Applet</code>.<P>
@@ -493,7 +496,18 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
     public void actualiza() throws IOException {
 		long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
 		if (status == STATUS.GAME) {
+                        
 			if (!fox.getDeath()) {
+                            
+                            if (tempScore == 6) {
+                                crawler.setVelX(crawler.getVelX()-dificultad);
+                                dificultad++;
+                                tempScore=0;
+                              }
+                            for (BadGuys bad : canons )  {
+                                bad.setX(bad.getX()-dificultad);
+                                break;
+                              }
 				sky.move(tiempoTranscurrido);
 			}
 			tiempoActual += tiempoTranscurrido;
@@ -693,6 +707,7 @@ public class JFrameDreamWalker extends JFrame implements KeyListener, MouseListe
 					Floor.cantMalos--;
 					score++;
 					temp=score;
+                                        tempScore++;
 					break;
 				}
 			}
