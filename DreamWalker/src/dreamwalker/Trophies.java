@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dreamwalker;
 
 /**
  *
  * @author Emilio
  */
-
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -26,25 +24,27 @@ import java.util.logging.Logger;
  */
 
 public class Trophies implements MouseListener {
-    
+
     private final Botones goBack;
     private final Botones reset;
     private final Image back;
-    private HighScore a = new HighScore(); 
-    
+    private HighScore a = new HighScore();
+
     /**
      * Metodo constructor
+     *
      * @param background
      */
     public Trophies(Image background) {
         this.back = background;
 
-        goBack = new Botones (Base.getW()/10, 4*Base.getH()/5, "Images/Botones/goBack.png");
-        reset = new Botones (6*Base.getW()/10, 4*Base.getH()/5, "Images/Botones/reset.png");
+        goBack = new Botones(Base.getW() / 10, 4 * Base.getH() / 5, "Images/Botones/goBack.png");
+        reset = new Botones(6 * Base.getW() / 10, 4 * Base.getH() / 5, "Images/Botones/reset.png");
     }
-    
+
     /**
      * Metodo para pintar
+     *
      * @param g elemento grafico
      * @param juego JFrame
      */
@@ -54,28 +54,29 @@ public class Trophies implements MouseListener {
         } catch (IOException ex) {
             Logger.getLogger(Trophies.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         g.drawImage(back, 0, 0, juego);
         g.drawImage(goBack.getImagenI(), goBack.getPosX(), goBack.getPosY(), juego);
         g.drawImage(reset.getImagenI(), reset.getPosX(), reset.getPosY(), juego);
-        
+
         g.setFont(new Font("Sylfaen", Font.BOLD, 40));
-        for(int i =0; i < 5;i++){
-            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i*60);
+        for (int i = 0; i < 5; i++) {
+            g.drawString(a.getHighscoreName(i) + " " + a.getHighscore(i), 500, 300 + i * 60);
         }
-        
+
     }
 
     /**
      * Revisa clicks en los botones
+     *
      * @param e MouseEvent
      */
     @Override
-    public void mouseClicked (MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
         if (JFrameDreamWalker.status == JFrameDreamWalker.STATUS.TROPHIES) {
-            if (goBack.contiene (e.getX(), e.getY())) {
+            if (goBack.contiene(e.getX(), e.getY())) {
                 JFrameDreamWalker.status = JFrameDreamWalker.STATUS.MENU;
-            }else if (reset.contiene (e.getX(), e.getY())) {
+            } else if (reset.contiene(e.getX(), e.getY())) {
                 try {
                     a.initHighScore();
                     a.grabaArchivo();
@@ -85,13 +86,20 @@ public class Trophies implements MouseListener {
             }
         }
     }
-    
+
     @Override
-    public void mousePressed (MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
+
     @Override
-    public void mouseReleased (MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
+
     @Override
-    public void mouseEntered (MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
+
     @Override
-    public void mouseExited (MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 }
